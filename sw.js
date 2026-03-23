@@ -1,4 +1,4 @@
-const CACHE = 'sweet-olivia-v1';
+const CACHE = 'sweet-olivia-v4';
 const ASSETS = [
   './index.html',
   'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Nunito:wght@300;400;500;600;700&display=swap'
