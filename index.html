@@ -2,1239 +2,1441 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="application-name" content="Sweet Olivia">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Sweet Olivia">
-<meta name="theme-color" content="#7D3D56">
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-
-<title>Sweet Olivia — Gestão</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@300;400;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sweet Olivia – Doces Gourmet</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #EBF6FB;
-    --surface: #FFFFFF;
-    --surface2: #F5FBFD;
-    --primary: #7D3D56;
-    --primary2: #9B4A6A;
-    --primary-light: #C67898;
-    --accent: #E8609A;
-    --green: #3A7D5A;
-    --green-light: #E8F5EE;
-    --red: #C0392B;
-    --red-light: #FDECEA;
-    --text: #3A1F2E;
-    --text2: #7D4F68;
-    --text3: #B07A96;
-    --border: #E4C8D8;
-    --shadow: 0 2px 16px rgba(125,61,86,0.08);
-    --shadow-md: 0 4px 24px rgba(125,61,86,0.12);
-    --radius: 14px;
-    --radius-sm: 8px;
+    --pink: #E8649A;
+    --dark-pink: #C1537F;
+    --wine: #7B2D4E;
+    --wine-light: #9B3D64;
+    --bg: #EAF4F8;
+    --bg2: #F7FBFD;
+    --white: #ffffff;
+    --text: #3a2030;
+    --text-soft: #7a5068;
+    --border: #dce8ef;
+    --success: #4caf50;
+    --warning: #f5a623;
+    --danger: #e53935;
+    --shadow: 0 2px 12px rgba(123,45,78,0.10);
+    --shadow-lg: 0 8px 32px rgba(123,45,78,0.15);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Lato', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
-  .sidebar { width: 220px; background: var(--primary); min-height: 100vh; position: fixed; left: 0; top: 0; display: flex; flex-direction: column; z-index: 100; box-shadow: 4px 0 24px rgba(125,61,86,0.2); }
-  .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  .sidebar-logo h1 { font-family: 'Cormorant Garamond', serif; color: #fff; font-size: 20px; font-weight: 700; }
-  .sidebar-logo p { color: rgba(255,255,255,0.6); font-size: 11px; margin-top: 2px; }
-  .sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
-  .nav-section { padding: 8px 16px 4px; font-size: 9px; font-weight: 600; letter-spacing: 1.2px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-top: 8px; }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 400; transition: all 0.15s; position: relative; }
-  .nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
-  .nav-item.active { background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; }
-  .nav-item.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); border-radius: 0 3px 3px 0; }
 
-  .nav-icon { width: 18px; height: 18px; flex-shrink: 0; display:flex; align-items:center; }
-  .nav-icon svg { width: 18px; height: 18px; }
-  .nav-icon-old { font-size: 15px; width: 20px; text-align: center; }
-  .nav-badge { margin-left: auto; background: var(--accent); color: #fff; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
-  .main { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
-  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; gap: 8px; }
-  .topbar h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--text); font-weight: 600; }
-  .topbar-actions { display: flex; gap: 10px; align-items: center; }
-  .content { padding: 24px 28px; flex: 1; }
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-  .stat-card { background: var(--surface); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
-  .stat-card.highlight { background: linear-gradient(135deg, var(--primary) 0%, #E8609A 100%); border: none; }
-  .stat-icon { font-size: 20px; margin-bottom: 8px; color: var(--primary); width:24px; height:24px; } .stat-icon svg { width:24px; height:24px; }
-  .stat-value { font-size: 24px; font-weight: 700; color: var(--text); line-height: 1; }
-  .stat-label { font-size: 11px; color: var(--text3); margin-top: 4px; font-weight: 500; }
-  .stat-card.highlight .stat-value { color: #fff; }
-  .stat-card.highlight .stat-label { color: rgba(255,255,255,0.7); }
-  .stat-card.highlight .stat-icon { color: rgba(255,255,255,0.9); }
-  .btn { padding: 9px 18px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 500; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; }
-  .btn-primary { background: var(--primary); color: #fff; }
-  .btn-primary:hover { background: var(--primary2); }
-  .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
-  .btn-outline:hover { background: var(--primary); color: #fff; }
-  .btn-ghost { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
-  .btn-ghost:hover { background: var(--border); }
-  .btn-sm { padding: 6px 12px; font-size: 12px; }
-  .btn-danger { background: var(--red); color: #fff; }
-  .btn-success { background: var(--green); color: #fff; }
-  .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; }
-  .card-header { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .card-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; }
-  table { width: 100%; border-collapse: collapse; }
-  th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; background: var(--surface2); border-bottom: 1px solid var(--border); }
-  td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); color: var(--text); }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: var(--surface2); }
-  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-  .badge-green { background: var(--green-light); color: var(--green); }
-  .badge-red { background: var(--red-light); color: var(--red); }
-  .badge-yellow { background: #FEF9E7; color: #B7770D; }
-  .badge-blue { background: #EBF5FB; color: #1A5276; }
-  .badge-gray { background: #F0F0F0; color: #555; }
-  .form-grid { display: grid; gap: 14px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .form-group { display: flex; flex-direction: column; gap: 5px; }
-  .form-group label { font-size: 12px; font-weight: 600; color: var(--text2); }
-  .form-group input, .form-group select, .form-group textarea { padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-family: 'Lato', sans-serif; font-size: 13px; color: var(--text); background: var(--surface); transition: border 0.15s; outline: none; }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal { background: var(--surface); border-radius: var(--radius); padding: 28px; width: 560px; max-width: 95vw; max-height: 90vh; overflow-y: auto; transform: translateY(10px); transition: transform 0.2s; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-  .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; }
-  .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text3); padding: 4px 8px; border-radius: 6px; }
-  .modal-close:hover { background: var(--surface2); }
-  .modal-footer { margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end; }
-  .page { display: none; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ====== TOP BAR ====== */
+  .top-bar {
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(123,45,78,0.07);
+  }
+  .top-bar .brand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--wine);
+    letter-spacing: 0.5px;
+  }
+  .top-bar .menu-btn {
+    background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .menu-btn span {
+    display: block; width: 22px; height: 2px;
+    background: var(--wine); border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .top-bar .help-btn {
+    background: none; border: none; cursor: pointer;
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--border);
+    color: var(--text-soft); font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ====== SIDEBAR ====== */
+  .sidebar-overlay {
+    position: fixed; inset: 0; background: rgba(58,32,48,0.4);
+    z-index: 200; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .sidebar-overlay.open { opacity: 1; pointer-events: all; }
+
+  .sidebar {
+    position: fixed; left: -280px; top: 0; bottom: 0;
+    width: 280px; background: var(--white);
+    z-index: 201; transition: left 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    display: flex; flex-direction: column;
+  }
+  .sidebar.open { left: 0; }
+
+  .sidebar-header {
+    padding: 28px 22px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-header .brand-big {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    color: var(--wine);
+  }
+  .sidebar-header .brand-big span { color: var(--pink); }
+
+  .sidebar nav { flex: 1; overflow-y: auto; padding: 10px 0; }
+  .nav-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 13px 22px; cursor: pointer;
+    color: var(--text); font-size: 0.95rem; font-weight: 500;
+    transition: background 0.15s;
+    border: none; background: none; width: 100%; text-align: left;
+  }
+  .nav-item:hover, .nav-item.active {
+    background: linear-gradient(90deg, #fce8f2 0%, transparent 100%);
+    color: var(--wine);
+  }
+  .nav-item .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+  .nav-item.danger { color: var(--danger); }
+  .nav-item.danger:hover { background: #fff0f0; }
+
+  /* ====== PAGES ====== */
+  .page { display: none; padding: 0 0 90px; min-height: calc(100vh - 60px); }
   .page.active { display: block; }
-  .progress-bar { height: 6px; background: var(--border); border-radius: 10px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 10px; transition: width 0.3s; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  .alert { padding: 12px 16px; border-radius: var(--radius-sm); font-size: 13px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
-  .alert-warning { background: #FEF9E7; border: 1px solid #F0C040; color: #7D6608; }
-  .alert-danger { background: var(--red-light); border: 1px solid #E74C3C; color: var(--red); }
-  .sep { height: 1px; background: var(--border); margin: 20px 0; }
-  .ingredient-row { display: grid; grid-template-columns: 1fr 100px 70px 80px auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
-  .ingredient-row:last-child { border-bottom: none; }
-  .notif-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
-  .notif-item:hover { background: var(--surface2); }
-  .notif-item.unread { background: #FDF0F6; }
-  .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); margin-top: 5px; flex-shrink: 0; }
-  .notif-dot.read { background: var(--border); }
-  .cf-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
-  .cf-item:last-child { border-bottom: none; }
-  .cf-positive { color: var(--green); font-weight: 600; }
-  .cf-negative { color: var(--red); font-weight: 600; }
-  ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-  /* ── MOBILE ── */
-  @media (max-width: 768px) {
-    .sidebar { display: none; }
-    .main { margin-left: 0 !important; padding-bottom: 80px; }
-    .content { padding: 12px; }
-    .topbar { padding: 10px 14px; }
-    .topbar h2 { font-size: 17px; }
-    .topbar-actions span { display: none; }
-    .topbar h2 { font-size: 16px; }
-
-    /* Stats: 2 columns */
-    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .stat-card { padding: 14px; }
-    .stat-value { font-size: 18px; }
-
-    /* Grids stack */
-    .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
-
-    /* Tables scroll horizontally */
-    .card { overflow: visible; }
-    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    table { min-width: 500px; }
-    th, td { padding: 8px 10px; font-size: 12px; white-space: nowrap; }
-
-    /* Forms full width */
-    .form-row { grid-template-columns: 1fr; gap: 10px; }
-    .ingredient-row { grid-template-columns: 1fr 80px 40px auto auto; gap: 6px; }
-
-    /* Modals full screen */
-    .modal { width: 100vw !important; max-width: 100vw !important; max-height: 92vh;
-      border-radius: 20px 20px 0 0; margin: auto 0 0 0; }
-    .modal-overlay { align-items: flex-end; }
-
-    /* Cards padding */
-    .card-header { padding: 14px 16px; }
-    .card-header .card-title { font-size: 15px; }
-
-    /* Buttons */
-    .btn { padding: 8px 14px; font-size: 13px; }
-    .btn-sm { padding: 5px 10px; font-size: 11px; }
-
-    /* Sim result */
-    .sim-result .big { font-size: 28px; }
-    .sim-row { grid-template-columns: 1fr 1fr; gap: 10px; }
-
-    /* ── BOTTOM NAV BAR ── */
-    .mobile-nav {
-      display: flex;
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: var(--primary);
-      z-index: 300;
-      box-shadow: 0 -2px 20px rgba(125,61,86,0.3);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
-    .mobile-nav-item {
-      flex: 1; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; padding: 8px 2px 10px;
-      cursor: pointer; color: rgba(255,255,255,0.5);
-      font-size: 9.5px; font-weight: 500; gap: 4px;
-      transition: color 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .mobile-nav-item .mni {
-      width: 22px; height: 22px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .mobile-nav-item .mni svg { width: 22px; height: 22px; display: block; }
-    .mobile-nav-item.active { color: #fff; }
-    .mobile-nav-item.active .mni svg { filter: drop-shadow(0 0 3px rgba(232,96,154,0.8)); }
-
-    /* ── MORE DRAWER ── */
-    .mobile-more-drawer {
-      display: none;
-      position: fixed; bottom: 62px; left: 0; right: 0;
-      background: #6B2A47;
-      z-index: 299;
-      padding: 16px 10px 12px;
-      border-radius: 20px 20px 0 0;
-      box-shadow: 0 -4px 30px rgba(58,31,46,0.4);
-    }
-    .mobile-more-drawer.open { display: block; }
-    .mobile-drawer-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
-    }
-    .mobile-drawer-item {
-      display: flex; flex-direction: column; align-items: center;
-      padding: 12px 4px 10px; cursor: pointer;
-      color: rgba(255,255,255,0.85); font-size: 10px; font-weight: 500; gap: 6px;
-      border-radius: 12px; transition: background 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .mobile-drawer-item:active { background: rgba(255,255,255,0.12); }
-    .mobile-drawer-item .mdi {
-      width: 26px; height: 26px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .mobile-drawer-item .mdi svg { width: 24px; height: 24px; display: block; }
-    .drawer-overlay {
-      display: none; position: fixed; inset: 0; z-index: 298;
-      background: rgba(58,31,46,0.4);
-    }
-    .drawer-overlay.open { display: block; }
+  /* ====== HOME PAGE ====== */
+  .home-welcome {
+    background: linear-gradient(135deg, var(--wine) 0%, var(--wine-light) 100%);
+    padding: 24px 20px 28px;
+    color: white;
   }
-  @media (max-width: 768px) { .hide-mobile { display:none!important; } }
-  @media (min-width: 769px) {
-    .mobile-nav, .mobile-more-drawer, .drawer-overlay { display: none !important; }
+  .home-welcome .greeting {
+    font-size: 0.85rem; opacity: 0.85; margin-bottom: 4px;
   }
-  .stock-level { display: flex; align-items: center; gap: 8px; }
-  .sim-result { background: linear-gradient(135deg, var(--primary), #E8609A); border-radius: var(--radius); padding: 24px; color: #fff; text-align: center; }
-  .sim-result .big { font-size: 36px; font-weight: 700; font-family: 'Cormorant Garamond', serif; }
-  .sim-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
-  .sim-box { background: rgba(255,255,255,0.15); border-radius: var(--radius-sm); padding: 12px; }
-  .sim-box .label { font-size: 11px; opacity: 0.8; }
-  .sim-box .val { font-size: 18px; font-weight: 700; margin-top: 2px; }
-  .input-prefix { position: relative; }
-  .input-prefix span { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 13px; pointer-events: none; }
-  .input-prefix input { padding-left: 28px; }
-  .tag { display: inline-block; padding: 2px 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; font-size: 11px; color: var(--text2); margin: 2px; }
-  .empty-state { text-align: center; padding: 40px; color: var(--text3); }
-  .empty-state .empty-icon { font-size: 36px; margin-bottom: 10px; }
-  .empty-state p { font-size: 13px; }
-  .chart-bar-wrap { display: flex; align-items: flex-end; gap: 4px; }
-  .chart-bar { flex: 1; border-radius: 4px 4px 0 0; background: var(--primary-light); position: relative; cursor: pointer; transition: opacity 0.15s; min-width: 20px; }
-  .chart-bar:hover { opacity: 0.8; }
-  .chart-bar .tip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px; white-space: nowrap; display: none; }
-  .chart-bar:hover .tip { display: block; }
+  .home-welcome h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; margin-bottom: 6px;
+  }
+  .home-welcome h1 span { color: #f8bdd0; }
+  .home-welcome .subtitle { font-size: 0.82rem; opacity: 0.75; }
+
+  .home-stats-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px; padding: 18px 16px 0;
+  }
+  .stat-card {
+    background: var(--white); border-radius: 14px;
+    padding: 14px 10px; text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .stat-card .stat-num {
+    font-size: 1.4rem; font-weight: 700; color: var(--wine);
+    font-family: 'Playfair Display', serif;
+  }
+  .stat-card .stat-label {
+    font-size: 0.7rem; color: var(--text-soft); margin-top: 3px;
+  }
+
+  .section-cards { padding: 14px 16px 0; display: flex; flex-direction: column; gap: 13px; }
+
+  .home-card {
+    background: var(--white); border-radius: 16px;
+    padding: 18px; box-shadow: var(--shadow);
+  }
+  .home-card .card-title {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 1rem; color: var(--wine);
+    margin-bottom: 8px;
+  }
+  .home-card .card-title .icon { font-size: 1.15rem; }
+  .home-card p { font-size: 0.83rem; color: var(--text-soft); line-height: 1.5; }
+  .home-card .card-link {
+    display: inline-block; margin-top: 10px;
+    font-size: 0.78rem; font-weight: 700;
+    color: var(--wine); text-transform: uppercase;
+    letter-spacing: 0.5px; cursor: pointer;
+    border: none; background: none; padding: 0;
+  }
+
+  .share-url {
+    font-size: 0.82rem; color: var(--wine-light);
+    font-weight: 600; margin: 6px 0 10px;
+  }
+  .share-btns { display: flex; gap: 8px; }
+  .share-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--wine); color: white;
+    border: none; cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .share-btn:hover { transform: scale(1.08); background: var(--pink); }
+
+  /* ====== RECEITAS PAGE ====== */
+  .list-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px 6px;
+    position: relative;
+  }
+  .search-box {
+    flex: 1; background: var(--white); border: 1px solid var(--border);
+    border-radius: 20px; padding: 8px 14px 8px 36px;
+    font-size: 0.88rem; color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+  }
+  .search-wrap { flex: 1; position: relative; }
+  .search-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    color: var(--text-soft); font-size: 0.9rem; pointer-events: none;
+  }
+
+  .recipe-list { padding: 8px 16px; display: flex; flex-direction: column; gap: 0; }
+  .recipe-item {
+    background: var(--white); border-radius: 0; padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative;
+  }
+  .recipe-item:first-child { border-top: 1px solid var(--border); }
+  .recipe-info .recipe-name { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+  .recipe-info .recipe-meta {
+    font-size: 0.78rem; color: var(--text-soft); margin-top: 2px;
+  }
+  .recipe-info .recipe-price {
+    font-size: 0.83rem; color: var(--wine); font-weight: 600; margin-top: 1px;
+  }
+  .warn-icon { color: var(--warning); font-size: 0.75rem; }
+
+  .more-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-soft); padding: 4px 8px; font-size: 1.1rem;
+  }
+
+  .dropdown-menu {
+    position: absolute; right: 0; top: 36px;
+    background: var(--white); border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    z-index: 50; min-width: 160px; overflow: hidden;
+    animation: fadeIn 0.15s ease;
+  }
+  .dropdown-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 16px; font-size: 0.88rem; cursor: pointer;
+    transition: background 0.12s; border: none; background: none;
+    width: 100%; color: var(--text); font-family: 'Nunito', sans-serif;
+  }
+  .dropdown-item:hover { background: #fce8f2; }
+  .dropdown-item.danger { color: var(--danger); }
+  .dropdown-item.danger:hover { background: #fff0f0; }
+
+  @keyframes fadeIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: translateY(0); } }
+
+  /* ====== FAB ====== */
+  .fab {
+    position: fixed; bottom: 24px; right: 50%;
+    transform: translateX(50%);
+    background: linear-gradient(135deg, var(--pink), var(--wine));
+    color: white; border: none; border-radius: 24px;
+    padding: 13px 22px; font-size: 0.9rem; font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer; box-shadow: 0 4px 18px rgba(123,45,78,0.35);
+    display: flex; align-items: center; gap: 8px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    z-index: 150;
+  }
+  .fab:hover { transform: translateX(50%) scale(1.04); box-shadow: 0 6px 22px rgba(123,45,78,0.4); }
+  .fab.hidden { display: none; }
+
+  /* ====== INGREDIENTES PAGE ====== */
+  .ingredient-item {
+    background: var(--white); padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ingredient-item:first-child { border-top: 1px solid var(--border); }
+  .ing-name { font-weight: 600; font-size: 0.92rem; }
+  .ing-price { font-size: 0.82rem; color: var(--wine); font-weight: 600; }
+  .ing-qty { font-size: 0.78rem; color: var(--text-soft); text-align: right; }
+
+  /* ====== PRECIFICAÇÃO PAGE ====== */
+  .pricing-header {
+    padding: 20px 16px 10px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+  }
+  .back-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--wine); font-size: 1.1rem; padding: 2px;
+  }
+  .pricing-header h2 { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+
+  .recipe-hero { text-align: center; padding: 22px 16px 14px; }
+  .recipe-thumb {
+    width: 100px; height: 100px; border-radius: 16px;
+    object-fit: cover; box-shadow: var(--shadow);
+    background: #fce8f2; display: flex; align-items: center;
+    justify-content: center; font-size: 2.5rem; margin: 0 auto 12px;
+  }
+  .recipe-hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: var(--text);
+  }
+
+  .etapa-block { padding: 0 16px 8px; }
+  .etapa-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; color: var(--wine); padding: 14px 0 8px;
+    border-bottom: 1px solid var(--border); margin-bottom: 4px;
+  }
+  .etapa-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0; border-bottom: 1px solid #f0e8ec;
+  }
+  .etapa-row .ing-label { font-size: 0.88rem; }
+  .etapa-row .ing-label small { display: block; color: var(--text-soft); font-size: 0.76rem; }
+  .etapa-row .ing-val { font-size: 0.88rem; color: var(--wine); font-weight: 600; }
+  .subtotal-row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; font-weight: 700;
+    border-top: 1.5px solid var(--border); margin-top: 4px;
+  }
+
+  .custo-block {
+    background: var(--white); margin: 12px 16px;
+    border-radius: 16px; padding: 18px; box-shadow: var(--shadow);
+  }
+  .custo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; text-align: center; margin-bottom: 14px; color: var(--text);
+  }
+  .custo-row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px solid #f0e8ec;
+    font-size: 0.9rem;
+  }
+  .custo-row.total {
+    font-weight: 700; font-size: 1rem; border-bottom: none;
+    border-top: 1.5px solid var(--border); margin-top: 4px; padding-top: 12px;
+  }
+  .custo-row .val { font-weight: 600; color: var(--wine); }
+
+  .custo-info {
+    font-size: 0.78rem; text-align: center; color: var(--text-soft);
+    margin: 10px 0 6px;
+  }
+  .fatia-row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; font-size: 0.9rem;
+  }
+  .fatia-row .val { font-weight: 600; color: var(--wine); }
+  .fatia-row.bold { font-weight: 700; font-size: 1rem; }
+  .fatia-row.bold .val { color: var(--pink); }
+
+  .checkbox-row {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.82rem; color: var(--text-soft); margin-top: 8px;
+  }
+  .checkbox-row input { accent-color: var(--wine); width: 16px; height: 16px; }
+
+  .ajuste-block {
+    background: var(--white); margin: 0 16px 16px;
+    border-radius: 16px; padding: 18px; box-shadow: var(--shadow);
+  }
+  .ajuste-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; text-align: center; margin-bottom: 8px;
+  }
+  .ajuste-desc {
+    font-size: 0.78rem; color: var(--text-soft); text-align: center; margin-bottom: 16px;
+  }
+  .lucro-slider {
+    width: 100%; accent-color: var(--wine);
+    height: 4px; cursor: pointer; margin-bottom: 14px;
+  }
+  .lucro-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.9rem; padding: 6px 0;
+  }
+  .lucro-row .val { font-weight: 700; color: var(--wine); }
+  .lucro-row.pink .val { color: var(--pink); font-size: 1rem; }
+
+  .price-input-wrap { margin: 12px 0 6px; }
+  .price-input-wrap label {
+    font-size: 0.78rem; color: var(--text-soft);
+    display: block; margin-bottom: 6px;
+  }
+  .price-input {
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--border); border-radius: 12px;
+    font-size: 1rem; font-family: 'Nunito', sans-serif;
+    color: var(--text); outline: none;
+    transition: border-color 0.2s;
+  }
+  .price-input:focus { border-color: var(--pink); }
+
+  .save-btn {
+    width: 100%; background: linear-gradient(135deg, var(--pink), var(--wine));
+    color: white; border: none; border-radius: 12px;
+    padding: 13px; font-size: 0.95rem; font-weight: 700;
+    font-family: 'Nunito', sans-serif; cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+  }
+  .save-btn:hover { opacity: 0.92; }
+
+  /* ====== EDITAR RECEITA ====== */
+  .form-page { padding: 16px 16px 90px; }
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    font-size: 0.78rem; color: var(--text-soft);
+    display: block; margin-bottom: 5px; font-weight: 600;
+  }
+  .form-input, .form-select {
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--border); border-radius: 12px;
+    font-size: 0.92rem; font-family: 'Nunito', sans-serif;
+    color: var(--text); outline: none; background: var(--white);
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--pink); }
+
+  .photo-area {
+    display: flex; flex-direction: column; align-items: center;
+    margin-bottom: 20px;
+  }
+  .photo-thumb {
+    width: 110px; height: 110px; border-radius: 16px;
+    background: #fce8f2; display: flex; align-items: center;
+    justify-content: center; font-size: 2.5rem; margin-bottom: 10px;
+    box-shadow: var(--shadow); border: 2px dashed var(--pink);
+  }
+  .photo-btns { display: flex; gap: 12px; }
+  .photo-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--wine); color: white; border: none;
+    cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .checkbox-label {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88rem; cursor: pointer;
+  }
+  .checkbox-label input { accent-color: var(--wine); width: 16px; height: 16px; }
+
+  /* ====== NUTRICIONAL ====== */
+  .nutri-header-block {
+    text-align: center; padding: 22px 16px 10px;
+  }
+  .nutri-header-block h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem;
+  }
+  .nutri-desc {
+    font-size: 0.78rem; color: var(--text-soft);
+    line-height: 1.5; margin: 8px 0 14px; text-align: center;
+    padding: 0 10px;
+  }
+
+  .nutri-table {
+    margin: 0 16px 16px; background: var(--white);
+    border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  .nutri-table-header {
+    background: var(--wine); color: white;
+    text-align: center; padding: 12px; font-weight: 700; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .nutri-table-sub {
+    text-align: center; padding: 8px; font-size: 0.85rem;
+    border-bottom: 1.5px solid var(--wine); background: #f8f0f4;
+    font-weight: 600;
+  }
+  .nutri-row {
+    display: flex; justify-content: space-between;
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .nutri-row .val { font-weight: 600; color: var(--wine); }
+  .nutri-footer {
+    text-align: center; padding: 10px; font-size: 0.75rem;
+    color: var(--text-soft); background: #f8f0f4;
+  }
+
+  .dl-btn {
+    display: block; width: calc(100% - 32px); margin: 0 16px 16px;
+    background: var(--white); color: var(--wine);
+    border: 2px solid var(--wine); border-radius: 12px;
+    padding: 13px; font-size: 0.92rem; font-weight: 700;
+    font-family: 'Nunito', sans-serif; cursor: pointer; text-align: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .dl-btn:hover { background: var(--wine); color: white; }
+
+  /* ====== CLIENTES ====== */
+  .client-item {
+    background: var(--white); padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .client-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--wine));
+    color: white; font-weight: 700; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .client-info { flex: 1; margin-left: 12px; }
+  .client-name { font-weight: 600; font-size: 0.92rem; }
+  .client-meta { font-size: 0.78rem; color: var(--text-soft); }
+
+  /* ====== ESTATÍSTICAS ====== */
+  .stats-section { padding: 16px; }
+  .stats-card {
+    background: var(--white); border-radius: 16px;
+    padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow);
+  }
+  .stats-card h3 { font-size: 0.88rem; color: var(--text-soft); margin-bottom: 8px; }
+  .stats-card .big-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: var(--wine); font-weight: 700;
+  }
+  .stats-card .big-sub { font-size: 0.78rem; color: var(--text-soft); }
+  .progress-bar {
+    height: 8px; background: var(--border); border-radius: 10px;
+    margin: 10px 0 4px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, var(--pink), var(--wine));
+    transition: width 0.5s ease;
+  }
+  .top-recipe { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .top-recipe:last-child { border-bottom: none; }
+  .top-recipe .name { font-size: 0.88rem; font-weight: 600; }
+  .top-recipe .profit { font-size: 0.88rem; color: var(--pink); font-weight: 700; }
+
+  /* ====== MODAL ====== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(58,32,48,0.5);
+    z-index: 300; display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--white); border-radius: 20px 20px 0 0;
+    width: 100%; max-width: 430px; padding: 24px 20px 34px;
+    transform: translateY(100%); transition: transform 0.3s ease;
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.15);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal h3 { font-size: 1.1rem; margin-bottom: 18px; color: var(--wine); }
+  .modal-btns { display: flex; gap: 10px; margin-top: 18px; }
+  .modal-btn {
+    flex: 1; padding: 12px; border-radius: 12px; border: none;
+    font-size: 0.9rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .modal-btn.cancel { background: var(--border); color: var(--text); }
+  .modal-btn.confirm { background: linear-gradient(135deg, var(--pink), var(--wine)); color: white; }
+
+  /* ====== TOAST ====== */
+  .toast {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--wine); color: white; padding: 10px 22px;
+    border-radius: 24px; font-size: 0.88rem; font-weight: 600;
+    z-index: 500; opacity: 0; transition: all 0.3s;
+    pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ====== NAV BAR ====== */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    background: var(--white); border-top: 1px solid var(--border);
+    display: flex; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(123,45,78,0.08);
+  }
+  .bnav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 8px 0 10px; cursor: pointer; border: none; background: none;
+    color: var(--text-soft); font-size: 0.62rem; font-family: 'Nunito', sans-serif;
+    font-weight: 600; gap: 3px; transition: color 0.15s;
+  }
+  .bnav-item.active { color: var(--wine); }
+  .bnav-item .bicon { font-size: 1.3rem; }
+
+  /* ====== SECTION TITLE ====== */
+  .section-title {
+    padding: 18px 16px 6px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; color: var(--wine);
+  }
+
+  /* Utility */
+  .badge {
+    display: inline-block; background: #fce8f2;
+    color: var(--wine); font-size: 0.68rem; font-weight: 700;
+    border-radius: 20px; padding: 2px 8px; margin-left: 6px;
+  }
+
+  .page-header-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px 6px;
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+  }
+  .page-header-bar h2 { font-size: 1.02rem; font-weight: 700; }
 </style>
 </head>
 <body>
-<aside class="sidebar">
-  <div class="sidebar-logo" style="padding:16px 12px 14px;text-align:center">
-  <img src="data:image/png;base64,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" alt="Sweet Olivia" style="width:150px;max-width:100%;filter:brightness(0) invert(1);opacity:0.92">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <button class="menu-btn" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="brand" id="topBarTitle"><em>Sweet Olivia</em></div>
+  <button class="help-btn">?</button>
 </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section">Principal</div>
-    <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 17V13M12 17V7M16 17v-5"/></svg></span><span>Dashboard</span></div>
-    <div class="nav-section">Cardápio</div>
-    <div class="nav-item" onclick="showPage('ingredientes')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 5 7 5 12a7 7 0 0014 0c0-5-3-10-7-10z"/></svg></span><span>Ingredientes</span></div>
-    <div class="nav-item" onclick="showPage('receitas')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span><span>Receitas</span></div>
-    <div class="nav-item" onclick="showPage('simulador')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="11" r="1" fill="currentColor"/><circle cx="16" cy="11" r="1" fill="currentColor"/><circle cx="8" cy="15" r="1" fill="currentColor"/><circle cx="12" cy="15" r="1" fill="currentColor"/><circle cx="16" cy="15" r="1" fill="currentColor"/><circle cx="8" cy="19" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></span><span>Simulador</span></div>
-    <div class="nav-section">Operação</div>
-    <div class="nav-item" onclick="showPage('pedidos')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.66a2 2 0 001.97-1.67L23 6H6"/></svg></span><span>Pedidos</span><span class="nav-badge" id="badge-pedidos">0</span></div>
-    <div class="nav-item" onclick="showPage('producao')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13.87A4 4 0 017.41 6a5.11 5.11 0 019.18 0A4 4 0 0118 13.87V21H6z"/><line x1="6" y1="17" x2="18" y2="17"/></svg></span><span>Produção</span></div>
-    <div class="nav-item" onclick="showPage('estoque')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span>Estoque</span><span class="nav-badge" id="badge-estoque" style="background:#C0392B;display:none">0</span></div>
-    <div class="nav-item" onclick="showPage('compras')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span><span>Lista de Compras</span></div>
-    <div class="nav-section">Financeiro</div>
-    <div class="nav-item" onclick="showPage('caixa')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span><span>Fluxo de Caixa</span></div>
-    <div class="nav-item" onclick="showPage('relatorios')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span><span>Relatórios</span></div>
-    <div class="nav-item" onclick="showPage('historico')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span><span>Histórico de Preços</span></div>
-    <div class="nav-section">Sistema</div>
-    <div class="nav-item" onclick="showPage('notificacoes')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></span><span>Notificações</span><span class="nav-badge" id="badge-notif">0</span></div>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="brand-big">Sweet <span>Olivia</span></div>
+    <div style="font-size:0.75rem;color:var(--text-soft);margin-top:2px;">Doces Gourmet</div>
+  </div>
+  <nav>
+    <button class="nav-item active" onclick="navigate('home')"><span class="nav-icon">🏠</span> Início</button>
+    <button class="nav-item" onclick="navigate('stats')"><span class="nav-icon">📊</span> Estatísticas</button>
+    <button class="nav-item" onclick="navigate('perfil')"><span class="nav-icon">👤</span> Meu Perfil</button>
+    <button class="nav-item" onclick="navigate('cardapio')"><span class="nav-icon">📋</span> Cardápio Digital</button>
+    <button class="nav-item" onclick="navigate('receitas')"><span class="nav-icon">📝</span> Receitas</button>
+    <button class="nav-item" onclick="navigate('ingredientes')"><span class="nav-icon">🧂</span> Ingredientes e Insumos</button>
+    <button class="nav-item" onclick="navigate('eletro')"><span class="nav-icon">🔌</span> Eletrodomésticos</button>
+    <button class="nav-item" onclick="navigate('clientes')"><span class="nav-icon">👥</span> Clientes</button>
+    <button class="nav-item" onclick="navigate('senha')"><span class="nav-icon">🔑</span> Alterar Senha</button>
+    <button class="nav-item" onclick="navigate('planos')"><span class="nav-icon">💳</span> Planos de Assinatura</button>
+    <button class="nav-item" onclick="navigate('aprender')"><span class="nav-icon">🎓</span> Aprenda a Usar</button>
+    <button class="nav-item" onclick="navigate('suporte')"><span class="nav-icon">💬</span> Suporte</button>
+    <button class="nav-item danger" onclick="closeSidebar()"><span class="nav-icon">🚪</span> Sair</button>
   </nav>
-</aside>
+</div>
 
-<main class="main">
-  <div class="topbar">
-    <h2 id="page-title">Dashboard</h2>
-    <span id="save-indicator" style="position:fixed;top:12px;right:80px;background:#3A7D5A;color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;opacity:0;transition:opacity 0.4s;z-index:999;pointer-events:none">✓ Salvo</span>
-    <div class="topbar-actions">
-      <span style="font-size:11px;color:var(--text3);display:none" class="hide-mobile" id="today-date"></span>
-      <button class="btn btn-ghost btn-sm" onclick="exportData()">⬇ Backup</button>
+<!-- ===== PAGE: HOME ===== -->
+<div class="page active" id="page-home">
+  <div class="home-welcome">
+    <div class="greeting">Bem-vinda de volta! 🍬</div>
+    <h1>Olá, <span>Sweet Olivia!</span></h1>
+    <div class="subtitle">Gerencie sua doceria com facilidade</div>
+  </div>
+
+  <div class="home-stats-row">
+    <div class="stat-card">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Receitas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">47</div>
+      <div class="stat-label">Ingredientes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Clientes</div>
     </div>
   </div>
-  <div class="content">
 
-    <!-- DASHBOARD -->
-    <div class="page active" id="page-dashboard">
-      <div class="stats-grid">
-        <div class="stat-card highlight"><div class="stat-icon"><svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div class="stat-value" id="d-receita">R$ 0,00</div><div class="stat-label">Receita do Mês</div></div>
-        <div class="stat-card"><div class="stat-icon" style="color:var(--green)"><svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="stat-value" id="d-lucro" style="color:var(--green)">R$ 0,00</div><div class="stat-label">Lucro do Mês</div></div>
-        <div class="stat-card"><div class="stat-icon" style="color:var(--accent)"><svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.66a2 2 0 001.97-1.67L23 6H6"/></svg></div><div class="stat-value" id="d-pedidos">0</div><div class="stat-label">Pedidos Ativos</div></div>
-        <div class="stat-card"><div class="stat-icon" style="color:var(--primary)"><svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></div><div class="stat-value" id="d-receitas">0</div><div class="stat-label">Receitas Cadastradas</div></div>
-      </div>
-      <div class="grid-2" style="margin-bottom:16px">
-        <div class="card"><div class="card-header"><span class="card-title">🛒 Pedidos Ativos</span><button class="btn btn-primary btn-sm" onclick="showPage('pedidos')">Ver todos</button></div><div id="dash-pedidos-list"><div class="empty-state"><div class="empty-icon">🛒</div><p>Nenhum pedido</p></div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">⚠️ Alertas de Estoque</span></div><div id="dash-estoque-alerts"><div class="empty-state"><div class="empty-icon">✅</div><p>Estoque OK</p></div></div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card"><div class="card-header"><span class="card-title">💵 Desempenho Financeiro</span></div><div style="padding:20px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--text3)">Meta Mensal</span><span id="dash-meta-pct" style="font-size:12px;font-weight:700">0%</span></div>
-          <div class="progress-bar" style="height:10px;margin-bottom:16px"><div class="progress-fill" id="dash-meta-bar" style="width:0%;background:var(--primary)"></div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
-            <div><div style="font-size:11px;color:var(--text3)">Receita</div><div id="dash-r2" style="font-weight:700;font-size:15px">R$ 0</div></div>
-            <div><div style="font-size:11px;color:var(--text3)">Custos</div><div id="dash-c2" style="font-weight:700;font-size:15px;color:var(--red)">R$ 0</div></div>
-            <div><div style="font-size:11px;color:var(--text3)">Margem</div><div id="dash-m2" style="font-weight:700;font-size:15px;color:var(--green)">0%</div></div>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-header"><span class="card-title">🏆 Receitas + Lucrativas</span></div><div id="dash-top-receitas"><div class="empty-state"><div class="empty-icon">📋</div><p>Cadastre receitas</p></div></div></div>
-      </div>
+  <div class="section-cards">
+    <div class="home-card">
+      <div class="card-title"><span class="icon">📊</span> Estatísticas</div>
+      <p>Veja estatísticas sobre suas receitas! Conheça os produtos com maiores margens de lucro, menores custos e maiores contribuições na sua receita financeira.</p>
+      <button class="card-link" onclick="navigate('stats')">VER ESTATÍSTICAS</button>
     </div>
 
-    <!-- INGREDIENTES -->
-    <div class="page" id="page-ingredientes">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Ingredientes</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Custo por unidade calculado automaticamente</p></div>
-        <button class="btn btn-primary" onclick="openModal('modal-ingrediente')">+ Novo Ingrediente</button>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Lista de Ingredientes</span><input type="text" placeholder="Buscar..." style="padding:6px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none;width:200px" oninput="renderIngredientes(this.value)"></div>
-        <div class="table-wrap"><table><thead><tr><th>Nome</th><th>Categoria</th><th>Embalagem</th><th>Preço Compra</th><th>Custo/Un</th><th>Estoque</th><th>Ações</th></tr></thead><tbody id="ingredientes-tbody"><tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🥚</div><p>Nenhum ingrediente</p></div></td></tr></tbody></table>
-</div></div>
+    <div class="home-card">
+      <div class="card-title"><span class="icon">👤</span> Meu Perfil</div>
+      <p>Use o menu lateral para acessar as outras partes do app e gerenciar seus dados.</p>
+      <button class="card-link" onclick="navigate('perfil')">AJUSTAR PERFIL</button>
     </div>
 
-    <!-- RECEITAS -->
-    <div class="page" id="page-receitas">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Receitas</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Custo e preço calculados automaticamente</p></div>
-        <button class="btn btn-primary" onclick="openModal('modal-receita')">+ Nova Receita</button>
+    <div class="home-card">
+      <div class="card-title"><span class="icon">📋</span> Cardápio Digital</div>
+      <p>Compartilhe seu cardápio nas redes sociais:</p>
+      <div class="share-url">sweetolivia.com/menu/doceria</div>
+      <div class="share-btns">
+        <button class="share-btn" onclick="showToast('Link copiado!')">📋</button>
+        <button class="share-btn" onclick="showToast('Compartilhado!')">↗️</button>
       </div>
-      <div class="card">
-<div class="table-wrap"><table><thead><tr><th>Receita</th><th>Categoria</th><th>Rendimento</th><th>Custo Total</th><th>Custo/Un</th><th>Preço Venda</th><th>Margem</th><th>Ações</th></tr></thead><tbody id="receitas-tbody"><tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><p>Nenhuma receita</p></div></td></tr></tbody></table>
-</div></div>
+      <p style="margin-top:10px;">Use os botões para compartilhar seu cardápio nas redes sociais.</p>
     </div>
 
-    <!-- SIMULADOR -->
-    <div class="page" id="page-simulador">
-      <div style="margin-bottom:20px"><h3 style="font-family:'Playfair Display',serif;font-size:17px">Simulador de Precificação</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Calcule o preço ideal com taxas e margem</p></div>
-      <div class="grid-2">
-        <div class="card" style="padding:24px">
-          <h4 style="font-size:15px;font-weight:600;margin-bottom:16px">Parâmetros</h4>
-          <div class="form-grid">
-            <div class="form-group"><label>Receita base (opcional)</label><select id="sim-receita" onchange="simPreencherReceita()"><option value="">— Calcular manualmente —</option></select></div>
-            <div class="form-row">
-              <div class="form-group"><label>Custo do Produto (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="sim-custo" value="0" step="0.01" oninput="calcSimulador()"></div></div>
-              <div class="form-group"><label>Custos Fixos Rateados (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="sim-fixo" value="0" step="0.01" oninput="calcSimulador()"></div></div>
-            </div>
-            <div class="form-row">
-              <div class="form-group"><label>Taxa Cartão (%)</label><input type="number" id="sim-cartao" value="0" step="0.1" oninput="calcSimulador()"></div>
-              <div class="form-group"><label>Taxa Marketplace (%)</label><input type="number" id="sim-market" value="0" step="0.1" oninput="calcSimulador()"></div>
-            </div>
-            <div class="form-group">
-              <label>Margem de Lucro: <span id="sim-margem-val" style="color:var(--primary);font-weight:700">40%</span></label>
-              <input type="range" id="sim-margem" min="0" max="100" value="40" oninput="document.getElementById('sim-margem-val').textContent=this.value+'%';calcSimulador()">
-            </div>
-            <div class="form-group"><label>Quantidade (unidades)</label><input type="number" id="sim-qtd" value="1" min="1" oninput="calcSimulador()"></div>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:16px">
-          <div class="sim-result">
-            <div style="font-size:13px;opacity:0.8;margin-bottom:4px">Preço de Venda Ideal / unidade</div>
-            <div class="big" id="sim-preco">R$ 0,00</div>
-            <div class="sim-row">
-              <div class="sim-box"><div class="label">Custo Total</div><div class="val" id="sim-total">R$ 0,00</div></div>
-              <div class="sim-box"><div class="label">Lucro / Un.</div><div class="val" id="sim-lucro-un">R$ 0,00</div></div>
-            </div>
-          </div>
-          <div class="card" style="padding:20px"><h4 style="font-size:14px;font-weight:600;margin-bottom:14px">Cenários de Margem</h4><div id="sim-cenarios"></div></div>
-          <div class="card" style="padding:20px"><h4 style="font-size:14px;font-weight:600;margin-bottom:10px">Ponto de Equilíbrio</h4><div id="sim-equilibrio" style="font-size:13px;color:var(--text2)">Preencha os campos</div></div>
-        </div>
-      </div>
+    <div class="home-card" style="border-left:4px solid var(--pink);">
+      <div class="card-title"><span class="icon">⚠️</span> Ingredientes desatualizados</div>
+      <p>Alguns ingredientes estão com preços desatualizados. Atualize para garantir preços corretos nas suas receitas.</p>
+      <button class="card-link" onclick="navigate('ingredientes')">ATUALIZAR AGORA</button>
     </div>
-
-    <!-- PEDIDOS -->
-    <div class="page" id="page-pedidos">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Pedidos</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Gerencie seus pedidos</p></div>
-        <button class="btn btn-primary" onclick="openModal('modal-pedido')">+ Novo Pedido</button>
-      </div>
-      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-        <button class="btn btn-ghost btn-sm" onclick="filterPedidos('')">Todos</button>
-        <button class="btn btn-ghost btn-sm" onclick="filterPedidos('Pendente')">🟡 Pendentes</button>
-        <button class="btn btn-ghost btn-sm" onclick="filterPedidos('Em produção')">🟠 Em produção</button>
-        <button class="btn btn-ghost btn-sm" onclick="filterPedidos('Pronto')">🟢 Prontos</button>
-        <button class="btn btn-ghost btn-sm" onclick="filterPedidos('Entregue')">✅ Entregues</button>
-      </div>
-      <div class="card">
-<div class="table-wrap"><table><thead><tr><th>#</th><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Valor</th><th>Entrega</th><th>Status</th><th>Ações</th></tr></thead><tbody id="pedidos-tbody"><tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🛒</div><p>Nenhum pedido</p></div></td></tr></tbody></table>
-</div></div>
-    </div>
-
-    <!-- PRODUÇÃO -->
-    <div class="page" id="page-producao">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Fila de Produção</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Organize o que precisa ser produzido</p></div>
-        <button class="btn btn-primary" onclick="openModal('modal-producao')">+ Adicionar à Fila</button>
-      </div>
-      <div class="grid-2">
-        <div class="card"><div class="card-header"><span class="card-title">👩‍🍳 Para Produzir Hoje</span></div><div id="producao-hoje-list"><div class="empty-state"><div class="empty-icon">✅</div><p>Nada para hoje</p></div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">📅 Próximos Dias</span></div><div id="producao-prox-list"><div class="empty-state"><div class="empty-icon">📅</div><p>Sem agendamentos</p></div></div></div>
-      </div>
-    </div>
-
-    <!-- ESTOQUE -->
-    <div class="page" id="page-estoque">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Controle de Estoque</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Monitore seus ingredientes</p></div>
-        <button class="btn btn-primary" onclick="openModal('modal-estoque-mov')">+ Movimentação</button>
-      </div>
-      <div id="estoque-alerts" style="margin-bottom:16px"></div>
-      <div class="card">
-<div class="table-wrap"><table><thead><tr><th>Ingrediente</th><th>Estoque Atual</th><th>Mínimo</th><th>Nível</th><th>Última Mov.</th><th>Ações</th></tr></thead><tbody id="estoque-tbody"><tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📦</div><p>Cadastre ingredientes primeiro</p></div></td></tr></tbody></table>
-</div></div>
-    </div>
-
-    <!-- LISTA DE COMPRAS -->
-    <div class="page" id="page-compras">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Lista de Compras</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Gerada automaticamente pelo estoque baixo</p></div>
-        <div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="gerarListaCompras()">🔄 Gerar do Estoque</button><button class="btn btn-primary" onclick="openModal('modal-compra-item')">+ Item Manual</button></div>
-      </div>
-      <div class="grid-2">
-        <div class="card"><div class="card-header"><span class="card-title">🛍️ Itens para Comprar</span><span id="compras-total-badge" class="badge badge-yellow">R$ 0,00</span></div><div id="compras-list"><div class="empty-state"><div class="empty-icon">🛍️</div><p>Lista vazia</p></div></div></div>
-        <div class="card" style="padding:20px"><h4 style="font-size:15px;font-weight:600;margin-bottom:14px">Resumo</h4><div id="compras-resumo"><p style="font-size:13px;color:var(--text3)">Nenhum item</p></div></div>
-      </div>
-    </div>
-
-    <!-- FLUXO DE CAIXA -->
-    <div class="page" id="page-caixa">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Fluxo de Caixa</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Controle entradas e saídas</p></div>
-        <button class="btn btn-primary" onclick="openModal('modal-caixa')">+ Lançamento</button>
-      </div>
-      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div class="stat-icon" style="color:var(--green)">⬆️</div><div class="stat-value" id="cf-entradas" style="color:var(--green)">R$ 0,00</div><div class="stat-label">Entradas do Mês</div></div>
-        <div class="stat-card"><div class="stat-icon" style="color:var(--red)">⬇️</div><div class="stat-value" id="cf-saidas" style="color:var(--red)">R$ 0,00</div><div class="stat-label">Saídas do Mês</div></div>
-        <div class="stat-card highlight"><div class="stat-icon"><svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div class="stat-value" id="cf-saldo">R$ 0,00</div><div class="stat-label">Saldo Líquido</div></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Lançamentos</span><select id="cf-mes-filter" onchange="renderCaixa()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none"><option value="">Todos os meses</option></select></div>
-        <div id="caixa-list"><div class="empty-state"><div class="empty-icon">💵</div><p>Nenhum lançamento</p></div></div>
-      </div>
-    </div>
-
-    <!-- RELATÓRIOS -->
-    <div class="page" id="page-relatorios">
-      <div style="margin-bottom:20px"><h3 style="font-family:'Playfair Display',serif;font-size:17px">Relatórios</h3></div>
-      <div class="grid-3" style="margin-bottom:16px">
-        <div class="stat-card"><div class="stat-icon" style="color:var(--primary)">🎯</div><div class="stat-value" id="rel-ticket">R$ 0</div><div class="stat-label">Ticket Médio</div></div>
-        <div class="stat-card"><div class="stat-icon" style="color:var(--green)"><svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="stat-value" id="rel-margem">0%</div><div class="stat-label">Margem Média</div></div>
-        <div class="stat-card"><div class="stat-icon" style="color:var(--accent)">🏆</div><div class="stat-value" id="rel-best" style="font-size:16px">—</div><div class="stat-label">Produto + Lucrativo</div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card"><div class="card-header"><span class="card-title">🏆 Ranking de Receitas</span></div><div id="rel-ranking"><div class="empty-state"><div class="empty-icon">📋</div><p>Sem receitas</p></div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">📅 Pedidos por Mês</span></div><div style="padding:20px"><div id="rel-pedidos-chart" style="display:flex;align-items:flex-end;gap:4px;height:100px;margin-bottom:8px"></div><div id="rel-pedidos-labels" style="display:flex;gap:4px"></div></div></div>
-      </div>
-    </div>
-
-    <!-- HISTÓRICO -->
-    <div class="page" id="page-historico">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Histórico de Preços</h3><p style="font-size:12px;color:var(--text3);margin-top:2px">Acompanhe a evolução dos custos</p></div>
-        <button class="btn btn-primary" onclick="openModal('modal-historico')">+ Registrar Preço</button>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header"><span class="card-title">📉 Variação de Preço</span><select id="hist-ingrediente-sel" onchange="renderHistoricoChart()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none"><option value="">Selecione...</option></select></div>
-          <div style="padding:20px"><div id="hist-chart" style="display:flex;align-items:flex-end;gap:6px;height:100px;margin-bottom:8px"></div><div id="hist-labels" style="display:flex;gap:6px"></div></div>
-        </div>
-        <div class="card"><div class="card-header"><span class="card-title">Registros Recentes</span></div><div id="historico-list"><div class="empty-state"><div class="empty-icon">📉</div><p>Nenhum registro</p></div></div></div>
-      </div>
-    </div>
-
-    <!-- NOTIFICAÇÕES -->
-    <div class="page" id="page-notificacoes">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div><h3 style="font-family:'Playfair Display',serif;font-size:17px">Notificações</h3></div>
-        <button class="btn btn-ghost btn-sm" onclick="markAllRead()">✓ Marcar todas como lidas</button>
-      </div>
-      <div class="card" id="notif-list"><div class="empty-state"><div class="empty-icon">🔔</div><p>Sem notificações</p></div></div>
-    </div>
-
-  </div>
-</main>
-
-<!-- MODALS -->
-<!-- Modal Ingrediente -->
-<div class="modal-overlay" id="modal-ingrediente">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">🥚 Novo Ingrediente</span><button class="modal-close" onclick="closeModal('modal-ingrediente')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-row">
-        <div class="form-group"><label>Nome *</label><input type="text" id="ing-nome" placeholder="ex: Farinha de trigo"></div>
-        <div class="form-group"><label>Categoria</label><select id="ing-cat"><option>Farináceos</option><option>Laticínios</option><option>Ovos</option><option>Açúcar</option><option>Gorduras</option><option>Chocolates</option><option>Frutas</option><option>Embalagens</option><option>Outros</option></select></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Unidade de medida</label><select id="ing-unidade"><option value="g">gramas (g)</option><option value="ml">mililitros (ml)</option><option value="un">unidades (un)</option><option value="kg">quilogramas (kg)</option><option value="L">litros (L)</option></select></div>
-        <div class="form-group"><label>Qtd por embalagem</label><input type="number" id="ing-qtd-emb" placeholder="ex: 1000" min="0" step="any" oninput="calcCustoUnitario()"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Preço de compra (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="ing-preco" placeholder="0,00" step="0.01" oninput="calcCustoUnitario()"></div></div>
-        <div class="form-group"><label>Custo por unidade</label><input type="text" id="ing-custo-un" readonly style="background:var(--surface2);color:var(--primary);font-weight:700"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Estoque atual</label><input type="number" id="ing-estoque" placeholder="0" step="any" min="0"></div>
-        <div class="form-group"><label>Estoque mínimo</label><input type="number" id="ing-estoque-min" placeholder="0" step="any" min="0"></div>
-      </div>
-    </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-ingrediente')">Cancelar</button><button class="btn btn-primary" onclick="salvarIngrediente()">Salvar</button></div>
   </div>
 </div>
 
-<!-- Modal Receita -->
-<div class="modal-overlay" id="modal-receita">
-  <div class="modal" style="width:680px">
-    <div class="modal-header"><span class="modal-title">📋 Nova Receita</span><button class="modal-close" onclick="closeModal('modal-receita')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-row">
-        <div class="form-group"><label>Nome *</label><input type="text" id="rec-nome" placeholder="ex: Bolo de Chocolate"></div>
-        <div class="form-group"><label>Categoria</label><select id="rec-cat"><option>Bolos</option><option>Tortas</option><option>Doces</option><option>Salgados</option><option>Sobremesas</option><option>Outros</option></select></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Rendimento (unidades)</label><input type="number" id="rec-rend" value="1" min="1" oninput="calcReceitaCusto()"></div>
-        <div class="form-group"><label>Tempo de preparo (min)</label><input type="number" id="rec-tempo" value="60" min="1"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Custos Fixos Rateados (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="rec-fixo" value="0" step="0.01" oninput="calcReceitaCusto()"></div></div>
-        <div class="form-group"><label>Margem de Lucro (%)</label><input type="number" id="rec-margem" value="40" min="0" max="100" oninput="calcReceitaCusto()"></div>
-      </div>
-      <div class="sep"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><strong>Ingredientes</strong><button class="btn btn-ghost btn-sm" onclick="addIngredienteReceita()">+ Adicionar</button></div>
-      <div id="rec-ingredientes-list"><p style="font-size:12px;color:var(--text3)">Adicione ingredientes</p></div>
-      <div class="sep"></div>
-      <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
-        <div><div style="font-size:11px;color:var(--text3)">Custo Total</div><div id="rec-custo-total" style="font-weight:700;color:var(--red)">R$ 0,00</div></div>
-        <div><div style="font-size:11px;color:var(--text3)">Custo/Unidade</div><div id="rec-custo-un" style="font-weight:700">R$ 0,00</div></div>
-        <div><div style="font-size:11px;color:var(--text3)">Preço de Venda</div><div id="rec-preco-venda" style="font-weight:700;color:var(--primary);font-size:18px">R$ 0,00</div></div>
-      </div>
+<!-- ===== PAGE: RECEITAS ===== -->
+<div class="page" id="page-receitas">
+  <div class="list-header">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-box" placeholder="Buscar receitas..." oninput="filterRecipes(this.value)">
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-receita')">Cancelar</button><button class="btn btn-primary" onclick="salvarReceita()">Salvar Receita</button></div>
   </div>
+
+  <div class="recipe-list" id="recipeList"></div>
+
+  <button class="fab" id="fab-receitas" onclick="openNewRecipe()">+ Nova Receita</button>
 </div>
 
-<!-- Modal Pedido -->
-<div class="modal-overlay" id="modal-pedido">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">🛒 Novo Pedido</span><button class="modal-close" onclick="closeModal('modal-pedido')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-row">
-        <div class="form-group"><label>Cliente *</label><input type="text" id="ped-cliente" placeholder="Nome do cliente"></div>
-        <div class="form-group"><label>Telefone</label><input type="text" id="ped-tel" placeholder="(00) 00000-0000"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Produto *</label><input type="text" id="ped-produto" placeholder="ex: Bolo Red Velvet"></div>
-        <div class="form-group"><label>Receita base</label><select id="ped-receita-base"><option value="">— Sem vínculo —</option></select></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Quantidade</label><input type="number" id="ped-qtd" value="1" min="1" oninput="calcPedidoValor()"></div>
-        <div class="form-group"><label>Preço unitário (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="ped-preco" value="0" step="0.01" oninput="calcPedidoValor()"></div></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Data de entrega</label><input type="date" id="ped-entrega"></div>
-        <div class="form-group"><label>Pagamento</label><select id="ped-pgto"><option>Pix</option><option>Dinheiro</option><option>Cartão Débito</option><option>Cartão Crédito</option><option>A combinar</option></select></div>
-      </div>
-      <div class="form-group"><label>Observações</label><textarea id="ped-obs" rows="2" placeholder="Detalhes especiais..."></textarea></div>
-      <div style="background:var(--surface2);padding:12px;border-radius:var(--radius-sm);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;color:var(--text2)">Valor Total</span><span id="ped-total" style="font-size:20px;font-weight:700;color:var(--primary)">R$ 0,00</span></div>
-    </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-pedido')">Cancelar</button><button class="btn btn-primary" onclick="salvarPedido()">Salvar Pedido</button></div>
+<!-- ===== PAGE: EDITAR RECEITA ===== -->
+<div class="page" id="page-editar">
+  <div class="pricing-header">
+    <button class="back-btn" onclick="navigate('receitas')">‹</button>
+    <h2 id="editarTitle">Nova Receita</h2>
   </div>
-</div>
-
-<!-- Modal Produção -->
-<div class="modal-overlay" id="modal-producao">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">👩‍🍳 Fila de Produção</span><button class="modal-close" onclick="closeModal('modal-producao')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-group"><label>Item *</label><input type="text" id="prod-item" placeholder="ex: Bolo Red Velvet para Ana"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Data</label><input type="date" id="prod-data"></div>
-        <div class="form-group"><label>Prioridade</label><select id="prod-prio"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div>
-      </div>
-      <div class="form-group"><label>Observações</label><textarea id="prod-obs" rows="2" placeholder="Detalhes..."></textarea></div>
-    </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-producao')">Cancelar</button><button class="btn btn-primary" onclick="salvarProducao()">Adicionar</button></div>
-  </div>
-</div>
-
-<!-- Modal Estoque -->
-<div class="modal-overlay" id="modal-estoque-mov">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">📦 Movimentação de Estoque</span><button class="modal-close" onclick="closeModal('modal-estoque-mov')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-group"><label>Ingrediente *</label><select id="est-ing"></select></div>
-      <div class="form-row">
-        <div class="form-group"><label>Tipo</label><select id="est-tipo"><option value="entrada">Entrada (compra)</option><option value="saida">Saída (uso)</option><option value="ajuste">Ajuste (definir qtd)</option></select></div>
-        <div class="form-group"><label>Quantidade</label><input type="number" id="est-qtd" step="any" min="0" placeholder="0"></div>
-      </div>
-      <div class="form-group"><label>Observação</label><input type="text" id="est-obs" placeholder="ex: Compra no mercado"></div>
-    </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-estoque-mov')">Cancelar</button><button class="btn btn-primary" onclick="salvarMovEstoque()">Salvar</button></div>
-  </div>
-</div>
-
-<!-- Modal Compra Manual -->
-<div class="modal-overlay" id="modal-compra-item">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">🛍️ Item Manual</span><button class="modal-close" onclick="closeModal('modal-compra-item')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-group"><label>Item *</label><input type="text" id="comp-item" placeholder="ex: Caixas de papelão"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Quantidade</label><input type="number" id="comp-qtd" value="1" min="1"></div>
-        <div class="form-group"><label>Custo Estimado (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="comp-custo" value="0" step="0.01"></div></div>
+  <div class="form-page">
+    <div class="photo-area">
+      <div class="photo-thumb" id="editPhotoThumb">🎂</div>
+      <div class="photo-btns">
+        <button class="photo-btn" onclick="showToast('Câmera não disponível no web')">📷</button>
+        <button class="photo-btn" onclick="showToast('Galeria não disponível no web')">🖼️</button>
       </div>
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-compra-item')">Cancelar</button><button class="btn btn-primary" onclick="salvarCompraManual()">Adicionar</button></div>
-  </div>
-</div>
-
-<!-- Modal Caixa -->
-<div class="modal-overlay" id="modal-caixa">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">💵 Novo Lançamento</span><button class="modal-close" onclick="closeModal('modal-caixa')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-row">
-        <div class="form-group"><label>Tipo *</label><select id="cf-tipo"><option value="entrada">Entrada</option><option value="saida">Saída</option></select></div>
-        <div class="form-group"><label>Data *</label><input type="date" id="cf-data"></div>
-      </div>
-      <div class="form-group"><label>Descrição *</label><input type="text" id="cf-desc" placeholder="ex: Venda bolo Red Velvet"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Categoria</label><select id="cf-cat"><option>Vendas</option><option>Ingredientes</option><option>Embalagens</option><option>Aluguel</option><option>Energia</option><option>Gás</option><option>Marketing</option><option>Equipamentos</option><option>Outros</option></select></div>
-        <div class="form-group"><label>Valor (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="cf-valor" step="0.01" placeholder="0,00"></div></div>
-      </div>
+    <div class="form-group">
+      <label class="form-label">Título</label>
+      <input class="form-input" id="editTitulo" placeholder="Ex: Bolo de Chocolate">
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-caixa')">Cancelar</button><button class="btn btn-primary" onclick="salvarCaixa()">Salvar</button></div>
-  </div>
-</div>
-
-<!-- Modal Histórico -->
-<div class="modal-overlay" id="modal-historico">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">📉 Registrar Preço</span><button class="modal-close" onclick="closeModal('modal-historico')">✕</button></div>
-    <div class="form-grid">
-      <div class="form-group"><label>Ingrediente *</label><select id="hist-ing"></select></div>
-      <div class="form-row">
-        <div class="form-group"><label>Data</label><input type="date" id="hist-data"></div>
-        <div class="form-group"><label>Novo Preço (R$)</label><div class="input-prefix"><span>R$</span><input type="number" id="hist-preco" step="0.01" placeholder="0,00"></div></div>
-      </div>
-      <div class="form-group"><label>Observação</label><input type="text" id="hist-obs" placeholder="ex: Alta do dólar"></div>
+    <div class="form-group">
+      <label class="form-label">Tempo de trabalho (minutos)</label>
+      <input class="form-input" id="editTempo" type="number" placeholder="120">
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-historico')">Cancelar</button><button class="btn btn-primary" onclick="salvarHistorico()">Salvar</button></div>
-  </div>
-</div>
-
-<script>
-let state = { ingredientes:[], receitas:[], pedidos:[], producao:[], caixa:[], compras:[], historico:[], notificacoes:[], metaMensal:3000, recIngredientes:[] };
-
-// Storage with multiple fallbacks
-const STORE_KEY = 'sweetolivia_v2';
-function loadState() {
-  try {
-    const s = localStorage.getItem(STORE_KEY);
-    if (s) { const parsed = JSON.parse(s); state = {...state, ...parsed, recIngredientes:[]}; return; }
-    // Try old key migration
-    const old = localStorage.getItem('sweetolivia_app');
-    if (old) { const parsed = JSON.parse(old); state = {...state, ...parsed, recIngredientes:[]}; saveState(); }
-  } catch(e) { console.warn('loadState error:', e); }
-}
-function saveState() {
-  try {
-    const toSave = {...state};
-    delete toSave.recIngredientes;
-    const json = JSON.stringify(toSave);
-    localStorage.setItem(STORE_KEY, json);
-    // Show save indicator
-    const ind = document.getElementById('save-indicator');
-    if (ind) { ind.style.opacity='1'; setTimeout(()=>ind.style.opacity='0', 1000); }
-  } catch(e) {
-    console.warn('saveState error:', e);
-    // Try sessionStorage as fallback
-    try { sessionStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e2) {}
-  }
-}
-
-const pageNames = { dashboard:'Dashboard', ingredientes:'Ingredientes', receitas:'Receitas', simulador:'Simulador de Precificação', pedidos:'Pedidos', producao:'Fila de Produção', estoque:'Controle de Estoque', compras:'Lista de Compras', caixa:'Fluxo de Caixa', relatorios:'Relatórios', historico:'Histórico de Preços', notificacoes:'Notificações' };
-
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>{ if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'")) n.classList.add('active'); });
-  document.getElementById('page-title').textContent = pageNames[id]||id;
-  const renders = { dashboard:renderDashboard, ingredientes:()=>renderIngredientes(''), receitas:renderReceitas, pedidos:renderPedidos, estoque:renderEstoque, compras:renderCompras, caixa:renderCaixa, relatorios:renderRelatorios, historico:renderHistorico, notificacoes:renderNotificacoes, producao:renderProducao, simulador:renderSimulador };
-  if(renders[id]) renders[id]();
-}
-
-function openModal(id) {
-  if(id==='modal-estoque-mov'||id==='modal-historico') fillIngSelect();
-  if(id==='modal-pedido') fillReceitaSelect();
-  if(id==='modal-receita') { state.recIngredientes=[]; renderRecIngredientes(); calcReceitaCusto(); }
-  document.getElementById(id).classList.add('open');
-  const today=new Date().toISOString().split('T')[0];
-  document.querySelectorAll('.modal-overlay.open input[type=date]').forEach(el=>{ if(!el.value) el.value=today; });
-}
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-document.getElementById('today-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
-
-const fmtBRL = v=>'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtPct = v=>Number(v||0).toFixed(1)+'%';
-const genId = ()=>Date.now().toString(36)+Math.random().toString(36).substr(2,5);
-
-// INGREDIENTES
-function calcCustoUnitario() {
-  const preco=parseFloat(document.getElementById('ing-preco').value)||0;
-  const qtd=parseFloat(document.getElementById('ing-qtd-emb').value)||1;
-  const un=document.getElementById('ing-unidade').value;
-  document.getElementById('ing-custo-un').value=`${fmtBRL(qtd>0?preco/qtd:0)} / ${un}`;
-}
-
-function salvarIngrediente() {
-  const nome=document.getElementById('ing-nome').value.trim();
-  if(!nome) return alert('Informe o nome');
-  const preco=parseFloat(document.getElementById('ing-preco').value)||0;
-  const qtdEmb=parseFloat(document.getElementById('ing-qtd-emb').value)||1;
-  const un=document.getElementById('ing-unidade').value;
-  state.ingredientes.push({ id:genId(), nome, cat:document.getElementById('ing-cat').value, unidade:un, qtdEmb, preco, custoUn:qtdEmb>0?preco/qtdEmb:0, estoque:parseFloat(document.getElementById('ing-estoque').value)||0, estoqueMin:parseFloat(document.getElementById('ing-estoque-min').value)||0, ultimaMov:new Date().toLocaleDateString('pt-BR') });
-  saveState(); closeModal('modal-ingrediente'); renderIngredientes(''); checkAlertas();
-  ['ing-nome','ing-preco','ing-qtd-emb','ing-estoque','ing-estoque-min','ing-custo-un'].forEach(id=>document.getElementById(id).value='');
-}
-
-function renderIngredientes(filter) {
-  const list=filter?state.ingredientes.filter(i=>i.nome.toLowerCase().includes(filter.toLowerCase())):state.ingredientes;
-  const tbody=document.getElementById('ingredientes-tbody');
-  if(!list.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🥚</div><p>Nenhum ingrediente</p></div></td></tr>'; return; }
-  tbody.innerHTML=list.map(i=>{
-    const nivel=i.estoqueMin>0?i.estoque/i.estoqueMin:1;
-    const cor=nivel>=1?'var(--green)':nivel>=0.5?'var(--accent)':'var(--red)';
-    return `<tr><td><strong>${i.nome}</strong></td><td><span class="tag">${i.cat}</span></td><td>${i.qtdEmb} ${i.unidade}</td><td>${fmtBRL(i.preco)}</td><td style="font-weight:600;color:var(--primary)">${fmtBRL(i.custoUn)}/${i.unidade}</td><td><div class="stock-level"><span>${i.estoque} ${i.unidade}</span><div class="progress-bar" style="width:80px"><div class="progress-fill" style="width:${Math.min(100,nivel*100)}%;background:${cor}"></div></div></div></td><td><button class="btn btn-danger btn-sm" onclick="delIngrediente('${i.id}')">🗑</button></td></tr>`;
-  }).join('');
-}
-
-function delIngrediente(id) { if(!confirm('Remover?')) return; state.ingredientes=state.ingredientes.filter(i=>i.id!==id); saveState(); renderIngredientes(''); checkAlertas(); }
-
-// RECEITAS
-function addIngredienteReceita() { state.recIngredientes.push({ingId:'',qtd:0}); renderRecIngredientes(); }
-
-function renderRecIngredientes() {
-  const div=document.getElementById('rec-ingredientes-list');
-  if(!state.recIngredientes.length) { div.innerHTML='<p style="font-size:12px;color:var(--text3)">Clique em + Adicionar para incluir ingredientes</p>'; return; }
-  div.innerHTML=state.recIngredientes.map((ri,idx)=>`
-    <div class="ingredient-row">
-      <select onchange="state.recIngredientes[${idx}].ingId=this.value;calcReceitaCusto()" style="padding:7px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none;width:100%">
-        <option value="">— Selecione —</option>
-        ${state.ingredientes.map(i=>`<option value="${i.id}" ${ri.ingId===i.id?'selected':''}>${i.nome}</option>`).join('')}
+    <div class="form-group">
+      <label class="form-label">Tempo de uso de gás (minutos)</label>
+      <input class="form-input" id="editGas" type="number" placeholder="40">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tipo de queimador ou forno</label>
+      <select class="form-select" id="editQueimador">
+        <option>Queimador médio</option>
+        <option>Queimador pequeno</option>
+        <option>Queimador grande</option>
+        <option>Forno elétrico</option>
+        <option>Forno a gás</option>
       </select>
-      <input type="number" placeholder="Qtd" value="${ri.qtd||''}" step="any" min="0" onchange="state.recIngredientes[${idx}].qtd=parseFloat(this.value)||0;calcReceitaCusto()" style="padding:7px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none;width:100%">
-      <span style="font-size:11px;color:var(--text3);text-align:center">${ri.ingId?(state.ingredientes.find(i=>i.id===ri.ingId)||{}).unidade||'':''}</span>
-      <span id="ri-custo-${idx}" style="font-size:12px;font-weight:600;color:var(--primary);text-align:right">R$ 0,00</span>
-      <button class="btn btn-danger btn-sm" onclick="state.recIngredientes.splice(${idx},1);renderRecIngredientes();calcReceitaCusto()">✕</button>
-    </div>`).join('');
-  calcReceitaCusto();
-}
-
-function calcReceitaCusto() {
-  let total=parseFloat(document.getElementById('rec-fixo').value)||0;
-  state.recIngredientes.forEach((ri,idx)=>{
-    const ing=state.ingredientes.find(i=>i.id===ri.ingId);
-    const custo=ing?ing.custoUn*ri.qtd:0; total+=custo;
-    const el=document.getElementById('ri-custo-'+idx); if(el) el.textContent=fmtBRL(custo);
-  });
-  const rend=parseInt(document.getElementById('rec-rend').value)||1;
-  const margem=parseFloat(document.getElementById('rec-margem').value)||0;
-  const custoUn=total/rend;
-  const preco=margem<100?custoUn/(1-margem/100):0;
-  document.getElementById('rec-custo-total').textContent=fmtBRL(total);
-  document.getElementById('rec-custo-un').textContent=fmtBRL(custoUn);
-  document.getElementById('rec-preco-venda').textContent=fmtBRL(preco);
-}
-
-function salvarReceita() {
-  const nome=document.getElementById('rec-nome').value.trim();
-  if(!nome) return alert('Informe o nome');
-  const fixo=parseFloat(document.getElementById('rec-fixo').value)||0;
-  const rend=parseInt(document.getElementById('rec-rend').value)||1;
-  const margem=parseFloat(document.getElementById('rec-margem').value)||0;
-  let custoIng=0;
-  state.recIngredientes.forEach(ri=>{ const ing=state.ingredientes.find(i=>i.id===ri.ingId); if(ing) custoIng+=ing.custoUn*ri.qtd; });
-  const custoTotal=custoIng+fixo, custoUn=custoTotal/rend, preco=margem<100?custoUn/(1-margem/100):0;
-  state.receitas.push({ id:genId(), nome, cat:document.getElementById('rec-cat').value, rendimento:rend, tempo:parseInt(document.getElementById('rec-tempo').value)||60, margem, custoTotal, custoUn, preco, ingredientes:[...state.recIngredientes], criadaEm:new Date().toISOString() });
-  saveState(); closeModal('modal-receita'); renderReceitas(); addNotif(`📋 Receita "${nome}" cadastrada — preço sugerido ${fmtBRL(preco)}`);
-  document.getElementById('rec-nome').value='';
-}
-
-function renderReceitas() {
-  const tbody=document.getElementById('receitas-tbody');
-  if(!state.receitas.length) { tbody.innerHTML='<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><p>Nenhuma receita</p></div></td></tr>'; return; }
-  tbody.innerHTML=state.receitas.map(r=>`<tr><td><strong>${r.nome}</strong></td><td><span class="tag">${r.cat}</span></td><td>${r.rendimento} un</td><td>${fmtBRL(r.custoTotal)}</td><td>${fmtBRL(r.custoUn)}</td><td style="font-weight:700;color:var(--primary)">${fmtBRL(r.preco)}</td><td><span class="badge ${r.margem>=40?'badge-green':r.margem>=25?'badge-yellow':'badge-red'}">${fmtPct(r.margem)}</span></td><td><button class="btn btn-danger btn-sm" onclick="delReceita('${r.id}')">🗑</button></td></tr>`).join('');
-}
-
-function delReceita(id) { if(!confirm('Remover?')) return; state.receitas=state.receitas.filter(r=>r.id!==id); saveState(); renderReceitas(); }
-
-// SIMULADOR
-function renderSimulador() {
-  const sel=document.getElementById('sim-receita');
-  sel.innerHTML='<option value="">— Calcular manualmente —</option>';
-  state.receitas.forEach(r=>sel.innerHTML+=`<option value="${r.id}">${r.nome}</option>`);
-  calcSimulador();
-}
-
-function simPreencherReceita() {
-  const id=document.getElementById('sim-receita').value; if(!id) return;
-  const r=state.receitas.find(x=>x.id===id); if(!r) return;
-  document.getElementById('sim-custo').value=r.custoTotal.toFixed(2);
-  document.getElementById('sim-margem').value=r.margem;
-  document.getElementById('sim-margem-val').textContent=r.margem+'%';
-  document.getElementById('sim-qtd').value=r.rendimento;
-  calcSimulador();
-}
-
-function calcSimulador() {
-  const custo=parseFloat(document.getElementById('sim-custo').value)||0;
-  const fixo=parseFloat(document.getElementById('sim-fixo').value)||0;
-  const cartao=parseFloat(document.getElementById('sim-cartao').value)||0;
-  const market=parseFloat(document.getElementById('sim-market').value)||0;
-  const margem=parseFloat(document.getElementById('sim-margem').value)||0;
-  const qtd=parseInt(document.getElementById('sim-qtd').value)||1;
-  const total=custo+fixo, custoUn=total/qtd;
-  const taxas=(cartao+market)/100;
-  const base=1-margem/100; const denom=base*(1-taxas);
-  const preco=denom>0?custoUn/denom:0;
-  const lucroUn=preco-custoUn;
-  document.getElementById('sim-total').textContent=fmtBRL(total);
-  document.getElementById('sim-preco').textContent=fmtBRL(preco);
-  document.getElementById('sim-lucro-un').textContent=fmtBRL(lucroUn);
-  document.getElementById('sim-cenarios').innerHTML=[30,40,50,60].map(m=>{
-    const p=denom>0?custoUn/((1-m/100)*(1-taxas)):0;
-    return `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px"><span>Margem ${m}%</span><span style="font-weight:700;color:var(--primary)">${fmtBRL(p)}</span></div>`;
-  }).join('');
-  document.getElementById('sim-equilibrio').innerHTML=custo>0&&lucroUn>0?`<span style="font-weight:600">Para cobrir R$ ${fixo.toFixed(2)} de custos fixos:</span><br><span style="font-size:20px;font-weight:700;color:var(--primary)">${Math.ceil(fixo/lucroUn)} unidades/mês</span>`:'Preencha os campos';
-}
-
-// PEDIDOS
-function fillReceitaSelect() {
-  const sel=document.getElementById('ped-receita-base');
-  sel.innerHTML='<option value="">— Sem vínculo —</option>';
-  state.receitas.forEach(r=>sel.innerHTML+=`<option value="${r.id}" data-preco="${r.preco}">${r.nome} (${fmtBRL(r.preco)})</option>`);
-  sel.onchange=()=>{ const p=sel.options[sel.selectedIndex].dataset.preco; if(p){document.getElementById('ped-preco').value=parseFloat(p).toFixed(2);calcPedidoValor();} };
-}
-
-function calcPedidoValor() {
-  const qtd=parseInt(document.getElementById('ped-qtd').value)||0;
-  const preco=parseFloat(document.getElementById('ped-preco').value)||0;
-  document.getElementById('ped-total').textContent=fmtBRL(qtd*preco);
-}
-
-function salvarPedido() {
-  const cliente=document.getElementById('ped-cliente').value.trim();
-  const produto=document.getElementById('ped-produto').value.trim();
-  if(!cliente||!produto) return alert('Preencha cliente e produto');
-  const qtd=parseInt(document.getElementById('ped-qtd').value)||1;
-  const preco=parseFloat(document.getElementById('ped-preco').value)||0;
-  const entrega=document.getElementById('ped-entrega').value;
-  const pedido={ id:genId(), num:state.pedidos.length+1, cliente, tel:document.getElementById('ped-tel').value, produto, receitaId:document.getElementById('ped-receita-base').value, qtd, preco, total:qtd*preco, entrega, pgto:document.getElementById('ped-pgto').value, obs:document.getElementById('ped-obs').value, status:'Pendente', criadoEm:new Date().toISOString() };
-  state.pedidos.push(pedido);
-  state.caixa.push({ id:genId(), tipo:'entrada', desc:`Pedido #${pedido.num} — ${produto} (${cliente})`, cat:'Vendas', valor:pedido.total, data:entrega||new Date().toISOString().split('T')[0] });
-  saveState(); closeModal('modal-pedido'); renderPedidos();
-  addNotif(`🛒 Novo pedido: ${produto} para ${cliente}`);
-  ['ped-cliente','ped-tel','ped-produto','ped-obs'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('ped-preco').value=0;
-}
-
-let pedidoFilter='';
-function filterPedidos(s) { pedidoFilter=s; renderPedidos(); }
-
-function renderPedidos() {
-  const list=pedidoFilter?state.pedidos.filter(p=>p.status===pedidoFilter):state.pedidos;
-  const tbody=document.getElementById('pedidos-tbody');
-  const sm={'Pendente':'badge-yellow','Em produção':'badge-blue','Pronto':'badge-green','Entregue':'badge-gray','Cancelado':'badge-red'};
-  if(!list.length) { tbody.innerHTML='<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🛒</div><p>Nenhum pedido</p></div></td></tr>'; }
-  else tbody.innerHTML=list.sort((a,b)=>new Date(b.criadoEm)-new Date(a.criadoEm)).map(p=>`<tr><td>#${p.num}</td><td><strong>${p.cliente}</strong>${p.tel?`<br><small style="color:var(--text3)">${p.tel}</small>`:''}</td><td>${p.produto}${p.obs?`<br><small style="color:var(--text3)">${p.obs}</small>`:''}</td><td>${p.qtd}</td><td style="font-weight:700">${fmtBRL(p.total)}</td><td>${p.entrega?new Date(p.entrega+'T12:00').toLocaleDateString('pt-BR'):'—'}</td><td><span class="badge ${sm[p.status]||'badge-gray'}">${p.status}</span></td><td style="white-space:nowrap"><select onchange="updatePedidoStatus('${p.id}',this.value)" style="padding:5px;border:1px solid var(--border);border-radius:6px;font-size:12px">${['Pendente','Em produção','Pronto','Entregue','Cancelado'].map(s=>`<option ${p.status===s?'selected':''}>${s}</option>`).join('')}</select> <button class="btn btn-danger btn-sm" onclick="delPedido('${p.id}')">🗑</button></td></tr>`).join('');
-  const ativos=state.pedidos.filter(p=>!['Entregue','Cancelado'].includes(p.status)).length;
-  document.getElementById('badge-pedidos').textContent=ativos;
-}
-
-function updatePedidoStatus(id,status) { const p=state.pedidos.find(x=>x.id===id); if(p){p.status=status;saveState();renderPedidos();} }
-function delPedido(id) { if(!confirm('Remover?')) return; state.pedidos=state.pedidos.filter(p=>p.id!==id); saveState(); renderPedidos(); }
-
-// PRODUÇÃO
-function salvarProducao() {
-  const item=document.getElementById('prod-item').value.trim(); if(!item) return alert('Informe o item');
-  state.producao.push({ id:genId(), item, data:document.getElementById('prod-data').value, prio:document.getElementById('prod-prio').value, obs:document.getElementById('prod-obs').value, feito:false });
-  saveState(); closeModal('modal-producao'); renderProducao();
-  document.getElementById('prod-item').value=''; document.getElementById('prod-obs').value='';
-}
-
-function renderProducao() {
-  const today=new Date().toISOString().split('T')[0];
-  const hoje=state.producao.filter(p=>p.data===today&&!p.feito);
-  const prox=state.producao.filter(p=>p.data>today&&!p.feito);
-  const prioColor={'Urgente':'badge-red','Alta':'badge-yellow','Normal':'badge-gray'};
-  const mk=(list,empty)=>!list.length?`<div class="empty-state"><div class="empty-icon">✅</div><p>${empty}</p></div>`:list.map(p=>`<div class="cf-item"><div><div style="font-weight:600;font-size:13px">${p.item}</div><div style="font-size:11px;color:var(--text3)">${p.data?new Date(p.data+'T12:00').toLocaleDateString('pt-BR'):''} ${p.obs?'· '+p.obs:''}</div></div><div style="display:flex;align-items:center;gap:8px"><span class="badge ${prioColor[p.prio]||'badge-gray'}">${p.prio}</span><button class="btn btn-success btn-sm" onclick="marcarFeito('${p.id}')">✓</button><button class="btn btn-danger btn-sm" onclick="delProducao('${p.id}')">🗑</button></div></div>`).join('');
-  document.getElementById('producao-hoje-list').innerHTML=mk(hoje,'Nada para hoje');
-  document.getElementById('producao-prox-list').innerHTML=mk(prox.sort((a,b)=>a.data>b.data?1:-1),'Sem agendamentos');
-}
-
-function marcarFeito(id) { const p=state.producao.find(x=>x.id===id); if(p){p.feito=true;saveState();renderProducao();} }
-function delProducao(id) { state.producao=state.producao.filter(p=>p.id!==id); saveState(); renderProducao(); }
-
-// ESTOQUE
-function fillIngSelect() {
-  ['est-ing','hist-ing'].forEach(selId=>{ const sel=document.getElementById(selId); if(!sel) return; sel.innerHTML=state.ingredientes.map(i=>`<option value="${i.id}">${i.nome}</option>`).join(''); });
-}
-
-function salvarMovEstoque() {
-  const ingId=document.getElementById('est-ing').value;
-  const tipo=document.getElementById('est-tipo').value;
-  const qtd=parseFloat(document.getElementById('est-qtd').value)||0;
-  const ing=state.ingredientes.find(i=>i.id===ingId); if(!ing) return;
-  if(tipo==='entrada') ing.estoque+=qtd;
-  else if(tipo==='saida') ing.estoque=Math.max(0,ing.estoque-qtd);
-  else ing.estoque=qtd;
-  ing.ultimaMov=new Date().toLocaleDateString('pt-BR');
-  saveState(); closeModal('modal-estoque-mov'); renderEstoque(); checkAlertas();
-  document.getElementById('est-qtd').value='';
-}
-
-function renderEstoque() {
-  const tbody=document.getElementById('estoque-tbody');
-  if(!state.ingredientes.length) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📦</div><p>Cadastre ingredientes primeiro</p></div></td></tr>'; document.getElementById('badge-estoque').style.display='none'; return; }
-  let baixo=0;
-  tbody.innerHTML=state.ingredientes.map(i=>{
-    const nivel=i.estoqueMin>0?i.estoque/i.estoqueMin:1;
-    const cor=nivel>=1?'var(--green)':nivel>=0.5?'var(--accent)':'var(--red)';
-    if(nivel<1&&i.estoqueMin>0) baixo++;
-    const lbl=nivel<0.5?'⚠️ Crítico':nivel<1?'⚡ Baixo':'✅ OK';
-    const badge=nivel<0.5?'badge-red':nivel<1?'badge-yellow':'badge-green';
-    return `<tr><td><strong>${i.nome}</strong><br><small style="color:var(--text3)">${i.cat}</small></td><td>${i.estoque} ${i.unidade}</td><td>${i.estoqueMin} ${i.unidade}</td><td><div class="progress-bar" style="width:120px;margin-bottom:4px"><div class="progress-fill" style="width:${Math.min(100,nivel*100)}%;background:${cor}"></div></div><span class="badge ${badge}">${lbl}</span></td><td>${i.ultimaMov||'—'}</td><td><button class="btn btn-ghost btn-sm" onclick="openModal('modal-estoque-mov')">📦 Mover</button></td></tr>`;
-  }).join('');
-  const b=document.getElementById('badge-estoque'); b.textContent=baixo; b.style.display=baixo>0?'':'none';
-  const alertDiv=document.getElementById('estoque-alerts');
-  alertDiv.innerHTML=state.ingredientes.filter(i=>i.estoqueMin>0&&i.estoque<i.estoqueMin).map(i=>`<div class="alert alert-${i.estoque/i.estoqueMin<0.5?'danger':'warning'}">⚠️ <strong>${i.nome}</strong>: ${i.estoque}/${i.estoqueMin} ${i.unidade}</div>`).join('');
-}
-
-// COMPRAS
-function gerarListaCompras() {
-  state.compras=[];
-  state.ingredientes.filter(i=>i.estoqueMin>0&&i.estoque<i.estoqueMin).forEach(i=>{
-    const emb=Math.ceil((i.estoqueMin-i.estoque)/i.qtdEmb);
-    state.compras.push({ id:genId(), item:i.nome, ingId:i.id, qtd:emb, custo:emb*i.preco, unidade:`${emb}x emb.`, comprado:false });
-  });
-  saveState(); renderCompras();
-}
-
-function salvarCompraManual() {
-  const item=document.getElementById('comp-item').value.trim(); if(!item) return;
-  state.compras.push({ id:genId(), item, qtd:parseInt(document.getElementById('comp-qtd').value)||1, custo:parseFloat(document.getElementById('comp-custo').value)||0, comprado:false });
-  saveState(); closeModal('modal-compra-item'); renderCompras();
-  document.getElementById('comp-item').value='';
-}
-
-function renderCompras() {
-  const div=document.getElementById('compras-list');
-  if(!state.compras.length) { div.innerHTML='<div class="empty-state"><div class="empty-icon">🛍️</div><p>Lista vazia</p></div>'; document.getElementById('compras-total-badge').textContent='R$ 0,00'; document.getElementById('compras-resumo').innerHTML='<p style="font-size:13px;color:var(--text3)">Nenhum item</p>'; return; }
-  const total=state.compras.filter(c=>!c.comprado).reduce((s,c)=>s+c.custo,0);
-  document.getElementById('compras-total-badge').textContent=fmtBRL(total);
-  div.innerHTML=state.compras.map(c=>`<div class="cf-item" style="${c.comprado?'opacity:0.5;text-decoration:line-through':''}"><div style="display:flex;align-items:center;gap:10px"><input type="checkbox" ${c.comprado?'checked':''} onchange="toggleCompra('${c.id}',this.checked)" style="cursor:pointer;width:16px;height:16px"><div><div style="font-weight:500;font-size:13px">${c.item}</div><div style="font-size:11px;color:var(--text3)">${c.qtd} ${c.unidade||'un'}</div></div></div><div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">${fmtBRL(c.custo)}</span><button class="btn btn-danger btn-sm" onclick="delCompra('${c.id}')">🗑</button></div></div>`).join('');
-  document.getElementById('compras-resumo').innerHTML=`<div style="font-size:13px;color:var(--text2);line-height:2.2"><div>📦 Total: <strong>${state.compras.length}</strong></div><div>✅ Comprados: <strong>${state.compras.filter(c=>c.comprado).length}</strong></div><div>🛒 Pendentes: <strong>${state.compras.filter(c=>!c.comprado).length}</strong></div><div style="margin-top:8px;font-size:16px;font-weight:700;color:var(--primary)">Total estimado: ${fmtBRL(total)}</div></div>`;
-}
-
-function toggleCompra(id,v) { const c=state.compras.find(x=>x.id===id); if(c){c.comprado=v;saveState();renderCompras();} }
-function delCompra(id) { state.compras=state.compras.filter(c=>c.id!==id); saveState(); renderCompras(); }
-
-// CAIXA
-function salvarCaixa() {
-  const desc=document.getElementById('cf-desc').value.trim();
-  const valor=parseFloat(document.getElementById('cf-valor').value)||0;
-  if(!desc||!valor) return alert('Preencha descrição e valor');
-  state.caixa.push({ id:genId(), tipo:document.getElementById('cf-tipo').value, desc, cat:document.getElementById('cf-cat').value, valor, data:document.getElementById('cf-data').value });
-  saveState(); closeModal('modal-caixa'); renderCaixa();
-  document.getElementById('cf-desc').value=''; document.getElementById('cf-valor').value='';
-}
-
-function renderCaixa() {
-  const meses=[...new Set(state.caixa.map(c=>c.data.substring(0,7)))].sort().reverse();
-  const sel=document.getElementById('cf-mes-filter'); const cur=sel.value;
-  sel.innerHTML='<option value="">Todos os meses</option>';
-  meses.forEach(m=>{ const [y,mo]=m.split('-'); sel.innerHTML+=`<option value="${m}" ${cur===m?'selected':''}>${new Date(y,parseInt(mo)-1,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'})}</option>`; });
-  const mf=sel.value;
-  const list=mf?state.caixa.filter(c=>c.data.startsWith(mf)):state.caixa;
-  const ent=list.filter(c=>c.tipo==='entrada').reduce((s,c)=>s+c.valor,0);
-  const sai=list.filter(c=>c.tipo==='saida').reduce((s,c)=>s+c.valor,0);
-  document.getElementById('cf-entradas').textContent=fmtBRL(ent);
-  document.getElementById('cf-saidas').textContent=fmtBRL(sai);
-  document.getElementById('cf-saldo').textContent=fmtBRL(ent-sai);
-  const div=document.getElementById('caixa-list');
-  if(!list.length) { div.innerHTML='<div class="empty-state"><div class="empty-icon">💵</div><p>Nenhum lançamento</p></div>'; return; }
-  div.innerHTML=list.sort((a,b)=>b.data.localeCompare(a.data)).map(c=>`<div class="cf-item"><div><div style="font-weight:500;font-size:13px">${c.desc}</div><div style="font-size:11px;color:var(--text3)">${new Date(c.data+'T12:00').toLocaleDateString('pt-BR')} · ${c.cat}</div></div><div style="display:flex;align-items:center;gap:10px"><span class="${c.tipo==='entrada'?'cf-positive':'cf-negative'}">${c.tipo==='entrada'?'+':'-'}${fmtBRL(c.valor)}</span><button class="btn btn-danger btn-sm" onclick="delCaixa('${c.id}')">🗑</button></div></div>`).join('');
-}
-
-function delCaixa(id) { state.caixa=state.caixa.filter(c=>c.id!==id); saveState(); renderCaixa(); }
-
-// RELATÓRIOS
-function renderRelatorios() {
-  const ent=state.caixa.filter(c=>c.tipo==='entrada').reduce((s,c)=>s+c.valor,0);
-  const sai=state.caixa.filter(c=>c.tipo==='saida').reduce((s,c)=>s+c.valor,0);
-  const margem=ent>0?(ent-sai)/ent*100:0;
-  const pedsE=state.pedidos.filter(p=>p.status==='Entregue');
-  const ticket=pedsE.length>0?pedsE.reduce((s,p)=>s+p.total,0)/pedsE.length:0;
-  document.getElementById('rel-ticket').textContent=fmtBRL(ticket);
-  document.getElementById('rel-margem').textContent=fmtPct(margem);
-  const best=[...state.receitas].sort((a,b)=>b.margem-a.margem)[0];
-  document.getElementById('rel-best').textContent=best?best.nome:'—';
-  const div=document.getElementById('rel-ranking');
-  if(!state.receitas.length) div.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><p>Sem receitas</p></div>';
-  else div.innerHTML=[...state.receitas].sort((a,b)=>b.margem-a.margem).map((r,i)=>`<div class="cf-item"><div style="display:flex;gap:10px;align-items:center"><span style="font-weight:700;color:var(--primary);font-size:18px">#${i+1}</span><div><div style="font-weight:600;font-size:13px">${r.nome}</div><div style="font-size:11px;color:var(--text3)">Preço: ${fmtBRL(r.preco)} · Custo: ${fmtBRL(r.custoUn)}</div></div></div><span class="badge ${r.margem>=40?'badge-green':r.margem>=25?'badge-yellow':'badge-red'}">${fmtPct(r.margem)}</span></div>`).join('');
-  // Chart
-  const pm={};
-  state.pedidos.forEach(p=>{ const m=(p.criadoEm||'').substring(0,7); if(m) pm[m]=(pm[m]||0)+1; });
-  const ms=Object.keys(pm).sort().slice(-6);
-  const cd=document.getElementById('rel-pedidos-chart'); const ld=document.getElementById('rel-pedidos-labels');
-  if(!ms.length){cd.innerHTML='<p style="font-size:12px;color:var(--text3)">Sem dados</p>';return;}
-  const mx=Math.max(...ms.map(m=>pm[m]));
-  cd.innerHTML=ms.map(m=>`<div class="chart-bar" style="height:${mx>0?Math.round(pm[m]/mx*100):0}%;flex:1"><div class="tip">${pm[m]} pedidos</div></div>`).join('');
-  ld.innerHTML=ms.map(m=>{ const [y,mo]=m.split('-'); return `<div style="flex:1;text-align:center;font-size:10px;color:var(--text3)">${new Date(y,parseInt(mo)-1,1).toLocaleDateString('pt-BR',{month:'short'})}</div>`; }).join('');
-}
-
-// HISTÓRICO
-function salvarHistorico() {
-  const ingId=document.getElementById('hist-ing').value;
-  const preco=parseFloat(document.getElementById('hist-preco').value)||0;
-  if(!ingId||!preco) return alert('Preencha ingrediente e preço');
-  const ing=state.ingredientes.find(i=>i.id===ingId);
-  state.historico.push({ id:genId(), ingId, ingNome:ing?ing.nome:'', preco, data:document.getElementById('hist-data').value, obs:document.getElementById('hist-obs').value });
-  if(ing){ing.preco=preco;ing.custoUn=ing.qtdEmb>0?preco/ing.qtdEmb:0;}
-  saveState(); closeModal('modal-historico'); renderHistorico();
-  addNotif(`📉 Preço de "${ing?.nome}" atualizado: ${fmtBRL(preco)}`);
-  document.getElementById('hist-preco').value=''; document.getElementById('hist-obs').value='';
-}
-
-function renderHistorico() {
-  const sel=document.getElementById('hist-ingrediente-sel');
-  sel.innerHTML='<option value="">Selecione...</option>';
-  state.ingredientes.forEach(i=>sel.innerHTML+=`<option value="${i.id}">${i.nome}</option>`);
-  const div=document.getElementById('historico-list');
-  if(!state.historico.length){div.innerHTML='<div class="empty-state"><div class="empty-icon">📉</div><p>Nenhum registro</p></div>';return;}
-  div.innerHTML=[...state.historico].sort((a,b)=>b.data.localeCompare(a.data)).slice(0,20).map(h=>`<div class="cf-item"><div><div style="font-weight:600;font-size:13px">${h.ingNome}</div><div style="font-size:11px;color:var(--text3)">${new Date(h.data+'T12:00').toLocaleDateString('pt-BR')}${h.obs?' · '+h.obs:''}</div></div><span style="font-weight:700;color:var(--primary)">${fmtBRL(h.preco)}</span></div>`).join('');
-  renderHistoricoChart();
-}
-
-function renderHistoricoChart() {
-  const ingId=document.getElementById('hist-ingrediente-sel').value;
-  const cd=document.getElementById('hist-chart'); const ld=document.getElementById('hist-labels');
-  if(!ingId){cd.innerHTML='<p style="font-size:12px;color:var(--text3)">Selecione um ingrediente</p>';ld.innerHTML='';return;}
-  const data=state.historico.filter(h=>h.ingId===ingId).sort((a,b)=>a.data.localeCompare(b.data)).slice(-10);
-  if(!data.length){cd.innerHTML='<p style="font-size:12px;color:var(--text3)">Sem registros</p>';ld.innerHTML='';return;}
-  const mx=Math.max(...data.map(d=>d.preco));
-  cd.innerHTML=data.map(d=>`<div class="chart-bar" style="height:${mx>0?Math.round(d.preco/mx*100):0}%;flex:1;background:var(--primary)"><div class="tip">${fmtBRL(d.preco)}</div></div>`).join('');
-  ld.innerHTML=data.map(d=>`<div style="flex:1;text-align:center;font-size:10px;color:var(--text3)">${new Date(d.data+'T12:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</div>`).join('');
-}
-
-// NOTIFICAÇÕES
-function addNotif(msg) { state.notificacoes.unshift({id:genId(),msg,lida:false,data:new Date().toLocaleString('pt-BR')}); saveState(); updateNotifBadge(); }
-function updateNotifBadge() { document.getElementById('badge-notif').textContent=state.notificacoes.filter(n=>!n.lida).length; }
-function markAllRead() { state.notificacoes.forEach(n=>n.lida=true); saveState(); renderNotificacoes(); updateNotifBadge(); }
-function renderNotificacoes() {
-  const div=document.getElementById('notif-list');
-  if(!state.notificacoes.length){div.innerHTML='<div class="empty-state"><div class="empty-icon">🔔</div><p>Sem notificações</p></div>';return;}
-  div.innerHTML=state.notificacoes.slice(0,50).map(n=>`<div class="notif-item ${n.lida?'':'unread'}" onclick="markNotifRead('${n.id}')"><div class="notif-dot ${n.lida?'read':''}"></div><div><div style="font-size:13px">${n.msg}</div><div style="font-size:11px;color:var(--text3);margin-top:2px">${n.data}</div></div></div>`).join('');
-}
-function markNotifRead(id) { const n=state.notificacoes.find(x=>x.id===id); if(n){n.lida=true;saveState();renderNotificacoes();updateNotifBadge();} }
-
-// DASHBOARD
-function renderDashboard() {
-  const mes=new Date().toISOString().substring(0,7);
-  const cm=state.caixa.filter(c=>c.data.startsWith(mes));
-  const rec=cm.filter(c=>c.tipo==='entrada').reduce((s,c)=>s+c.valor,0);
-  const cus=cm.filter(c=>c.tipo==='saida').reduce((s,c)=>s+c.valor,0);
-  const luc=rec-cus; const mrg=rec>0?luc/rec*100:0;
-  document.getElementById('d-receita').textContent=fmtBRL(rec);
-  document.getElementById('d-lucro').textContent=fmtBRL(luc);
-  document.getElementById('d-pedidos').textContent=state.pedidos.filter(p=>!['Entregue','Cancelado'].includes(p.status)).length;
-  document.getElementById('d-receitas').textContent=state.receitas.length;
-  const pct=Math.min(100,(rec/state.metaMensal)*100);
-  document.getElementById('dash-meta-pct').textContent=pct.toFixed(0)+'%';
-  document.getElementById('dash-meta-bar').style.width=pct+'%';
-  document.getElementById('dash-r2').textContent=fmtBRL(rec);
-  document.getElementById('dash-c2').textContent=fmtBRL(cus);
-  document.getElementById('dash-m2').textContent=fmtPct(mrg);
-  const dp=document.getElementById('dash-pedidos-list');
-  const rp=state.pedidos.filter(p=>!['Entregue','Cancelado'].includes(p.status)).slice(0,5);
-  dp.innerHTML=!rp.length?'<div class="empty-state"><div class="empty-icon">🛒</div><p>Nenhum pedido ativo</p></div>':rp.map(p=>`<div class="cf-item"><div><div style="font-size:13px;font-weight:600">${p.cliente}</div><div style="font-size:11px;color:var(--text3)">${p.produto}</div></div><div style="text-align:right"><div style="font-weight:700">${fmtBRL(p.total)}</div><span class="badge ${p.status==='Pronto'?'badge-green':p.status==='Em produção'?'badge-blue':'badge-yellow'}" style="font-size:10px">${p.status}</span></div></div>`).join('');
-  const alertas=state.ingredientes.filter(i=>i.estoqueMin>0&&i.estoque<i.estoqueMin);
-  const ad=document.getElementById('dash-estoque-alerts');
-  ad.innerHTML=!alertas.length?'<div class="empty-state"><div class="empty-icon">✅</div><p>Estoque OK</p></div>':alertas.map(i=>`<div class="cf-item"><div><div style="font-size:13px;font-weight:600">${i.nome}</div><div style="font-size:11px;color:var(--text3)">${i.estoque}/${i.estoqueMin} ${i.unidade}</div></div><span class="badge badge-red">⚠️ Baixo</span></div>`).join('');
-  const td=document.getElementById('dash-top-receitas');
-  const top=[...state.receitas].sort((a,b)=>b.margem-a.margem).slice(0,5);
-  td.innerHTML=!top.length?'<div class="empty-state"><div class="empty-icon">📋</div><p>Sem receitas</p></div>':top.map((r,i)=>`<div class="cf-item"><div style="display:flex;gap:10px;align-items:center"><span style="font-weight:700;color:var(--primary)">#${i+1}</span><span style="font-size:13px">${r.nome}</span></div><span class="badge badge-green">${fmtPct(r.margem)}</span></div>`).join('');
-}
-
-function checkAlertas() {
-  const baixo=state.ingredientes.filter(i=>i.estoqueMin>0&&i.estoque<i.estoqueMin);
-  const b=document.getElementById('badge-estoque'); b.textContent=baixo.length; b.style.display=baixo.length>0?'':'none';
-  baixo.forEach(i=>{ if(!state.notificacoes.find(n=>!n.lida&&n.msg.includes(i.nome))) addNotif(`⚠️ Estoque baixo: ${i.nome} (${i.estoque}/${i.estoqueMin} ${i.unidade})`); });
-}
-
-function exportData() {
-  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob); const a=document.createElement('a');
-  a.href=url; a.download=`docinharia_backup_${new Date().toISOString().split('T')[0]}.json`; a.click(); URL.revokeObjectURL(url);
-}
-
-// INIT
-function initApp() {
-  loadState();
-  updateNotifBadge();
-  renderDashboard();
-  document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
-  // Test save on startup
-  try {
-    localStorage.setItem('_test', '1');
-    localStorage.removeItem('_test');
-  } catch(e) {
-    alert('Aviso: seu navegador está bloqueando o armazenamento local. Os dados podem não ser salvos. Tente desativar o modo privado/incógnito.');
-  }
-}
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
-} else {
-  initApp();
-}
-
-// MOBILE NAV
-function mobileNav(page){
-  closeDrawer();
-  showPage(page);
-  document.querySelectorAll('.mobile-nav-item').forEach(el=>{
-    el.classList.toggle('active',el.dataset.page===page);
-  });
-}
-function toggleDrawer(){
-  document.getElementById('more-drawer').classList.toggle('open');
-  document.getElementById('drawer-overlay').classList.toggle('open');
-}
-function closeDrawer(){
-  document.getElementById('more-drawer').classList.remove('open');
-  document.getElementById('drawer-overlay').classList.remove('open');
-}
-function mobileDrawerNav(page){
-  closeDrawer();
-  showPage(page);
-  document.querySelectorAll('.mobile-nav-item').forEach(el=>el.classList.remove('active'));
-}
-</script>
-
-<!-- MOBILE BOTTOM NAV -->
-<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
-<div class="mobile-more-drawer" id="more-drawer">
-  <div class="mobile-drawer-grid">
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('simulador')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="11" r="1" fill="currentColor"/><circle cx="16" cy="11" r="1" fill="currentColor"/><circle cx="8" cy="15" r="1" fill="currentColor"/><circle cx="12" cy="15" r="1" fill="currentColor"/><circle cx="16" cy="15" r="1" fill="currentColor"/></svg>
-      <span>Simulador</span>
     </div>
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('estoque')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-      <span>Estoque</span>
+    <div class="form-group">
+      <label class="form-label">Rendimento</label>
+      <input class="form-input" id="editRendimento" type="number" placeholder="12">
     </div>
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('compras')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.66a2 2 0 001.97-1.67L23 6H6"/></svg>
-      <span>Compras</span>
+    <div class="form-group">
+      <label class="form-label">Medida</label>
+      <select class="form-select" id="editMedida">
+        <option>fatias</option>
+        <option>unidades</option>
+        <option>porções</option>
+        <option>gramas</option>
+      </select>
     </div>
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('caixa')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      <span>Caixa</span>
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" id="editCardapio"> Exibir no Cardápio Digital
+      </label>
     </div>
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('relatorios')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-      <span>Relatórios</span>
+    <div class="form-group">
+      <label class="form-label">Preço de venda (R$)</label>
+      <input class="form-input" id="editPreco" type="number" placeholder="0,00">
     </div>
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('historico')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>Histórico</span>
+    <button class="save-btn" onclick="saveRecipe()">Salvar Receita</button>
+  </div>
+</div>
+
+<!-- ===== PAGE: PRECIFICAÇÃO ===== -->
+<div class="page" id="page-pricing">
+  <div class="pricing-header">
+    <button class="back-btn" onclick="navigate('receitas')">‹</button>
+    <h2>Precificação</h2>
+    <button class="help-btn" style="margin-left:auto">?</button>
+  </div>
+
+  <div class="recipe-hero">
+    <div class="recipe-thumb">🎂</div>
+    <h2 id="pricingRecipeName">Bolo Alto</h2>
+  </div>
+
+  <div class="etapa-block">
+    <div class="etapa-title">Etapa 1: Massa Branca</div>
+    <div class="etapa-row"><span class="ing-label">Açúcar agro vale<small>265 g</small></span><span class="ing-val">R$ 1,14</span></div>
+    <div class="etapa-row"><span class="ing-label">Manteiga Davaca<small>160 g</small></span><span class="ing-val">R$ 7,36</span></div>
+    <div class="etapa-row"><span class="ing-label">Ovo<small>5 un.</small></span><span class="ing-val">R$ 4,50</span></div>
+    <div class="etapa-row"><span class="ing-label">Leite de côco Sococo<small>200 mL</small></span><span class="ing-val">R$ 5,64</span></div>
+    <div class="etapa-row"><span class="ing-label">Farinha de Trigo Finna sem fermento<small>267 g</small></span><span class="ing-val">R$ 1,25</span></div>
+    <div class="etapa-row"><span class="ing-label">Fermento químico Dr. Oetker<small>13 g</small></span><span class="ing-val">R$ 0,51</span></div>
+    <div class="subtotal-row"><span>Sub-total</span><span>R$ 20,39</span></div>
+  </div>
+
+  <div class="etapa-block">
+    <div class="etapa-title">Etapa 2: Recheio de Brigadeiro</div>
+    <div class="etapa-row"><span class="ing-label">Leite condensado moça semidesnatado<small>395 g</small></span><span class="ing-val">R$ 6,99</span></div>
+    <div class="etapa-row"><span class="ing-label">Creme de leite Nestlé<small>400 ml</small></span><span class="ing-val">R$ 6,98</span></div>
+    <div class="etapa-row"><span class="ing-label">Chocolate 50%<small>30 g</small></span><span class="ing-val">R$ 1,17</span></div>
+    <div class="etapa-row"><span class="ing-label">Manteiga Davaca<small>20 g</small></span><span class="ing-val">R$ 0,92</span></div>
+    <div class="etapa-row"><span class="ing-label">Leite Ninho<small>15 g</small></span><span class="ing-val">R$ 0,99</span></div>
+    <div class="subtotal-row"><span>Sub-total</span><span>R$ 17,05</span></div>
+  </div>
+
+  <div class="etapa-block">
+    <div class="etapa-title">Etapa 3: Finalização</div>
+    <div class="etapa-row"><span class="ing-label">Bandeja MDF 35cm x 6mm<small>1 un.</small></span><span class="ing-val">R$ 22,99</span></div>
+    <div class="subtotal-row"><span>Sub-total</span><span>R$ 22,99</span></div>
+  </div>
+
+  <div class="custo-block">
+    <div class="custo-title">Cálculo de Custos</div>
+    <div class="custo-row"><span>Custo dos ingredientes</span><span class="val">R$ 60,43</span></div>
+    <div class="custo-row"><span>Custo do gás</span><span class="val">R$ 0,88</span></div>
+    <div class="custo-row"><span>Custo da energia</span><span class="val">R$ 0,00</span></div>
+    <div class="custo-row"><span>Custo da mão-de-obra</span><span class="val">R$ 16,00</span></div>
+    <div class="custo-row total"><span>Custo total</span><span class="val">R$ 77,31</span></div>
+    <div class="custo-info">Calculei também o custo e o preço por fatia.</div>
+    <div class="fatia-row"><span>Custo por fatia</span><span class="val">R$ 6,44</span></div>
+    <div class="fatia-row bold"><span>Preço por fatia</span><span class="val">R$ 11,67</span></div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="fatiaCardapio">
+      <label for="fatiaCardapio">Exibir o preço por fatia no Cardápio Digital</label>
     </div>
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('notificacoes')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-      <span>Notificações</span>
+  </div>
+
+  <div class="ajuste-block">
+    <div class="ajuste-title">Ajuste de preço</div>
+    <div class="ajuste-desc">Ajuste a barra de lucro para saber quanto você precisa cobrar nesta receita para obter o lucro desejado.</div>
+    <input type="range" class="lucro-slider" id="lucroSlider" min="0" max="200" value="81" oninput="updatePricing(this.value)">
+    <div class="lucro-row"><span>Margem de lucro</span><span class="val" id="margemVal">81%</span></div>
+    <div class="lucro-row pink"><span>Seu lucro</span><span class="val" id="lucroVal">R$ 62,69</span></div>
+    <div class="price-input-wrap">
+      <label>Preço final do produto</label>
+      <input class="price-input" id="precoFinal" type="text" value="R$ 140,00" oninput="updateFromPrice(this.value)">
     </div>
-    <div class="mobile-drawer-item" onclick="mobileDrawerNav('producao')">
-      <svg class="mdi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-      <span>Produção</span>
+    <button class="save-btn" onclick="showToast('Preço salvo com sucesso! ✓')">Salvar preço</button>
+  </div>
+</div>
+
+<!-- ===== PAGE: NUTRICIONAL ===== -->
+<div class="page" id="page-nutri">
+  <div class="pricing-header">
+    <button class="back-btn" onclick="navigate('receitas')">‹</button>
+    <h2>Informações Nutricionais</h2>
+    <button class="help-btn" style="margin-left:auto">?</button>
+  </div>
+
+  <div class="nutri-header-block">
+    <div class="recipe-thumb" style="margin:0 auto 12px;">🎂</div>
+    <h2>Bolo Alto</h2>
+    <p class="nutri-desc">Abaixo estão as informações nutricionais da sua receita com base nos ingredientes e nas quantidades. O valor é aproximado, pois pode haver variação devido às diferenças entre marcas e forma de preparo.</p>
+    <label class="checkbox-label" style="justify-content:center;margin-top:4px;">
+      <input type="checkbox" checked> Exibir título da receita na etiqueta
+    </label>
+  </div>
+
+  <div class="nutri-table">
+    <div class="nutri-table-header">INFORMAÇÕES NUTRICIONAIS<br><span style="font-size:0.82rem;font-weight:400;">Bolo Alto</span></div>
+    <div class="nutri-table-sub">Porção: 100 g</div>
+    <div class="nutri-row"><span>Calorias</span><span class="val">336 kcal</span></div>
+    <div class="nutri-row"><span>Carboidratos</span><span class="val">44 g</span></div>
+    <div class="nutri-row"><span>Lipídeos</span><span class="val">17 g</span></div>
+    <div class="nutri-row"><span>Proteína</span><span class="val">2 g</span></div>
+    <div class="nutri-row"><span>Sódio</span><span class="val">0 mg</span></div>
+    <div class="nutri-footer">Gerado pelo Sweet Olivia App</div>
+  </div>
+
+  <button class="dl-btn" onclick="showToast('Imagem baixada! 📥')">Baixar imagem</button>
+</div>
+
+<!-- ===== PAGE: INGREDIENTES ===== -->
+<div class="page" id="page-ingredientes">
+  <div class="list-header">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-box" placeholder="Buscar ingredientes...">
+    </div>
+  </div>
+  <div style="padding: 0 16px;">
+    <div class="ingredient-item">
+      <div><div class="ing-name">Açúcar agro vale</div><div class="ing-price">R$ 4,29 ⚠️</div></div>
+      <div class="ing-qty">1.000 g</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Creme de leite Nestlé</div><div class="ing-price">R$ 6,98 ⚠️</div></div>
+      <div class="ing-qty">400 ml</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Chocolate 50%</div><div class="ing-price">R$ 3,90 ⚠️</div></div>
+      <div class="ing-qty">100 g</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Manteiga Davaca</div><div class="ing-price">R$ 4,60 ⚠️</div></div>
+      <div class="ing-qty">200 g</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Farinha de Trigo Finna</div><div class="ing-price">R$ 4,69 ⚠️</div></div>
+      <div class="ing-qty">1.000 g</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Leite condensado moça</div><div class="ing-price">R$ 6,99 ⚠️</div></div>
+      <div class="ing-qty">395 g</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Leite de côco Sococo</div><div class="ing-price">R$ 5,64</div></div>
+      <div class="ing-qty">200 ml</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Leite Ninho</div><div class="ing-price">R$ 39,90 ⚠️</div></div>
+      <div class="ing-qty">400 g</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Ovos</div><div class="ing-price">R$ 0,90</div></div>
+      <div class="ing-qty">1 un.</div>
+    </div>
+    <div class="ingredient-item">
+      <div><div class="ing-name">Fermento Dr. Oetker</div><div class="ing-price">R$ 3,99 ⚠️</div></div>
+      <div class="ing-qty">100 g</div>
+    </div>
+  </div>
+  <button class="fab" onclick="showModal('novoIngrediente')">+ Novo Ingrediente</button>
+</div>
+
+<!-- ===== PAGE: CLIENTES ===== -->
+<div class="page" id="page-clientes">
+  <div class="list-header">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-box" placeholder="Buscar clientes...">
+    </div>
+  </div>
+  <div>
+    <div class="client-item">
+      <div class="client-avatar">M</div>
+      <div class="client-info">
+        <div class="client-name">Maria Silva</div>
+        <div class="client-meta">3 pedidos · Último: 15/03</div>
+      </div>
+      <button class="more-btn">⋮</button>
+    </div>
+    <div class="client-item">
+      <div class="client-avatar">J</div>
+      <div class="client-info">
+        <div class="client-name">João Pedro</div>
+        <div class="client-meta">1 pedido · Último: 20/03</div>
+      </div>
+      <button class="more-btn">⋮</button>
+    </div>
+    <div class="client-item">
+      <div class="client-avatar">A</div>
+      <div class="client-info">
+        <div class="client-name">Ana Carolina</div>
+        <div class="client-meta">5 pedidos · Último: 24/03</div>
+      </div>
+      <button class="more-btn">⋮</button>
+    </div>
+    <div class="client-item">
+      <div class="client-avatar">L</div>
+      <div class="client-info">
+        <div class="client-name">Larissa Mendes</div>
+        <div class="client-meta">2 pedidos · Último: 10/03</div>
+      </div>
+      <button class="more-btn">⋮</button>
+    </div>
+  </div>
+  <button class="fab" onclick="showToast('Novo cliente adicionado!')">+ Novo Cliente</button>
+</div>
+
+<!-- ===== PAGE: ESTATÍSTICAS ===== -->
+<div class="page" id="page-stats">
+  <div class="stats-section">
+    <div class="stats-card">
+      <h3>Receita total estimada (mês)</h3>
+      <div class="big-val">R$ 1.840</div>
+      <div class="big-sub">baseado nos preços cadastrados</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+      <div style="font-size:0.75rem;color:var(--text-soft);">72% da meta mensal</div>
+    </div>
+    <div class="stats-card">
+      <h3>Maior margem de lucro</h3>
+      <div class="top-recipe"><span class="name">Bolo Alto</span><span class="profit">81%</span></div>
+      <div class="top-recipe"><span class="name">Trufa de Chocolate</span><span class="profit">74%</span></div>
+      <div class="top-recipe"><span class="name">Brownie Gourmet</span><span class="profit">68%</span></div>
+      <div class="top-recipe"><span class="name">Bolo de Pote</span><span class="profit">65%</span></div>
+    </div>
+    <div class="stats-card">
+      <h3>Menor custo de produção</h3>
+      <div class="top-recipe"><span class="name">Bolo de Pote</span><span class="profit" style="color:var(--wine);">R$ 12,40</span></div>
+      <div class="top-recipe"><span class="name">Brigadeiro (dz)</span><span class="profit" style="color:var(--wine);">R$ 14,20</span></div>
+      <div class="top-recipe"><span class="name">Cookie Recheado</span><span class="profit" style="color:var(--wine);">R$ 18,90</span></div>
+    </div>
+    <div class="stats-card">
+      <h3>Receitas cadastradas</h3>
+      <div class="big-val">12</div>
+      <div class="big-sub">em 4 categorias</div>
     </div>
   </div>
 </div>
-<nav class="mobile-nav">
-  <div class="mobile-nav-item active" data-page="dashboard" onclick="mobileNav('dashboard')">
-    <svg class="mni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 17V13M12 17V7M16 17v-5"/></svg>
-    <span>Dashboard</span>
+
+<!-- ===== PAGE: PERFIL ===== -->
+<div class="page" id="page-perfil">
+  <div class="form-page">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">🎂</div>
+      <div style="font-weight:700;font-size:1.1rem;">Sweet Olivia</div>
+      <div style="font-size:0.82rem;color:var(--text-soft);">Doces Gourmet</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nome do negócio</label>
+      <input class="form-input" value="Sweet Olivia">
+    </div>
+    <div class="form-group">
+      <label class="form-label">E-mail</label>
+      <input class="form-input" type="email" value="contato@sweetolivia.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Cidade</label>
+      <input class="form-input" value="Juazeiro do Norte, CE">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Custo/hora da mão de obra (R$)</label>
+      <input class="form-input" type="number" value="8.00">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Custo do gás (R$ por botijão)</label>
+      <input class="form-input" type="number" value="120.00">
+    </div>
+    <button class="save-btn" onclick="showToast('Perfil salvo! ✓')">Salvar Perfil</button>
   </div>
-  <div class="mobile-nav-item" data-page="pedidos" onclick="mobileNav('pedidos')">
-    <svg class="mni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-    <span>Pedidos</span>
+</div>
+
+<!-- ===== PAGE: CARDÁPIO ===== -->
+<div class="page" id="page-cardapio">
+  <div class="form-page">
+    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Cardápio Digital</h2>
+    <div class="home-card" style="margin-bottom:14px;">
+      <div class="card-title"><span class="icon">🔗</span> Seu link</div>
+      <div class="share-url">sweetolivia.com/menu/doceria</div>
+      <div class="share-btns">
+        <button class="share-btn" onclick="showToast('Link copiado!')">📋</button>
+        <button class="share-btn" onclick="showToast('Compartilhado!')">↗️</button>
+      </div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-soft);">As receitas marcadas como "Exibir no Cardápio Digital" aparecerão automaticamente no seu cardápio público.</p>
+    <div style="margin-top:16px;">
+      <div style="font-weight:700;margin-bottom:8px;font-size:0.95rem;">Receitas no cardápio:</div>
+      <div class="recipe-item" style="padding:12px 0;">
+        <div class="recipe-info">
+          <div class="recipe-name">Bolo de Pote Nutella</div>
+          <div class="recipe-meta">R$ 22,00 · visível</div>
+        </div>
+        <input type="checkbox" checked style="accent-color:var(--wine);width:18px;height:18px;">
+      </div>
+      <div class="recipe-item" style="padding:12px 0;">
+        <div class="recipe-info">
+          <div class="recipe-name">Brownie Gourmet</div>
+          <div class="recipe-meta">R$ 55,00 · visível</div>
+        </div>
+        <input type="checkbox" checked style="accent-color:var(--wine);width:18px;height:18px;">
+      </div>
+    </div>
   </div>
-  <div class="mobile-nav-item" data-page="ingredientes" onclick="mobileNav('ingredientes')">
-    <svg class="mni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12m0 0C12 7 8 4 4 6m8 6c0-5 4-8 8-6"/><circle cx="12" cy="8" r="2"/></svg>
-    <span>Ingredientes</span>
+</div>
+
+<!-- ===== PAGE: ELETRO ===== -->
+<div class="page" id="page-eletro">
+  <div class="form-page">
+    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Eletrodomésticos</h2>
+    <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:16px;">Cadastre seus eletrodomésticos para calcular o custo de energia elétrica nas suas receitas.</p>
+    <div class="stats-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div class="client-name">Batedeira KitchenAid</div><div class="client-meta">300W · R$ 0,25/h</div></div>
+        <button class="more-btn">⋮</button>
+      </div>
+    </div>
+    <div class="stats-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div class="client-name">Forno elétrico</div><div class="client-meta">1800W · R$ 1,50/h</div></div>
+        <button class="more-btn">⋮</button>
+      </div>
+    </div>
+    <button class="save-btn" style="margin-top:8px;" onclick="showToast('Eletrodoméstico adicionado!')">+ Novo Eletrodoméstico</button>
   </div>
-  <div class="mobile-nav-item" data-page="receitas" onclick="mobileNav('receitas')">
-    <svg class="mni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
-    <span>Receitas</span>
+</div>
+
+<!-- ===== PAGE: SENHA ===== -->
+<div class="page" id="page-senha">
+  <div class="form-page">
+    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:20px;">Alterar Senha</h2>
+    <div class="form-group">
+      <label class="form-label">Senha atual</label>
+      <input class="form-input" type="password" placeholder="••••••••">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nova senha</label>
+      <input class="form-input" type="password" placeholder="••••••••">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Confirmar nova senha</label>
+      <input class="form-input" type="password" placeholder="••••••••">
+    </div>
+    <button class="save-btn" onclick="showToast('Senha alterada com sucesso! ✓')">Salvar nova senha</button>
   </div>
-  <div class="mobile-nav-item" onclick="toggleDrawer()">
-    <svg class="mni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    <span>Mais</span>
+</div>
+
+<!-- ===== PAGE: PLANOS ===== -->
+<div class="page" id="page-planos">
+  <div class="form-page">
+    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Planos de Assinatura</h2>
+    <div class="home-card" style="border:2px solid var(--wine);margin-bottom:14px;">
+      <div class="card-title">🌸 Plano Básico — Grátis</div>
+      <p>Até 5 receitas · Ingredientes ilimitados · Precificação básica</p>
+    </div>
+    <div class="home-card" style="border:2px solid var(--pink);background:linear-gradient(135deg,#fff0f7,white);margin-bottom:14px;">
+      <div class="card-title" style="color:var(--pink);">✨ Plano Pro — R$ 19,90/mês</div>
+      <p>Receitas ilimitadas · Cardápio digital · Estatísticas avançadas · Info nutricional · Suporte prioritário</p>
+      <button class="save-btn" style="margin-top:12px;" onclick="showToast('Redirecionando para pagamento...')">Assinar Agora</button>
+    </div>
   </div>
+</div>
+
+<!-- ===== PAGE: APRENDER ===== -->
+<div class="page" id="page-aprender">
+  <div class="form-page">
+    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Aprenda a Usar</h2>
+    <div class="home-card" onclick="showToast('Abrindo tutorial...')" style="cursor:pointer;margin-bottom:12px;">
+      <div class="card-title">▶️ Como cadastrar uma receita</div>
+      <p>Aprenda a criar e organizar suas receitas passo a passo.</p>
+    </div>
+    <div class="home-card" onclick="showToast('Abrindo tutorial...')" style="cursor:pointer;margin-bottom:12px;">
+      <div class="card-title">▶️ Como precificar seus produtos</div>
+      <p>Entenda como calcular o preço ideal para seu negócio.</p>
+    </div>
+    <div class="home-card" onclick="showToast('Abrindo tutorial...')" style="cursor:pointer;margin-bottom:12px;">
+      <div class="card-title">▶️ Cardápio Digital</div>
+      <p>Veja como configurar e compartilhar seu cardápio online.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: SUPORTE ===== -->
+<div class="page" id="page-suporte">
+  <div class="form-page">
+    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Suporte</h2>
+    <div class="form-group">
+      <label class="form-label">Assunto</label>
+      <input class="form-input" placeholder="Descreva brevemente o problema">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Mensagem</label>
+      <textarea class="form-input" rows="5" placeholder="Descreva sua dúvida ou problema em detalhes..."></textarea>
+    </div>
+    <button class="save-btn" onclick="showToast('Mensagem enviada! Responderemos em breve 💌')">Enviar mensagem</button>
+    <div style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--text-soft);">
+      Ou fale pelo WhatsApp:<br>
+      <a href="#" style="color:var(--wine);font-weight:700;">(88) 9 9999-9999</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Novo Ingrediente -->
+<div class="modal-overlay" id="modal-novoIngrediente">
+  <div class="modal">
+    <h3>Novo Ingrediente</h3>
+    <div class="form-group">
+      <label class="form-label">Nome</label>
+      <input class="form-input" placeholder="Ex: Farinha de Trigo">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Preço (R$)</label>
+      <input class="form-input" type="number" placeholder="0,00">
+    </div>
+    <div class="form-group" style="display:flex;gap:10px;">
+      <div style="flex:1">
+        <label class="form-label">Quantidade</label>
+        <input class="form-input" type="number" placeholder="1000">
+      </div>
+      <div style="flex:1">
+        <label class="form-label">Unidade</label>
+        <select class="form-select">
+          <option>g</option><option>kg</option><option>ml</option><option>l</option><option>un.</option><option>cm</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('novoIngrediente')">Cancelar</button>
+      <button class="modal-btn confirm" onclick="closeModal('novoIngrediente');showToast('Ingrediente adicionado! ✓')">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bnav-item active" id="bnav-home" onclick="navigate('home')">
+    <span class="bicon">🏠</span> Início
+  </button>
+  <button class="bnav-item" id="bnav-receitas" onclick="navigate('receitas')">
+    <span class="bicon">📝</span> Receitas
+  </button>
+  <button class="bnav-item" id="bnav-ingredientes" onclick="navigate('ingredientes')">
+    <span class="bicon">🧂</span> Ingredientes
+  </button>
+  <button class="bnav-item" id="bnav-clientes" onclick="navigate('clientes')">
+    <span class="bicon">👥</span> Clientes
+  </button>
+  <button class="bnav-item" id="bnav-stats" onclick="navigate('stats')">
+    <span class="bicon">📊</span> Stats
+  </button>
 </nav>
 
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
-// Unregister any old service workers that might block localStorage
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(regs => {
-    regs.forEach(r => r.unregister());
-  });
+// ====== DATA ======
+let recipes = [
+  { id:1, name:'Bolo Alto', price:'R$ 140,00', qty:'12 fatias', warn:true },
+  { id:2, name:'Bolo de Pote Nutella', price:'R$ 22,00', qty:'1 unidade', warn:false },
+  { id:3, name:'Brownie Gourmet', price:'R$ 55,00', qty:'12 unidades', warn:true },
+  { id:4, name:'Trufa de Chocolate', price:'R$ 45,00', qty:'20 unidades', warn:true },
+  { id:5, name:'Cookie Recheado', price:'R$ 38,00', qty:'12 unidades', warn:false },
+  { id:6, name:'Brigadeiro (dz)', price:'R$ 18,00', qty:'12 unidades', warn:true },
+  { id:7, name:'Bolo de Aipim', price:'R$ 65,00', qty:'15 fatias', warn:true },
+  { id:8, name:'Bolo de Flocão', price:'', qty:'15 fatias', warn:true },
+];
+
+let openDropdown = null;
+
+// ====== NAVIGATION ======
+const pageMap = {
+  home: 'page-home',
+  receitas: 'page-receitas',
+  ingredientes: 'page-ingredientes',
+  pricing: 'page-pricing',
+  editar: 'page-editar',
+  nutri: 'page-nutri',
+  clientes: 'page-clientes',
+  stats: 'page-stats',
+  perfil: 'page-perfil',
+  cardapio: 'page-cardapio',
+  eletro: 'page-eletro',
+  senha: 'page-senha',
+  planos: 'page-planos',
+  aprender: 'page-aprender',
+  suporte: 'page-suporte',
+};
+
+const bnavMap = {
+  home: 'bnav-home',
+  receitas: 'bnav-receitas',
+  ingredientes: 'bnav-ingredientes',
+  clientes: 'bnav-clientes',
+  stats: 'bnav-stats',
+};
+
+const titles = {
+  home: 'Sweet Olivia',
+  receitas: 'Receitas',
+  ingredientes: 'Ingredientes e Insumos',
+  pricing: 'Precificação',
+  editar: 'Editar Receita',
+  nutri: 'Info Nutricional',
+  clientes: 'Clientes',
+  stats: 'Estatísticas',
+  perfil: 'Meu Perfil',
+  cardapio: 'Cardápio Digital',
+  eletro: 'Eletrodomésticos',
+  senha: 'Alterar Senha',
+  planos: 'Planos',
+  aprender: 'Aprenda a Usar',
+  suporte: 'Suporte',
+};
+
+function navigate(page) {
+  closeDropdowns();
+  closeSidebar();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageMap[page]).classList.add('active');
+  document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+  if(bnavMap[page]) document.getElementById(bnavMap[page]).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('topBarTitle').innerHTML = `<em>${titles[page] || 'Sweet Olivia'}</em>`;
+  if(page === 'receitas') renderRecipes();
+  window.scrollTo(0,0);
 }
+
+// ====== SIDEBAR ======
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ====== RECIPES ======
+function renderRecipes(filter = '') {
+  const list = document.getElementById('recipeList');
+  const filtered = recipes.filter(r => r.name.toLowerCase().includes(filter.toLowerCase()));
+  list.innerHTML = filtered.map(r => `
+    <div class="recipe-item" id="ritem-${r.id}">
+      <div class="recipe-info">
+        <div class="recipe-name">${r.name} ${r.warn ? '<span class="warn-icon">⚠️</span>' : ''}</div>
+        ${r.price ? `<div class="recipe-price">${r.price}</div>` : ''}
+        <div class="recipe-meta">${r.qty}</div>
+      </div>
+      <button class="more-btn" onclick="toggleDropdown(event, ${r.id})">⋮</button>
+      <div class="dropdown-menu" id="dd-${r.id}" style="display:none;">
+        <button class="dropdown-item" onclick="editRecipe(${r.id})">✏️ Editar</button>
+        <button class="dropdown-item" onclick="copyRecipe(${r.id})">📋 Copiar</button>
+        <button class="dropdown-item" onclick="pricingRecipe(${r.id})">💰 Precificação</button>
+        <button class="dropdown-item" onclick="nutriRecipe(${r.id})">🥗 Info Nutricional</button>
+        <button class="dropdown-item danger" onclick="deleteRecipe(${r.id})">❌ Excluir</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleDropdown(e, id) {
+  e.stopPropagation();
+  const dd = document.getElementById(`dd-${id}`);
+  if(openDropdown && openDropdown !== dd) openDropdown.style.display = 'none';
+  dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
+  openDropdown = dd.style.display === 'block' ? dd : null;
+}
+
+function closeDropdowns() {
+  document.querySelectorAll('.dropdown-menu').forEach(d => d.style.display = 'none');
+  openDropdown = null;
+}
+document.addEventListener('click', closeDropdowns);
+
+function editRecipe(id) {
+  const r = recipes.find(x => x.id === id);
+  document.getElementById('editarTitle').textContent = 'Editar Receita';
+  document.getElementById('editTitulo').value = r.name;
+  navigate('editar');
+}
+
+function openNewRecipe() {
+  document.getElementById('editarTitle').textContent = 'Nova Receita';
+  document.getElementById('editTitulo').value = '';
+  document.getElementById('editTempo').value = '';
+  document.getElementById('editGas').value = '';
+  document.getElementById('editRendimento').value = '';
+  document.getElementById('editPreco').value = '';
+  navigate('editar');
+}
+
+function saveRecipe() {
+  const titulo = document.getElementById('editTitulo').value;
+  if(!titulo) { showToast('Informe o título da receita!'); return; }
+  const precoVal = document.getElementById('editPreco').value;
+  const existing = recipes.find(r => r.name === titulo);
+  if(!existing) {
+    recipes.push({ id: Date.now(), name: titulo, price: precoVal ? `R$ ${precoVal}` : '', qty: `${document.getElementById('editRendimento').value || '?'} ${document.getElementById('editMedida').value}`, warn: false });
+  }
+  showToast('Receita salva! ✓');
+  navigate('receitas');
+}
+
+function copyRecipe(id) {
+  const r = recipes.find(x => x.id === id);
+  recipes.push({ ...r, id: Date.now(), name: r.name + ' (cópia)' });
+  renderRecipes();
+  showToast('Receita copiada! ✓');
+}
+
+function deleteRecipe(id) {
+  recipes = recipes.filter(r => r.id !== id);
+  renderRecipes();
+  showToast('Receita excluída.');
+}
+
+function pricingRecipe(id) {
+  const r = recipes.find(x => x.id === id);
+  document.getElementById('pricingRecipeName').textContent = r.name;
+  navigate('pricing');
+}
+
+function nutriRecipe(id) {
+  navigate('nutri');
+}
+
+function filterRecipes(val) { renderRecipes(val); }
+
+// ====== PRICING SLIDER ======
+function updatePricing(val) {
+  const custo = 77.31;
+  const margem = parseInt(val);
+  const lucro = custo * (margem / 100);
+  const preco = custo + lucro;
+  document.getElementById('margemVal').textContent = margem + '%';
+  document.getElementById('lucroVal').textContent = 'R$ ' + lucro.toFixed(2).replace('.', ',');
+  document.getElementById('precoFinal').value = 'R$ ' + preco.toFixed(2).replace('.', ',');
+}
+
+function updateFromPrice(val) {
+  const custo = 77.31;
+  const num = parseFloat(val.replace('R$','').replace(',','.').trim());
+  if(!isNaN(num) && num > 0) {
+    const margem = Math.round(((num - custo) / custo) * 100);
+    document.getElementById('margemVal').textContent = margem + '%';
+    document.getElementById('lucroVal').textContent = 'R$ ' + (num - custo).toFixed(2).replace('.', ',');
+    document.getElementById('lucroSlider').value = Math.min(Math.max(margem, 0), 200);
+  }
+}
+
+// ====== MODAL ======
+function showModal(id) {
+  document.getElementById('modal-' + id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById('modal-' + id).classList.remove('open');
+}
+
+// ====== TOAST ======
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ====== INIT ======
+renderRecipes();
 </script>
 </body>
 </html>
