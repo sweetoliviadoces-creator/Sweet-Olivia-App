@@ -3,1440 +3,1328 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Sweet Olivia – Doces Gourmet</title>
+<title>Sweet Olivia</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --pink: #E8649A;
-    --dark-pink: #C1537F;
-    --wine: #7B2D4E;
-    --wine-light: #9B3D64;
-    --bg: #EAF4F8;
-    --bg2: #F7FBFD;
-    --white: #ffffff;
-    --text: #3a2030;
-    --text-soft: #7a5068;
-    --border: #dce8ef;
-    --success: #4caf50;
-    --warning: #f5a623;
-    --danger: #e53935;
-    --shadow: 0 2px 12px rgba(123,45,78,0.10);
-    --shadow-lg: 0 8px 32px rgba(123,45,78,0.15);
-  }
+:root {
+  --pink:#E8649A; --dark-pink:#C1537F; --wine:#7B2D4E; --wine-light:#9B3D64;
+  --bg:#EAF4F8; --bg2:#F7FBFD; --white:#ffffff;
+  --text:#3a2030; --text-soft:#7a5068; --border:#dce8ef;
+  --success:#4caf50; --warning:#f5a623; --danger:#e53935;
+  --shadow:0 2px 12px rgba(123,45,78,0.10); --shadow-lg:0 8px 32px rgba(123,45,78,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:430px;margin:0 auto;position:relative;overflow-x:hidden;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* TOP BAR */
+.top-bar{background:var(--white);display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(123,45,78,0.07);}
+.top-bar .brand{font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;color:var(--wine);}
+.menu-btn{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;}
+.menu-btn span{display:block;width:22px;height:2px;background:var(--wine);border-radius:2px;}
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    max-width: 430px;
-    margin: 0 auto;
-    position: relative;
-    overflow-x: hidden;
-  }
+/* SIDEBAR */
+.sidebar-overlay{position:fixed;inset:0;background:rgba(58,32,48,0.4);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.sidebar-overlay.open{opacity:1;pointer-events:all;}
+.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:280px;background:var(--white);z-index:201;transition:left 0.3s ease;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;}
+.sidebar.open{left:0;}
+.sidebar-header{padding:28px 22px 18px;border-bottom:1px solid var(--border);}
+.sidebar-header .brand-big{font-family:'Playfair Display',serif;font-style:italic;font-size:1.7rem;color:var(--wine);}
+.sidebar-header .brand-big span{color:var(--pink);}
+.sidebar nav{flex:1;overflow-y:auto;padding:10px 0;}
+.nav-item{display:flex;align-items:center;gap:14px;padding:13px 22px;cursor:pointer;color:var(--text);font-size:0.95rem;font-weight:500;transition:background 0.15s;border:none;background:none;width:100%;text-align:left;}
+.nav-item:hover,.nav-item.active{background:linear-gradient(90deg,#fce8f2 0%,transparent 100%);color:var(--wine);}
+.nav-item .nav-icon{font-size:1.1rem;width:20px;text-align:center;}
+.nav-item.danger{color:var(--danger);}
 
-  /* ====== TOP BAR ====== */
-  .top-bar {
-    background: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(123,45,78,0.07);
-  }
-  .top-bar .brand {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.3rem;
-    color: var(--wine);
-    letter-spacing: 0.5px;
-  }
-  .top-bar .menu-btn {
-    background: none; border: none; cursor: pointer;
-    display: flex; flex-direction: column; gap: 5px; padding: 4px;
-  }
-  .menu-btn span {
-    display: block; width: 22px; height: 2px;
-    background: var(--wine); border-radius: 2px;
-    transition: all 0.3s;
-  }
-  .top-bar .help-btn {
-    background: none; border: none; cursor: pointer;
-    width: 28px; height: 28px; border-radius: 50%;
-    border: 2px solid var(--border);
-    color: var(--text-soft); font-size: 0.9rem;
-    display: flex; align-items: center; justify-content: center;
-  }
+/* PAGES */
+.page{display:none;padding-bottom:90px;min-height:calc(100vh - 60px);}
+.page.active{display:block;}
 
-  /* ====== SIDEBAR ====== */
-  .sidebar-overlay {
-    position: fixed; inset: 0; background: rgba(58,32,48,0.4);
-    z-index: 200; opacity: 0; pointer-events: none;
-    transition: opacity 0.3s;
-  }
-  .sidebar-overlay.open { opacity: 1; pointer-events: all; }
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid var(--border);display:flex;z-index:100;box-shadow:0 -2px 12px rgba(123,45,78,0.08);}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 10px;cursor:pointer;border:none;background:none;color:var(--text-soft);font-size:0.6rem;font-family:'Nunito',sans-serif;font-weight:600;gap:3px;transition:color 0.15s;}
+.bnav-item.active{color:var(--wine);}
+.bnav-item .bicon{font-size:1.25rem;}
 
-  .sidebar {
-    position: fixed; left: -280px; top: 0; bottom: 0;
-    width: 280px; background: var(--white);
-    z-index: 201; transition: left 0.3s ease;
-    box-shadow: var(--shadow-lg);
-    display: flex; flex-direction: column;
-  }
-  .sidebar.open { left: 0; }
+/* SECTION HEADER */
+.page-header{background:var(--white);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.page-header h2{font-size:1.02rem;font-weight:700;flex:1;}
+.back-btn{background:none;border:none;cursor:pointer;color:var(--wine);font-size:1.3rem;padding:2px 6px 2px 0;}
 
-  .sidebar-header {
-    padding: 28px 22px 18px;
-    border-bottom: 1px solid var(--border);
-  }
-  .sidebar-header .brand-big {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.7rem;
-    color: var(--wine);
-  }
-  .sidebar-header .brand-big span { color: var(--pink); }
+/* SEARCH */
+.search-wrap{padding:10px 16px;}
+.search-inner{position:relative;}
+.search-box{width:100%;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:9px 14px 9px 36px;font-size:0.88rem;color:var(--text);font-family:'Nunito',sans-serif;outline:none;}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-soft);font-size:0.9rem;pointer-events:none;}
 
-  .sidebar nav { flex: 1; overflow-y: auto; padding: 10px 0; }
-  .nav-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 13px 22px; cursor: pointer;
-    color: var(--text); font-size: 0.95rem; font-weight: 500;
-    transition: background 0.15s;
-    border: none; background: none; width: 100%; text-align: left;
-  }
-  .nav-item:hover, .nav-item.active {
-    background: linear-gradient(90deg, #fce8f2 0%, transparent 100%);
-    color: var(--wine);
-  }
-  .nav-item .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
-  .nav-item.danger { color: var(--danger); }
-  .nav-item.danger:hover { background: #fff0f0; }
+/* LIST ITEMS */
+.list-item{background:var(--white);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:relative;}
+.list-item:first-child{border-top:1px solid var(--border);}
+.item-main{flex:1;}
+.item-name{font-weight:600;font-size:0.94rem;}
+.item-sub{font-size:0.78rem;color:var(--text-soft);margin-top:2px;}
+.item-right{text-align:right;flex-shrink:0;margin-left:8px;}
+.item-val{font-size:0.88rem;font-weight:600;color:var(--wine);}
+.item-qty{font-size:0.78rem;color:var(--text-soft);}
 
-  /* ====== PAGES ====== */
-  .page { display: none; padding: 0 0 90px; min-height: calc(100vh - 60px); }
-  .page.active { display: block; }
+/* MORE BTN + DROPDOWN */
+.more-btn{background:none;border:none;cursor:pointer;color:var(--text-soft);padding:6px 10px;font-size:1.2rem;flex-shrink:0;}
+.dd{position:absolute;right:8px;top:44px;background:var(--white);border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.18);z-index:50;min-width:155px;overflow:hidden;animation:fadeIn 0.15s ease;}
+.dd-item{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:0.87rem;cursor:pointer;border:none;background:none;width:100%;color:var(--text);font-family:'Nunito',sans-serif;font-weight:500;}
+.dd-item:hover{background:#fce8f2;}
+.dd-item.danger{color:var(--danger);}
+.dd-item.danger:hover{background:#fff0f0;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 
-  /* ====== HOME PAGE ====== */
-  .home-welcome {
-    background: linear-gradient(135deg, var(--wine) 0%, var(--wine-light) 100%);
-    padding: 24px 20px 28px;
-    color: white;
-  }
-  .home-welcome .greeting {
-    font-size: 0.85rem; opacity: 0.85; margin-bottom: 4px;
-  }
-  .home-welcome h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem; margin-bottom: 6px;
-  }
-  .home-welcome h1 span { color: #f8bdd0; }
-  .home-welcome .subtitle { font-size: 0.82rem; opacity: 0.75; }
+/* FAB */
+.fab{position:fixed;bottom:72px;right:16px;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;border:none;border-radius:24px;padding:13px 20px;font-size:0.88rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 4px 18px rgba(123,45,78,0.35);display:flex;align-items:center;gap:8px;transition:transform 0.15s;z-index:90;}
+.fab:hover{transform:scale(1.04);}
 
-  .home-stats-row {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px; padding: 18px 16px 0;
-  }
-  .stat-card {
-    background: var(--white); border-radius: 14px;
-    padding: 14px 10px; text-align: center;
-    box-shadow: var(--shadow);
-  }
-  .stat-card .stat-num {
-    font-size: 1.4rem; font-weight: 700; color: var(--wine);
-    font-family: 'Playfair Display', serif;
-  }
-  .stat-card .stat-label {
-    font-size: 0.7rem; color: var(--text-soft); margin-top: 3px;
-  }
+/* FORMS */
+.form-page{padding:16px 16px 90px;}
+.form-group{margin-bottom:14px;}
+.form-label{font-size:0.76rem;color:var(--text-soft);display:block;margin-bottom:5px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:0.92rem;font-family:'Nunito',sans-serif;color:var(--text);outline:none;background:var(--white);transition:border-color 0.2s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--pink);}
+.form-textarea{resize:vertical;min-height:80px;}
+.form-row{display:flex;gap:10px;}
+.form-row .form-group{flex:1;}
+.save-btn{width:100%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;border:none;border-radius:12px;padding:13px;font-size:0.95rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-top:6px;transition:opacity 0.2s;}
+.save-btn:hover{opacity:0.92;}
+.cancel-btn{width:100%;background:var(--border);color:var(--text);border:none;border-radius:12px;padding:13px;font-size:0.95rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-top:8px;}
+.section-label{font-weight:700;color:var(--wine);font-size:0.9rem;margin:18px 0 8px;display:block;}
 
-  .section-cards { padding: 14px 16px 0; display: flex; flex-direction: column; gap: 13px; }
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(58,32,48,0.5);z-index:300;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--white);border-radius:20px 20px 0 0;width:100%;max-width:430px;padding:24px 20px 36px;transform:translateY(100%);transition:transform 0.3s ease;box-shadow:0 -4px 30px rgba(0,0,0,0.15);max-height:90vh;overflow-y:auto;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-title{font-size:1.1rem;font-weight:700;color:var(--wine);margin-bottom:18px;}
+.modal-btns{display:flex;gap:10px;margin-top:16px;}
+.modal-btn{flex:1;padding:12px;border-radius:12px;border:none;font-size:0.9rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;}
+.modal-btn.cancel{background:var(--border);color:var(--text);}
+.modal-btn.confirm{background:linear-gradient(135deg,var(--pink),var(--wine));color:white;}
+.modal-btn.danger-btn{background:var(--danger);color:white;}
 
-  .home-card {
-    background: var(--white); border-radius: 16px;
-    padding: 18px; box-shadow: var(--shadow);
-  }
-  .home-card .card-title {
-    display: flex; align-items: center; gap: 10px;
-    font-weight: 700; font-size: 1rem; color: var(--wine);
-    margin-bottom: 8px;
-  }
-  .home-card .card-title .icon { font-size: 1.15rem; }
-  .home-card p { font-size: 0.83rem; color: var(--text-soft); line-height: 1.5; }
-  .home-card .card-link {
-    display: inline-block; margin-top: 10px;
-    font-size: 0.78rem; font-weight: 700;
-    color: var(--wine); text-transform: uppercase;
-    letter-spacing: 0.5px; cursor: pointer;
-    border: none; background: none; padding: 0;
-  }
+/* TOAST */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--wine);color:white;padding:10px 22px;border-radius:24px;font-size:0.88rem;font-weight:600;z-index:500;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-  .share-url {
-    font-size: 0.82rem; color: var(--wine-light);
-    font-weight: 600; margin: 6px 0 10px;
-  }
-  .share-btns { display: flex; gap: 8px; }
-  .share-btn {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: var(--wine); color: white;
-    border: none; cursor: pointer; font-size: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.15s, background 0.15s;
-  }
-  .share-btn:hover { transform: scale(1.08); background: var(--pink); }
+/* HOME */
+.home-welcome{background:linear-gradient(135deg,var(--wine) 0%,var(--wine-light) 100%);padding:24px 20px 28px;color:white;}
+.home-welcome .greeting{font-size:0.85rem;opacity:0.85;margin-bottom:4px;}
+.home-welcome h1{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:4px;}
+.home-welcome h1 span{color:#f8bdd0;}
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;padding:14px 14px 0;}
+.stat-card{background:var(--white);border-radius:14px;padding:12px 8px;text-align:center;box-shadow:var(--shadow);}
+.stat-num{font-size:1.3rem;font-weight:700;color:var(--wine);font-family:'Playfair Display',serif;}
+.stat-label{font-size:0.66rem;color:var(--text-soft);margin-top:2px;}
+.home-sections{padding:14px 14px 0;display:flex;flex-direction:column;gap:12px;}
+.home-card{background:var(--white);border-radius:16px;padding:16px;box-shadow:var(--shadow);cursor:pointer;}
+.home-card-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:0.97rem;color:var(--wine);margin-bottom:6px;}
+.home-card p{font-size:0.82rem;color:var(--text-soft);}
 
-  /* ====== RECEITAS PAGE ====== */
-  .list-header {
-    display: flex; align-items: center; gap: 10px;
-    padding: 14px 16px 6px;
-    position: relative;
-  }
-  .search-box {
-    flex: 1; background: var(--white); border: 1px solid var(--border);
-    border-radius: 20px; padding: 8px 14px 8px 36px;
-    font-size: 0.88rem; color: var(--text);
-    font-family: 'Nunito', sans-serif;
-    outline: none;
-  }
-  .search-wrap { flex: 1; position: relative; }
-  .search-icon {
-    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-    color: var(--text-soft); font-size: 0.9rem; pointer-events: none;
-  }
+/* FINANCEIRO */
+.fin-card{background:var(--white);border-radius:16px;padding:18px;margin:14px 14px 0;box-shadow:var(--shadow);}
+.fin-card h3{font-size:0.82rem;color:var(--text-soft);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+.fin-big{font-family:'Playfair Display',serif;font-size:2rem;color:var(--wine);font-weight:700;}
+.fin-sub{font-size:0.78rem;color:var(--text-soft);margin-top:2px;}
+.fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 14px 0;}
+.fin-mini{background:var(--white);border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+.fin-mini h4{font-size:0.74rem;color:var(--text-soft);margin-bottom:4px;}
+.fin-mini .val{font-size:1.1rem;font-weight:700;color:var(--wine);}
+.fin-mini .val.green{color:var(--success);}
+.fin-mini .val.orange{color:var(--warning);}
+.fin-list-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:0.88rem;}
+.fin-list-item:last-child{border:none;}
+.badge{display:inline-block;font-size:0.68rem;font-weight:700;border-radius:20px;padding:2px 8px;}
+.badge-green{background:#e8f5e9;color:var(--success);}
+.badge-orange{background:#fff3e0;color:var(--warning);}
+.badge-red{background:#ffebee;color:var(--danger);}
+.badge-blue{background:#e3f2fd;color:#1565c0;}
 
-  .recipe-list { padding: 8px 16px; display: flex; flex-direction: column; gap: 0; }
-  .recipe-item {
-    background: var(--white); border-radius: 0; padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    position: relative;
-  }
-  .recipe-item:first-child { border-top: 1px solid var(--border); }
-  .recipe-info .recipe-name { font-weight: 600; font-size: 0.95rem; color: var(--text); }
-  .recipe-info .recipe-meta {
-    font-size: 0.78rem; color: var(--text-soft); margin-top: 2px;
-  }
-  .recipe-info .recipe-price {
-    font-size: 0.83rem; color: var(--wine); font-weight: 600; margin-top: 1px;
-  }
-  .warn-icon { color: var(--warning); font-size: 0.75rem; }
+/* PEDIDO DETAIL */
+.pedido-section{padding:12px 16px 0;}
+.pedido-section h4{font-size:0.78rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+.pedido-item-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.88rem;}
+.pedido-item-row:last-child{border:none;}
+.timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--pink);flex-shrink:0;margin-top:3px;}
 
-  .more-btn {
-    background: none; border: none; cursor: pointer;
-    color: var(--text-soft); padding: 4px 8px; font-size: 1.1rem;
-  }
+/* INGREDIENTE em receita */
+.ing-tag{display:inline-flex;align-items:center;gap:6px;background:#fce8f2;color:var(--wine);border-radius:20px;padding:5px 12px;font-size:0.82rem;font-weight:600;margin:4px;}
+.ing-tag .rm{cursor:pointer;font-size:1rem;color:var(--dark-pink);}
+.add-ing-row{display:flex;gap:8px;align-items:flex-end;}
+.add-ing-row .form-group{flex:1;margin-bottom:0;}
+.add-ing-row .form-group:last-child{flex:0 0 80px;}
 
-  .dropdown-menu {
-    position: absolute; right: 0; top: 36px;
-    background: var(--white); border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    z-index: 50; min-width: 160px; overflow: hidden;
-    animation: fadeIn 0.15s ease;
-  }
-  .dropdown-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 16px; font-size: 0.88rem; cursor: pointer;
-    transition: background 0.12s; border: none; background: none;
-    width: 100%; color: var(--text); font-family: 'Nunito', sans-serif;
-  }
-  .dropdown-item:hover { background: #fce8f2; }
-  .dropdown-item.danger { color: var(--danger); }
-  .dropdown-item.danger:hover { background: #fff0f0; }
+/* WARN */
+.warn{color:var(--warning);font-size:0.8rem;}
 
-  @keyframes fadeIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: translateY(0); } }
+/* PRICING VIEW */
+.price-section{padding:0 16px;}
+.price-block{background:var(--white);border-radius:14px;padding:16px;margin-top:12px;box-shadow:var(--shadow);}
+.price-block h4{font-size:0.88rem;font-weight:700;color:var(--wine);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.price-row{display:flex;justify-content:space-between;padding:7px 0;font-size:0.88rem;border-bottom:1px solid #f0e8ec;}
+.price-row:last-child{border:none;}
+.price-row.total{font-weight:700;font-size:0.95rem;border-top:1.5px solid var(--border);padding-top:10px;margin-top:4px;}
+.price-row .v{font-weight:600;color:var(--wine);}
+.slider-wrap{margin:10px 0;}
+.slider-wrap input[type=range]{width:100%;accent-color:var(--wine);}
+.price-final-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:1.05rem;font-weight:700;font-family:'Nunito',sans-serif;color:var(--wine);outline:none;}
+.price-final-input:focus{border-color:var(--pink);}
 
-  /* ====== FAB ====== */
-  .fab {
-    position: fixed; bottom: 24px; right: 50%;
-    transform: translateX(50%);
-    background: linear-gradient(135deg, var(--pink), var(--wine));
-    color: white; border: none; border-radius: 24px;
-    padding: 13px 22px; font-size: 0.9rem; font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer; box-shadow: 0 4px 18px rgba(123,45,78,0.35);
-    display: flex; align-items: center; gap: 8px;
-    transition: transform 0.15s, box-shadow 0.15s;
-    z-index: 150;
-  }
-  .fab:hover { transform: translateX(50%) scale(1.04); box-shadow: 0 6px 22px rgba(123,45,78,0.4); }
-  .fab.hidden { display: none; }
+/* CLIENTE DETAIL */
+.client-header{padding:20px 16px;background:var(--white);text-align:center;border-bottom:1px solid var(--border);}
+.client-avatar-big{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-weight:700;font-size:1.5rem;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
+.client-name-big{font-size:1.1rem;font-weight:700;}
+.client-meta-big{font-size:0.82rem;color:var(--text-soft);}
 
-  /* ====== INGREDIENTES PAGE ====== */
-  .ingredient-item {
-    background: var(--white); padding: 13px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .ingredient-item:first-child { border-top: 1px solid var(--border); }
-  .ing-name { font-weight: 600; font-size: 0.92rem; }
-  .ing-price { font-size: 0.82rem; color: var(--wine); font-weight: 600; }
-  .ing-qty { font-size: 0.78rem; color: var(--text-soft); text-align: right; }
+.empty-state{text-align:center;padding:50px 20px;color:var(--text-soft);}
+.empty-state .emoji{font-size:3rem;margin-bottom:12px;}
+.empty-state p{font-size:0.9rem;}
 
-  /* ====== PRECIFICAÇÃO PAGE ====== */
-  .pricing-header {
-    padding: 20px 16px 10px;
-    display: flex; align-items: center; gap: 12px;
-    border-bottom: 1px solid var(--border);
-    background: var(--white);
-  }
-  .back-btn {
-    background: none; border: none; cursor: pointer;
-    color: var(--wine); font-size: 1.1rem; padding: 2px;
-  }
-  .pricing-header h2 { font-size: 1.05rem; font-weight: 700; color: var(--text); }
-
-  .recipe-hero { text-align: center; padding: 22px 16px 14px; }
-  .recipe-thumb {
-    width: 100px; height: 100px; border-radius: 16px;
-    object-fit: cover; box-shadow: var(--shadow);
-    background: #fce8f2; display: flex; align-items: center;
-    justify-content: center; font-size: 2.5rem; margin: 0 auto 12px;
-  }
-  .recipe-hero h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem; color: var(--text);
-  }
-
-  .etapa-block { padding: 0 16px 8px; }
-  .etapa-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem; color: var(--wine); padding: 14px 0 8px;
-    border-bottom: 1px solid var(--border); margin-bottom: 4px;
-  }
-  .etapa-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 10px 0; border-bottom: 1px solid #f0e8ec;
-  }
-  .etapa-row .ing-label { font-size: 0.88rem; }
-  .etapa-row .ing-label small { display: block; color: var(--text-soft); font-size: 0.76rem; }
-  .etapa-row .ing-val { font-size: 0.88rem; color: var(--wine); font-weight: 600; }
-  .subtotal-row {
-    display: flex; justify-content: space-between;
-    padding: 10px 0; font-weight: 700;
-    border-top: 1.5px solid var(--border); margin-top: 4px;
-  }
-
-  .custo-block {
-    background: var(--white); margin: 12px 16px;
-    border-radius: 16px; padding: 18px; box-shadow: var(--shadow);
-  }
-  .custo-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; text-align: center; margin-bottom: 14px; color: var(--text);
-  }
-  .custo-row {
-    display: flex; justify-content: space-between;
-    padding: 8px 0; border-bottom: 1px solid #f0e8ec;
-    font-size: 0.9rem;
-  }
-  .custo-row.total {
-    font-weight: 700; font-size: 1rem; border-bottom: none;
-    border-top: 1.5px solid var(--border); margin-top: 4px; padding-top: 12px;
-  }
-  .custo-row .val { font-weight: 600; color: var(--wine); }
-
-  .custo-info {
-    font-size: 0.78rem; text-align: center; color: var(--text-soft);
-    margin: 10px 0 6px;
-  }
-  .fatia-row {
-    display: flex; justify-content: space-between;
-    padding: 8px 0; font-size: 0.9rem;
-  }
-  .fatia-row .val { font-weight: 600; color: var(--wine); }
-  .fatia-row.bold { font-weight: 700; font-size: 1rem; }
-  .fatia-row.bold .val { color: var(--pink); }
-
-  .checkbox-row {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 0.82rem; color: var(--text-soft); margin-top: 8px;
-  }
-  .checkbox-row input { accent-color: var(--wine); width: 16px; height: 16px; }
-
-  .ajuste-block {
-    background: var(--white); margin: 0 16px 16px;
-    border-radius: 16px; padding: 18px; box-shadow: var(--shadow);
-  }
-  .ajuste-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; text-align: center; margin-bottom: 8px;
-  }
-  .ajuste-desc {
-    font-size: 0.78rem; color: var(--text-soft); text-align: center; margin-bottom: 16px;
-  }
-  .lucro-slider {
-    width: 100%; accent-color: var(--wine);
-    height: 4px; cursor: pointer; margin-bottom: 14px;
-  }
-  .lucro-row {
-    display: flex; justify-content: space-between;
-    font-size: 0.9rem; padding: 6px 0;
-  }
-  .lucro-row .val { font-weight: 700; color: var(--wine); }
-  .lucro-row.pink .val { color: var(--pink); font-size: 1rem; }
-
-  .price-input-wrap { margin: 12px 0 6px; }
-  .price-input-wrap label {
-    font-size: 0.78rem; color: var(--text-soft);
-    display: block; margin-bottom: 6px;
-  }
-  .price-input {
-    width: 100%; padding: 12px 14px;
-    border: 1.5px solid var(--border); border-radius: 12px;
-    font-size: 1rem; font-family: 'Nunito', sans-serif;
-    color: var(--text); outline: none;
-    transition: border-color 0.2s;
-  }
-  .price-input:focus { border-color: var(--pink); }
-
-  .save-btn {
-    width: 100%; background: linear-gradient(135deg, var(--pink), var(--wine));
-    color: white; border: none; border-radius: 12px;
-    padding: 13px; font-size: 0.95rem; font-weight: 700;
-    font-family: 'Nunito', sans-serif; cursor: pointer;
-    margin-top: 8px;
-    transition: opacity 0.2s;
-  }
-  .save-btn:hover { opacity: 0.92; }
-
-  /* ====== EDITAR RECEITA ====== */
-  .form-page { padding: 16px 16px 90px; }
-  .form-group { margin-bottom: 16px; }
-  .form-label {
-    font-size: 0.78rem; color: var(--text-soft);
-    display: block; margin-bottom: 5px; font-weight: 600;
-  }
-  .form-input, .form-select {
-    width: 100%; padding: 12px 14px;
-    border: 1.5px solid var(--border); border-radius: 12px;
-    font-size: 0.92rem; font-family: 'Nunito', sans-serif;
-    color: var(--text); outline: none; background: var(--white);
-    transition: border-color 0.2s;
-  }
-  .form-input:focus, .form-select:focus { border-color: var(--pink); }
-
-  .photo-area {
-    display: flex; flex-direction: column; align-items: center;
-    margin-bottom: 20px;
-  }
-  .photo-thumb {
-    width: 110px; height: 110px; border-radius: 16px;
-    background: #fce8f2; display: flex; align-items: center;
-    justify-content: center; font-size: 2.5rem; margin-bottom: 10px;
-    box-shadow: var(--shadow); border: 2px dashed var(--pink);
-  }
-  .photo-btns { display: flex; gap: 12px; }
-  .photo-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--wine); color: white; border: none;
-    cursor: pointer; font-size: 1rem;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .checkbox-label {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 0.88rem; cursor: pointer;
-  }
-  .checkbox-label input { accent-color: var(--wine); width: 16px; height: 16px; }
-
-  /* ====== NUTRICIONAL ====== */
-  .nutri-header-block {
-    text-align: center; padding: 22px 16px 10px;
-  }
-  .nutri-header-block h2 {
-    font-family: 'Playfair Display', serif; font-size: 1.4rem;
-  }
-  .nutri-desc {
-    font-size: 0.78rem; color: var(--text-soft);
-    line-height: 1.5; margin: 8px 0 14px; text-align: center;
-    padding: 0 10px;
-  }
-
-  .nutri-table {
-    margin: 0 16px 16px; background: var(--white);
-    border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);
-  }
-  .nutri-table-header {
-    background: var(--wine); color: white;
-    text-align: center; padding: 12px; font-weight: 700; font-size: 0.95rem;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .nutri-table-sub {
-    text-align: center; padding: 8px; font-size: 0.85rem;
-    border-bottom: 1.5px solid var(--wine); background: #f8f0f4;
-    font-weight: 600;
-  }
-  .nutri-row {
-    display: flex; justify-content: space-between;
-    padding: 10px 16px; border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-  }
-  .nutri-row .val { font-weight: 600; color: var(--wine); }
-  .nutri-footer {
-    text-align: center; padding: 10px; font-size: 0.75rem;
-    color: var(--text-soft); background: #f8f0f4;
-  }
-
-  .dl-btn {
-    display: block; width: calc(100% - 32px); margin: 0 16px 16px;
-    background: var(--white); color: var(--wine);
-    border: 2px solid var(--wine); border-radius: 12px;
-    padding: 13px; font-size: 0.92rem; font-weight: 700;
-    font-family: 'Nunito', sans-serif; cursor: pointer; text-align: center;
-    transition: background 0.2s, color 0.2s;
-  }
-  .dl-btn:hover { background: var(--wine); color: white; }
-
-  /* ====== CLIENTES ====== */
-  .client-item {
-    background: var(--white); padding: 14px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .client-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--pink), var(--wine));
-    color: white; font-weight: 700; font-size: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .client-info { flex: 1; margin-left: 12px; }
-  .client-name { font-weight: 600; font-size: 0.92rem; }
-  .client-meta { font-size: 0.78rem; color: var(--text-soft); }
-
-  /* ====== ESTATÍSTICAS ====== */
-  .stats-section { padding: 16px; }
-  .stats-card {
-    background: var(--white); border-radius: 16px;
-    padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow);
-  }
-  .stats-card h3 { font-size: 0.88rem; color: var(--text-soft); margin-bottom: 8px; }
-  .stats-card .big-val {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem; color: var(--wine); font-weight: 700;
-  }
-  .stats-card .big-sub { font-size: 0.78rem; color: var(--text-soft); }
-  .progress-bar {
-    height: 8px; background: var(--border); border-radius: 10px;
-    margin: 10px 0 4px; overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%; border-radius: 10px;
-    background: linear-gradient(90deg, var(--pink), var(--wine));
-    transition: width 0.5s ease;
-  }
-  .top-recipe { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
-  .top-recipe:last-child { border-bottom: none; }
-  .top-recipe .name { font-size: 0.88rem; font-weight: 600; }
-  .top-recipe .profit { font-size: 0.88rem; color: var(--pink); font-weight: 700; }
-
-  /* ====== MODAL ====== */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(58,32,48,0.5);
-    z-index: 300; display: flex; align-items: flex-end; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal {
-    background: var(--white); border-radius: 20px 20px 0 0;
-    width: 100%; max-width: 430px; padding: 24px 20px 34px;
-    transform: translateY(100%); transition: transform 0.3s ease;
-    box-shadow: 0 -4px 30px rgba(0,0,0,0.15);
-  }
-  .modal-overlay.open .modal { transform: translateY(0); }
-  .modal h3 { font-size: 1.1rem; margin-bottom: 18px; color: var(--wine); }
-  .modal-btns { display: flex; gap: 10px; margin-top: 18px; }
-  .modal-btn {
-    flex: 1; padding: 12px; border-radius: 12px; border: none;
-    font-size: 0.9rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .modal-btn.cancel { background: var(--border); color: var(--text); }
-  .modal-btn.confirm { background: linear-gradient(135deg, var(--pink), var(--wine)); color: white; }
-
-  /* ====== TOAST ====== */
-  .toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--wine); color: white; padding: 10px 22px;
-    border-radius: 24px; font-size: 0.88rem; font-weight: 600;
-    z-index: 500; opacity: 0; transition: all 0.3s;
-    pointer-events: none; white-space: nowrap;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  /* ====== NAV BAR ====== */
-  .bottom-nav {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 100%; max-width: 430px;
-    background: var(--white); border-top: 1px solid var(--border);
-    display: flex; z-index: 100;
-    box-shadow: 0 -2px 12px rgba(123,45,78,0.08);
-  }
-  .bnav-item {
-    flex: 1; display: flex; flex-direction: column; align-items: center;
-    padding: 8px 0 10px; cursor: pointer; border: none; background: none;
-    color: var(--text-soft); font-size: 0.62rem; font-family: 'Nunito', sans-serif;
-    font-weight: 600; gap: 3px; transition: color 0.15s;
-  }
-  .bnav-item.active { color: var(--wine); }
-  .bnav-item .bicon { font-size: 1.3rem; }
-
-  /* ====== SECTION TITLE ====== */
-  .section-title {
-    padding: 18px 16px 6px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem; color: var(--wine);
-  }
-
-  /* Utility */
-  .badge {
-    display: inline-block; background: #fce8f2;
-    color: var(--wine); font-size: 0.68rem; font-weight: 700;
-    border-radius: 20px; padding: 2px 8px; margin-left: 6px;
-  }
-
-  .page-header-bar {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 16px 6px;
-    background: var(--bg2); border-bottom: 1px solid var(--border);
-  }
-  .page-header-bar h2 { font-size: 1.02rem; font-weight: 700; }
+/* PERFIL */
+.perfil-hero{background:linear-gradient(135deg,var(--wine),var(--wine-light));padding:28px 20px;text-align:center;color:white;}
+.perfil-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,0.2);font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.perfil-name{font-family:'Playfair Display',serif;font-size:1.4rem;}
+.perfil-sub{font-size:0.82rem;opacity:0.8;margin-top:4px;}
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="top-bar">
-  <button class="menu-btn" onclick="toggleSidebar()">
-    <span></span><span></span><span></span>
-  </button>
-  <div class="brand" id="topBarTitle"><em>Sweet Olivia</em></div>
-  <button class="help-btn">?</button>
+  <button class="menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+  <div class="brand" id="topTitle"><em>Sweet Olivia</em></div>
+  <div style="width:28px"></div>
 </div>
 
-<!-- SIDEBAR OVERLAY -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
 <!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="brand-big">Sweet <span>Olivia</span></div>
     <div style="font-size:0.75rem;color:var(--text-soft);margin-top:2px;">Doces Gourmet</div>
   </div>
   <nav>
-    <button class="nav-item active" onclick="navigate('home')"><span class="nav-icon">🏠</span> Início</button>
-    <button class="nav-item" onclick="navigate('stats')"><span class="nav-icon">📊</span> Estatísticas</button>
-    <button class="nav-item" onclick="navigate('perfil')"><span class="nav-icon">👤</span> Meu Perfil</button>
-    <button class="nav-item" onclick="navigate('cardapio')"><span class="nav-icon">📋</span> Cardápio Digital</button>
-    <button class="nav-item" onclick="navigate('receitas')"><span class="nav-icon">📝</span> Receitas</button>
-    <button class="nav-item" onclick="navigate('ingredientes')"><span class="nav-icon">🧂</span> Ingredientes e Insumos</button>
-    <button class="nav-item" onclick="navigate('eletro')"><span class="nav-icon">🔌</span> Eletrodomésticos</button>
-    <button class="nav-item" onclick="navigate('clientes')"><span class="nav-icon">👥</span> Clientes</button>
-    <button class="nav-item" onclick="navigate('senha')"><span class="nav-icon">🔑</span> Alterar Senha</button>
-    <button class="nav-item" onclick="navigate('planos')"><span class="nav-icon">💳</span> Planos de Assinatura</button>
-    <button class="nav-item" onclick="navigate('aprender')"><span class="nav-icon">🎓</span> Aprenda a Usar</button>
-    <button class="nav-item" onclick="navigate('suporte')"><span class="nav-icon">💬</span> Suporte</button>
-    <button class="nav-item danger" onclick="closeSidebar()"><span class="nav-icon">🚪</span> Sair</button>
+    <button class="nav-item" onclick="go('home')"><span class="nav-icon">🏠</span> Início</button>
+    <button class="nav-item" onclick="go('financeiro')"><span class="nav-icon">💰</span> Financeiro</button>
+    <button class="nav-item" onclick="go('pedidos')"><span class="nav-icon">📦</span> Pedidos</button>
+    <button class="nav-item" onclick="go('receitas')"><span class="nav-icon">📝</span> Receitas</button>
+    <button class="nav-item" onclick="go('ingredientes')"><span class="nav-icon">🧂</span> Ingredientes e Insumos</button>
+    <button class="nav-item" onclick="go('eletro')"><span class="nav-icon">🔌</span> Eletrodomésticos</button>
+    <button class="nav-item" onclick="go('clientes')"><span class="nav-icon">👥</span> Clientes</button>
+    <button class="nav-item" onclick="go('perfil')"><span class="nav-icon">👤</span> Meu Perfil</button>
+    <button class="nav-item" onclick="go('senha')"><span class="nav-icon">🔑</span> Alterar Senha</button>
   </nav>
 </div>
 
-<!-- ===== PAGE: HOME ===== -->
+<!-- ======================================================= -->
+<!-- PAGE: HOME -->
+<!-- ======================================================= -->
 <div class="page active" id="page-home">
   <div class="home-welcome">
     <div class="greeting">Bem-vinda de volta! 🍬</div>
     <h1>Olá, <span>Sweet Olivia!</span></h1>
-    <div class="subtitle">Gerencie sua doceria com facilidade</div>
   </div>
-
-  <div class="home-stats-row">
-    <div class="stat-card">
-      <div class="stat-num">12</div>
-      <div class="stat-label">Receitas</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">47</div>
-      <div class="stat-label">Ingredientes</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">8</div>
-      <div class="stat-label">Clientes</div>
-    </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="hs-receitas">0</div><div class="stat-label">Receitas</div></div>
+    <div class="stat-card"><div class="stat-num" id="hs-ings">0</div><div class="stat-label">Ingredientes</div></div>
+    <div class="stat-card"><div class="stat-num" id="hs-clientes">0</div><div class="stat-label">Clientes</div></div>
+    <div class="stat-card"><div class="stat-num" id="hs-pedidos">0</div><div class="stat-label">Pedidos</div></div>
   </div>
-
-  <div class="section-cards">
-    <div class="home-card">
-      <div class="card-title"><span class="icon">📊</span> Estatísticas</div>
-      <p>Veja estatísticas sobre suas receitas! Conheça os produtos com maiores margens de lucro, menores custos e maiores contribuições na sua receita financeira.</p>
-      <button class="card-link" onclick="navigate('stats')">VER ESTATÍSTICAS</button>
+  <div class="home-sections">
+    <div class="home-card" onclick="go('pedidos')">
+      <div class="home-card-title">📦 Pedidos</div>
+      <p>Registre encomendas, clientes, itens, pagamentos e datas de entrega.</p>
     </div>
-
-    <div class="home-card">
-      <div class="card-title"><span class="icon">👤</span> Meu Perfil</div>
-      <p>Use o menu lateral para acessar as outras partes do app e gerenciar seus dados.</p>
-      <button class="card-link" onclick="navigate('perfil')">AJUSTAR PERFIL</button>
+    <div class="home-card" onclick="go('financeiro')">
+      <div class="home-card-title">💰 Financeiro</div>
+      <p>Veja receita, lucro estimado, pendências de pagamento e resumo mensal.</p>
     </div>
-
-    <div class="home-card">
-      <div class="card-title"><span class="icon">📋</span> Cardápio Digital</div>
-      <p>Compartilhe seu cardápio nas redes sociais:</p>
-      <div class="share-url">sweetolivia.com/menu/doceria</div>
-      <div class="share-btns">
-        <button class="share-btn" onclick="showToast('Link copiado!')">📋</button>
-        <button class="share-btn" onclick="showToast('Compartilhado!')">↗️</button>
-      </div>
-      <p style="margin-top:10px;">Use os botões para compartilhar seu cardápio nas redes sociais.</p>
+    <div class="home-card" onclick="go('receitas')">
+      <div class="home-card-title">📝 Receitas</div>
+      <p>Cadastre receitas, adicione ingredientes e calcule precificação automática.</p>
     </div>
-
-    <div class="home-card" style="border-left:4px solid var(--pink);">
-      <div class="card-title"><span class="icon">⚠️</span> Ingredientes desatualizados</div>
-      <p>Alguns ingredientes estão com preços desatualizados. Atualize para garantir preços corretos nas suas receitas.</p>
-      <button class="card-link" onclick="navigate('ingredientes')">ATUALIZAR AGORA</button>
+    <div class="home-card" onclick="go('ingredientes')">
+      <div class="home-card-title">🧂 Ingredientes e Insumos</div>
+      <p>Gerencie ingredientes e preços para cálculo correto de custos.</p>
     </div>
   </div>
 </div>
 
-<!-- ===== PAGE: RECEITAS ===== -->
-<div class="page" id="page-receitas">
-  <div class="list-header">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input class="search-box" placeholder="Buscar receitas..." oninput="filterRecipes(this.value)">
-    </div>
-  </div>
-
-  <div class="recipe-list" id="recipeList"></div>
-
-  <button class="fab" id="fab-receitas" onclick="openNewRecipe()">+ Nova Receita</button>
-</div>
-
-<!-- ===== PAGE: EDITAR RECEITA ===== -->
-<div class="page" id="page-editar">
-  <div class="pricing-header">
-    <button class="back-btn" onclick="navigate('receitas')">‹</button>
-    <h2 id="editarTitle">Nova Receita</h2>
-  </div>
-  <div class="form-page">
-    <div class="photo-area">
-      <div class="photo-thumb" id="editPhotoThumb">🎂</div>
-      <div class="photo-btns">
-        <button class="photo-btn" onclick="showToast('Câmera não disponível no web')">📷</button>
-        <button class="photo-btn" onclick="showToast('Galeria não disponível no web')">🖼️</button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Título</label>
-      <input class="form-input" id="editTitulo" placeholder="Ex: Bolo de Chocolate">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Tempo de trabalho (minutos)</label>
-      <input class="form-input" id="editTempo" type="number" placeholder="120">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Tempo de uso de gás (minutos)</label>
-      <input class="form-input" id="editGas" type="number" placeholder="40">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Tipo de queimador ou forno</label>
-      <select class="form-select" id="editQueimador">
-        <option>Queimador médio</option>
-        <option>Queimador pequeno</option>
-        <option>Queimador grande</option>
-        <option>Forno elétrico</option>
-        <option>Forno a gás</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Rendimento</label>
-      <input class="form-input" id="editRendimento" type="number" placeholder="12">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Medida</label>
-      <select class="form-select" id="editMedida">
-        <option>fatias</option>
-        <option>unidades</option>
-        <option>porções</option>
-        <option>gramas</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="checkbox-label">
-        <input type="checkbox" id="editCardapio"> Exibir no Cardápio Digital
-      </label>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Preço de venda (R$)</label>
-      <input class="form-input" id="editPreco" type="number" placeholder="0,00">
-    </div>
-    <button class="save-btn" onclick="saveRecipe()">Salvar Receita</button>
-  </div>
-</div>
-
-<!-- ===== PAGE: PRECIFICAÇÃO ===== -->
-<div class="page" id="page-pricing">
-  <div class="pricing-header">
-    <button class="back-btn" onclick="navigate('receitas')">‹</button>
-    <h2>Precificação</h2>
-    <button class="help-btn" style="margin-left:auto">?</button>
-  </div>
-
-  <div class="recipe-hero">
-    <div class="recipe-thumb">🎂</div>
-    <h2 id="pricingRecipeName">Bolo Alto</h2>
-  </div>
-
-  <div class="etapa-block">
-    <div class="etapa-title">Etapa 1: Massa Branca</div>
-    <div class="etapa-row"><span class="ing-label">Açúcar agro vale<small>265 g</small></span><span class="ing-val">R$ 1,14</span></div>
-    <div class="etapa-row"><span class="ing-label">Manteiga Davaca<small>160 g</small></span><span class="ing-val">R$ 7,36</span></div>
-    <div class="etapa-row"><span class="ing-label">Ovo<small>5 un.</small></span><span class="ing-val">R$ 4,50</span></div>
-    <div class="etapa-row"><span class="ing-label">Leite de côco Sococo<small>200 mL</small></span><span class="ing-val">R$ 5,64</span></div>
-    <div class="etapa-row"><span class="ing-label">Farinha de Trigo Finna sem fermento<small>267 g</small></span><span class="ing-val">R$ 1,25</span></div>
-    <div class="etapa-row"><span class="ing-label">Fermento químico Dr. Oetker<small>13 g</small></span><span class="ing-val">R$ 0,51</span></div>
-    <div class="subtotal-row"><span>Sub-total</span><span>R$ 20,39</span></div>
-  </div>
-
-  <div class="etapa-block">
-    <div class="etapa-title">Etapa 2: Recheio de Brigadeiro</div>
-    <div class="etapa-row"><span class="ing-label">Leite condensado moça semidesnatado<small>395 g</small></span><span class="ing-val">R$ 6,99</span></div>
-    <div class="etapa-row"><span class="ing-label">Creme de leite Nestlé<small>400 ml</small></span><span class="ing-val">R$ 6,98</span></div>
-    <div class="etapa-row"><span class="ing-label">Chocolate 50%<small>30 g</small></span><span class="ing-val">R$ 1,17</span></div>
-    <div class="etapa-row"><span class="ing-label">Manteiga Davaca<small>20 g</small></span><span class="ing-val">R$ 0,92</span></div>
-    <div class="etapa-row"><span class="ing-label">Leite Ninho<small>15 g</small></span><span class="ing-val">R$ 0,99</span></div>
-    <div class="subtotal-row"><span>Sub-total</span><span>R$ 17,05</span></div>
-  </div>
-
-  <div class="etapa-block">
-    <div class="etapa-title">Etapa 3: Finalização</div>
-    <div class="etapa-row"><span class="ing-label">Bandeja MDF 35cm x 6mm<small>1 un.</small></span><span class="ing-val">R$ 22,99</span></div>
-    <div class="subtotal-row"><span>Sub-total</span><span>R$ 22,99</span></div>
-  </div>
-
-  <div class="custo-block">
-    <div class="custo-title">Cálculo de Custos</div>
-    <div class="custo-row"><span>Custo dos ingredientes</span><span class="val">R$ 60,43</span></div>
-    <div class="custo-row"><span>Custo do gás</span><span class="val">R$ 0,88</span></div>
-    <div class="custo-row"><span>Custo da energia</span><span class="val">R$ 0,00</span></div>
-    <div class="custo-row"><span>Custo da mão-de-obra</span><span class="val">R$ 16,00</span></div>
-    <div class="custo-row total"><span>Custo total</span><span class="val">R$ 77,31</span></div>
-    <div class="custo-info">Calculei também o custo e o preço por fatia.</div>
-    <div class="fatia-row"><span>Custo por fatia</span><span class="val">R$ 6,44</span></div>
-    <div class="fatia-row bold"><span>Preço por fatia</span><span class="val">R$ 11,67</span></div>
-    <div class="checkbox-row">
-      <input type="checkbox" id="fatiaCardapio">
-      <label for="fatiaCardapio">Exibir o preço por fatia no Cardápio Digital</label>
-    </div>
-  </div>
-
-  <div class="ajuste-block">
-    <div class="ajuste-title">Ajuste de preço</div>
-    <div class="ajuste-desc">Ajuste a barra de lucro para saber quanto você precisa cobrar nesta receita para obter o lucro desejado.</div>
-    <input type="range" class="lucro-slider" id="lucroSlider" min="0" max="200" value="81" oninput="updatePricing(this.value)">
-    <div class="lucro-row"><span>Margem de lucro</span><span class="val" id="margemVal">81%</span></div>
-    <div class="lucro-row pink"><span>Seu lucro</span><span class="val" id="lucroVal">R$ 62,69</span></div>
-    <div class="price-input-wrap">
-      <label>Preço final do produto</label>
-      <input class="price-input" id="precoFinal" type="text" value="R$ 140,00" oninput="updateFromPrice(this.value)">
-    </div>
-    <button class="save-btn" onclick="showToast('Preço salvo com sucesso! ✓')">Salvar preço</button>
-  </div>
-</div>
-
-<!-- ===== PAGE: NUTRICIONAL ===== -->
-<div class="page" id="page-nutri">
-  <div class="pricing-header">
-    <button class="back-btn" onclick="navigate('receitas')">‹</button>
-    <h2>Informações Nutricionais</h2>
-    <button class="help-btn" style="margin-left:auto">?</button>
-  </div>
-
-  <div class="nutri-header-block">
-    <div class="recipe-thumb" style="margin:0 auto 12px;">🎂</div>
-    <h2>Bolo Alto</h2>
-    <p class="nutri-desc">Abaixo estão as informações nutricionais da sua receita com base nos ingredientes e nas quantidades. O valor é aproximado, pois pode haver variação devido às diferenças entre marcas e forma de preparo.</p>
-    <label class="checkbox-label" style="justify-content:center;margin-top:4px;">
-      <input type="checkbox" checked> Exibir título da receita na etiqueta
-    </label>
-  </div>
-
-  <div class="nutri-table">
-    <div class="nutri-table-header">INFORMAÇÕES NUTRICIONAIS<br><span style="font-size:0.82rem;font-weight:400;">Bolo Alto</span></div>
-    <div class="nutri-table-sub">Porção: 100 g</div>
-    <div class="nutri-row"><span>Calorias</span><span class="val">336 kcal</span></div>
-    <div class="nutri-row"><span>Carboidratos</span><span class="val">44 g</span></div>
-    <div class="nutri-row"><span>Lipídeos</span><span class="val">17 g</span></div>
-    <div class="nutri-row"><span>Proteína</span><span class="val">2 g</span></div>
-    <div class="nutri-row"><span>Sódio</span><span class="val">0 mg</span></div>
-    <div class="nutri-footer">Gerado pelo Sweet Olivia App</div>
-  </div>
-
-  <button class="dl-btn" onclick="showToast('Imagem baixada! 📥')">Baixar imagem</button>
-</div>
-
-<!-- ===== PAGE: INGREDIENTES ===== -->
+<!-- ======================================================= -->
+<!-- PAGE: INGREDIENTES -->
+<!-- ======================================================= -->
 <div class="page" id="page-ingredientes">
-  <div class="list-header">
-    <div class="search-wrap">
+  <div class="search-wrap">
+    <div class="search-inner">
       <span class="search-icon">🔍</span>
-      <input class="search-box" placeholder="Buscar ingredientes...">
+      <input class="search-box" placeholder="Buscar ingredientes..." oninput="renderIngs(this.value)">
     </div>
   </div>
-  <div style="padding: 0 16px;">
-    <div class="ingredient-item">
-      <div><div class="ing-name">Açúcar agro vale</div><div class="ing-price">R$ 4,29 ⚠️</div></div>
-      <div class="ing-qty">1.000 g</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Creme de leite Nestlé</div><div class="ing-price">R$ 6,98 ⚠️</div></div>
-      <div class="ing-qty">400 ml</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Chocolate 50%</div><div class="ing-price">R$ 3,90 ⚠️</div></div>
-      <div class="ing-qty">100 g</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Manteiga Davaca</div><div class="ing-price">R$ 4,60 ⚠️</div></div>
-      <div class="ing-qty">200 g</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Farinha de Trigo Finna</div><div class="ing-price">R$ 4,69 ⚠️</div></div>
-      <div class="ing-qty">1.000 g</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Leite condensado moça</div><div class="ing-price">R$ 6,99 ⚠️</div></div>
-      <div class="ing-qty">395 g</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Leite de côco Sococo</div><div class="ing-price">R$ 5,64</div></div>
-      <div class="ing-qty">200 ml</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Leite Ninho</div><div class="ing-price">R$ 39,90 ⚠️</div></div>
-      <div class="ing-qty">400 g</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Ovos</div><div class="ing-price">R$ 0,90</div></div>
-      <div class="ing-qty">1 un.</div>
-    </div>
-    <div class="ingredient-item">
-      <div><div class="ing-name">Fermento Dr. Oetker</div><div class="ing-price">R$ 3,99 ⚠️</div></div>
-      <div class="ing-qty">100 g</div>
-    </div>
-  </div>
-  <button class="fab" onclick="showModal('novoIngrediente')">+ Novo Ingrediente</button>
+  <div id="ingList"></div>
+  <button class="fab" onclick="openIngModal()">+ Novo Ingrediente</button>
 </div>
 
-<!-- ===== PAGE: CLIENTES ===== -->
-<div class="page" id="page-clientes">
-  <div class="list-header">
-    <div class="search-wrap">
+<!-- ======================================================= -->
+<!-- PAGE: RECEITAS -->
+<!-- ======================================================= -->
+<div class="page" id="page-receitas">
+  <div class="search-wrap">
+    <div class="search-inner">
       <span class="search-icon">🔍</span>
-      <input class="search-box" placeholder="Buscar clientes...">
+      <input class="search-box" placeholder="Buscar receitas..." oninput="renderReceitas(this.value)">
     </div>
   </div>
-  <div>
-    <div class="client-item">
-      <div class="client-avatar">M</div>
-      <div class="client-info">
-        <div class="client-name">Maria Silva</div>
-        <div class="client-meta">3 pedidos · Último: 15/03</div>
-      </div>
-      <button class="more-btn">⋮</button>
-    </div>
-    <div class="client-item">
-      <div class="client-avatar">J</div>
-      <div class="client-info">
-        <div class="client-name">João Pedro</div>
-        <div class="client-meta">1 pedido · Último: 20/03</div>
-      </div>
-      <button class="more-btn">⋮</button>
-    </div>
-    <div class="client-item">
-      <div class="client-avatar">A</div>
-      <div class="client-info">
-        <div class="client-name">Ana Carolina</div>
-        <div class="client-meta">5 pedidos · Último: 24/03</div>
-      </div>
-      <button class="more-btn">⋮</button>
-    </div>
-    <div class="client-item">
-      <div class="client-avatar">L</div>
-      <div class="client-info">
-        <div class="client-name">Larissa Mendes</div>
-        <div class="client-meta">2 pedidos · Último: 10/03</div>
-      </div>
-      <button class="more-btn">⋮</button>
-    </div>
-  </div>
-  <button class="fab" onclick="showToast('Novo cliente adicionado!')">+ Novo Cliente</button>
+  <div id="receitaList"></div>
+  <button class="fab" onclick="openReceitaForm()">+ Nova Receita</button>
 </div>
 
-<!-- ===== PAGE: ESTATÍSTICAS ===== -->
-<div class="page" id="page-stats">
-  <div class="stats-section">
-    <div class="stats-card">
-      <h3>Receita total estimada (mês)</h3>
-      <div class="big-val">R$ 1.840</div>
-      <div class="big-sub">baseado nos preços cadastrados</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
-      <div style="font-size:0.75rem;color:var(--text-soft);">72% da meta mensal</div>
-    </div>
-    <div class="stats-card">
-      <h3>Maior margem de lucro</h3>
-      <div class="top-recipe"><span class="name">Bolo Alto</span><span class="profit">81%</span></div>
-      <div class="top-recipe"><span class="name">Trufa de Chocolate</span><span class="profit">74%</span></div>
-      <div class="top-recipe"><span class="name">Brownie Gourmet</span><span class="profit">68%</span></div>
-      <div class="top-recipe"><span class="name">Bolo de Pote</span><span class="profit">65%</span></div>
-    </div>
-    <div class="stats-card">
-      <h3>Menor custo de produção</h3>
-      <div class="top-recipe"><span class="name">Bolo de Pote</span><span class="profit" style="color:var(--wine);">R$ 12,40</span></div>
-      <div class="top-recipe"><span class="name">Brigadeiro (dz)</span><span class="profit" style="color:var(--wine);">R$ 14,20</span></div>
-      <div class="top-recipe"><span class="name">Cookie Recheado</span><span class="profit" style="color:var(--wine);">R$ 18,90</span></div>
-    </div>
-    <div class="stats-card">
-      <h3>Receitas cadastradas</h3>
-      <div class="big-val">12</div>
-      <div class="big-sub">em 4 categorias</div>
-    </div>
+<!-- ======================================================= -->
+<!-- PAGE: EDITAR RECEITA -->
+<!-- ======================================================= -->
+<div class="page" id="page-editar-receita">
+  <div class="page-header">
+    <button class="back-btn" onclick="go('receitas')">‹</button>
+    <h2 id="editReceitaTitle">Nova Receita</h2>
   </div>
-</div>
-
-<!-- ===== PAGE: PERFIL ===== -->
-<div class="page" id="page-perfil">
   <div class="form-page">
-    <div style="text-align:center;margin-bottom:20px;">
-      <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">🎂</div>
-      <div style="font-weight:700;font-size:1.1rem;">Sweet Olivia</div>
-      <div style="font-size:0.82rem;color:var(--text-soft);">Doces Gourmet</div>
+    <input type="hidden" id="er-id">
+    <div class="form-group">
+      <label class="form-label">Título da Receita</label>
+      <input class="form-input" id="er-nome" placeholder="Ex: Bolo de Chocolate">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Rendimento</label>
+        <input class="form-input" id="er-rendimento" type="number" placeholder="12">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Medida</label>
+        <select class="form-select" id="er-medida">
+          <option>fatias</option><option>unidades</option><option>porções</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Tempo trabalho (min)</label>
+        <input class="form-input" id="er-tempo" type="number" placeholder="120">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tempo gás (min)</label>
+        <input class="form-input" id="er-gas" type="number" placeholder="40">
+      </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Nome do negócio</label>
-      <input class="form-input" value="Sweet Olivia">
+      <label class="form-label">Tipo queimador/forno</label>
+      <select class="form-select" id="er-queimador">
+        <option>Queimador médio</option><option>Queimador pequeno</option>
+        <option>Queimador grande</option><option>Forno elétrico</option><option>Forno a gás</option>
+      </select>
     </div>
     <div class="form-group">
-      <label class="form-label">E-mail</label>
-      <input class="form-input" type="email" value="contato@sweetolivia.com">
+      <label class="form-label">Custo mão de obra (R$/hora)</label>
+      <input class="form-input" id="er-mao" type="number" placeholder="8.00" value="8.00">
+    </div>
+
+    <span class="section-label">🧂 Ingredientes da Receita</span>
+    <div id="er-ings-list" style="margin-bottom:10px;"></div>
+    <div class="add-ing-row">
+      <div class="form-group">
+        <label class="form-label">Ingrediente</label>
+        <select class="form-select" id="er-ing-sel"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Qtd</label>
+        <input class="form-input" id="er-ing-qty" type="number" placeholder="100">
+      </div>
+    </div>
+    <button type="button" style="width:100%;background:#fce8f2;color:var(--wine);border:none;border-radius:12px;padding:10px;font-size:0.88rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-bottom:14px;" onclick="addIngToRecipe()">+ Adicionar Ingrediente</button>
+
+    <button class="save-btn" onclick="saveReceita()">Salvar Receita</button>
+    <button class="cancel-btn" onclick="go('receitas')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: PRECIFICAÇÃO -->
+<!-- ======================================================= -->
+<div class="page" id="page-pricing">
+  <div class="page-header">
+    <button class="back-btn" onclick="go('receitas')">‹</button>
+    <h2 id="pricing-title">Precificação</h2>
+  </div>
+  <div class="price-section" id="pricing-body" style="padding-bottom:20px;"></div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: CLIENTES -->
+<!-- ======================================================= -->
+<div class="page" id="page-clientes">
+  <div class="search-wrap">
+    <div class="search-inner">
+      <span class="search-icon">🔍</span>
+      <input class="search-box" placeholder="Buscar clientes..." oninput="renderClientes(this.value)">
+    </div>
+  </div>
+  <div id="clienteList"></div>
+  <button class="fab" onclick="openClienteModal()">+ Novo Cliente</button>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: DETALHE CLIENTE -->
+<!-- ======================================================= -->
+<div class="page" id="page-cliente-detalhe">
+  <div class="page-header">
+    <button class="back-btn" onclick="go('clientes')">‹</button>
+    <h2 id="cd-title">Cliente</h2>
+    <button class="more-btn" style="margin-left:auto" onclick="editClienteAtual()">✏️</button>
+  </div>
+  <div id="cd-body"></div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: PEDIDOS -->
+<!-- ======================================================= -->
+<div class="page" id="page-pedidos">
+  <div class="search-wrap">
+    <div class="search-inner">
+      <span class="search-icon">🔍</span>
+      <input class="search-box" placeholder="Buscar pedidos..." oninput="renderPedidos(this.value)">
+    </div>
+  </div>
+  <div id="pedidoList"></div>
+  <button class="fab" onclick="openPedidoForm()">+ Novo Pedido</button>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: EDITAR PEDIDO -->
+<!-- ======================================================= -->
+<div class="page" id="page-editar-pedido">
+  <div class="page-header">
+    <button class="back-btn" onclick="go('pedidos')">‹</button>
+    <h2 id="editPedidoTitle">Novo Pedido</h2>
+  </div>
+  <div class="form-page">
+    <input type="hidden" id="ep-id">
+    <div class="form-group">
+      <label class="form-label">Cliente</label>
+      <select class="form-select" id="ep-cliente"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Data do pedido</label>
+        <input class="form-input" id="ep-data" type="date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Data de entrega</label>
+        <input class="form-input" id="ep-entrega" type="date">
+      </div>
+    </div>
+
+    <span class="section-label">🎂 Itens do Pedido</span>
+    <div id="ep-itens-list" style="margin-bottom:10px;"></div>
+    <div class="form-row" style="align-items:flex-end;gap:8px;">
+      <div class="form-group" style="flex:2;">
+        <label class="form-label">Receita / Produto</label>
+        <select class="form-select" id="ep-item-receita">
+          <option value="">Selecionar receita...</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label class="form-label">Qtd</label>
+        <input class="form-input" id="ep-item-qty" type="number" value="1" min="1">
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label class="form-label">Preço unit. R$</label>
+        <input class="form-input" id="ep-item-preco" type="number" placeholder="0,00">
+      </div>
+    </div>
+    <button type="button" style="width:100%;background:#fce8f2;color:var(--wine);border:none;border-radius:12px;padding:10px;font-size:0.88rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-bottom:14px;" onclick="addItemPedido()">+ Adicionar Item</button>
+
+    <div class="form-group">
+      <label class="form-label">Modo de Pagamento</label>
+      <select class="form-select" id="ep-pagamento">
+        <option value="pix">Pix</option>
+        <option value="dinheiro">Dinheiro</option>
+        <option value="cartao">Cartão</option>
+        <option value="outro">Outro</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Valor total (R$)</label>
+        <input class="form-input" id="ep-total" type="number" placeholder="0,00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Valor pago (R$)</label>
+        <input class="form-input" id="ep-pago" type="number" placeholder="0,00">
+      </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Cidade</label>
-      <input class="form-input" value="Juazeiro do Norte, CE">
+      <label class="form-label">Data do pagamento</label>
+      <input class="form-input" id="ep-data-pag" type="date">
     </div>
     <div class="form-group">
-      <label class="form-label">Custo/hora da mão de obra (R$)</label>
-      <input class="form-input" type="number" value="8.00">
+      <label class="form-label">Status</label>
+      <select class="form-select" id="ep-status">
+        <option value="pendente">Pendente</option>
+        <option value="pago">Pago</option>
+        <option value="parcial">Parcialmente pago</option>
+        <option value="entregue">Entregue</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
     </div>
     <div class="form-group">
-      <label class="form-label">Custo do gás (R$ por botijão)</label>
-      <input class="form-input" type="number" value="120.00">
+      <label class="form-label">Observações</label>
+      <textarea class="form-textarea" id="ep-obs" placeholder="Notas sobre o pedido..."></textarea>
+    </div>
+    <button class="save-btn" onclick="savePedido()">Salvar Pedido</button>
+    <button class="cancel-btn" onclick="go('pedidos')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: FINANCEIRO -->
+<!-- ======================================================= -->
+<div class="page" id="page-financeiro">
+  <div id="fin-body"></div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE: PERFIL -->
+<!-- ======================================================= -->
+<div class="page" id="page-perfil">
+  <div class="perfil-hero">
+    <div class="perfil-avatar">🎂</div>
+    <div class="perfil-name">Sweet Olivia</div>
+    <div class="perfil-sub">Doces Gourmet · Juazeiro do Norte, CE</div>
+  </div>
+  <div class="form-page">
+    <div class="form-group"><label class="form-label">Nome do negócio</label><input class="form-input" id="pf-nome" value="Sweet Olivia"></div>
+    <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="pf-email" type="email" value="contato@sweetolivia.com"></div>
+    <div class="form-group"><label class="form-label">Cidade</label><input class="form-input" id="pf-cidade" value="Juazeiro do Norte, CE"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Custo/hora mão de obra (R$)</label><input class="form-input" id="pf-mao" type="number" value="8.00"></div>
+      <div class="form-group"><label class="form-label">Preço botijão gás (R$)</label><input class="form-input" id="pf-gas" type="number" value="120.00"></div>
     </div>
     <button class="save-btn" onclick="showToast('Perfil salvo! ✓')">Salvar Perfil</button>
   </div>
 </div>
 
-<!-- ===== PAGE: CARDÁPIO ===== -->
-<div class="page" id="page-cardapio">
-  <div class="form-page">
-    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Cardápio Digital</h2>
-    <div class="home-card" style="margin-bottom:14px;">
-      <div class="card-title"><span class="icon">🔗</span> Seu link</div>
-      <div class="share-url">sweetolivia.com/menu/doceria</div>
-      <div class="share-btns">
-        <button class="share-btn" onclick="showToast('Link copiado!')">📋</button>
-        <button class="share-btn" onclick="showToast('Compartilhado!')">↗️</button>
-      </div>
-    </div>
-    <p style="font-size:0.85rem;color:var(--text-soft);">As receitas marcadas como "Exibir no Cardápio Digital" aparecerão automaticamente no seu cardápio público.</p>
-    <div style="margin-top:16px;">
-      <div style="font-weight:700;margin-bottom:8px;font-size:0.95rem;">Receitas no cardápio:</div>
-      <div class="recipe-item" style="padding:12px 0;">
-        <div class="recipe-info">
-          <div class="recipe-name">Bolo de Pote Nutella</div>
-          <div class="recipe-meta">R$ 22,00 · visível</div>
-        </div>
-        <input type="checkbox" checked style="accent-color:var(--wine);width:18px;height:18px;">
-      </div>
-      <div class="recipe-item" style="padding:12px 0;">
-        <div class="recipe-info">
-          <div class="recipe-name">Brownie Gourmet</div>
-          <div class="recipe-meta">R$ 55,00 · visível</div>
-        </div>
-        <input type="checkbox" checked style="accent-color:var(--wine);width:18px;height:18px;">
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== PAGE: ELETRO ===== -->
+<!-- ======================================================= -->
+<!-- PAGE: ELETRO -->
+<!-- ======================================================= -->
 <div class="page" id="page-eletro">
   <div class="form-page">
-    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Eletrodomésticos</h2>
-    <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:16px;">Cadastre seus eletrodomésticos para calcular o custo de energia elétrica nas suas receitas.</p>
-    <div class="stats-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><div class="client-name">Batedeira KitchenAid</div><div class="client-meta">300W · R$ 0,25/h</div></div>
-        <button class="more-btn">⋮</button>
-      </div>
-    </div>
-    <div class="stats-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><div class="client-name">Forno elétrico</div><div class="client-meta">1800W · R$ 1,50/h</div></div>
-        <button class="more-btn">⋮</button>
-      </div>
-    </div>
-    <button class="save-btn" style="margin-top:8px;" onclick="showToast('Eletrodoméstico adicionado!')">+ Novo Eletrodoméstico</button>
+    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:12px;">Eletrodomésticos</h2>
+    <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:16px;">Cadastre seus eletrodomésticos para calcular o custo de energia nas receitas.</p>
+    <div id="eletroList"></div>
+    <button class="save-btn" onclick="openEletroModal()">+ Novo Eletrodoméstico</button>
   </div>
 </div>
 
-<!-- ===== PAGE: SENHA ===== -->
+<!-- ======================================================= -->
+<!-- PAGE: SENHA -->
+<!-- ======================================================= -->
 <div class="page" id="page-senha">
   <div class="form-page">
     <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:20px;">Alterar Senha</h2>
-    <div class="form-group">
-      <label class="form-label">Senha atual</label>
-      <input class="form-input" type="password" placeholder="••••••••">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nova senha</label>
-      <input class="form-input" type="password" placeholder="••••••••">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Confirmar nova senha</label>
-      <input class="form-input" type="password" placeholder="••••••••">
-    </div>
-    <button class="save-btn" onclick="showToast('Senha alterada com sucesso! ✓')">Salvar nova senha</button>
-  </div>
-</div>
-
-<!-- ===== PAGE: PLANOS ===== -->
-<div class="page" id="page-planos">
-  <div class="form-page">
-    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Planos de Assinatura</h2>
-    <div class="home-card" style="border:2px solid var(--wine);margin-bottom:14px;">
-      <div class="card-title">🌸 Plano Básico — Grátis</div>
-      <p>Até 5 receitas · Ingredientes ilimitados · Precificação básica</p>
-    </div>
-    <div class="home-card" style="border:2px solid var(--pink);background:linear-gradient(135deg,#fff0f7,white);margin-bottom:14px;">
-      <div class="card-title" style="color:var(--pink);">✨ Plano Pro — R$ 19,90/mês</div>
-      <p>Receitas ilimitadas · Cardápio digital · Estatísticas avançadas · Info nutricional · Suporte prioritário</p>
-      <button class="save-btn" style="margin-top:12px;" onclick="showToast('Redirecionando para pagamento...')">Assinar Agora</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== PAGE: APRENDER ===== -->
-<div class="page" id="page-aprender">
-  <div class="form-page">
-    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Aprenda a Usar</h2>
-    <div class="home-card" onclick="showToast('Abrindo tutorial...')" style="cursor:pointer;margin-bottom:12px;">
-      <div class="card-title">▶️ Como cadastrar uma receita</div>
-      <p>Aprenda a criar e organizar suas receitas passo a passo.</p>
-    </div>
-    <div class="home-card" onclick="showToast('Abrindo tutorial...')" style="cursor:pointer;margin-bottom:12px;">
-      <div class="card-title">▶️ Como precificar seus produtos</div>
-      <p>Entenda como calcular o preço ideal para seu negócio.</p>
-    </div>
-    <div class="home-card" onclick="showToast('Abrindo tutorial...')" style="cursor:pointer;margin-bottom:12px;">
-      <div class="card-title">▶️ Cardápio Digital</div>
-      <p>Veja como configurar e compartilhar seu cardápio online.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ===== PAGE: SUPORTE ===== -->
-<div class="page" id="page-suporte">
-  <div class="form-page">
-    <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:16px;">Suporte</h2>
-    <div class="form-group">
-      <label class="form-label">Assunto</label>
-      <input class="form-input" placeholder="Descreva brevemente o problema">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Mensagem</label>
-      <textarea class="form-input" rows="5" placeholder="Descreva sua dúvida ou problema em detalhes..."></textarea>
-    </div>
-    <button class="save-btn" onclick="showToast('Mensagem enviada! Responderemos em breve 💌')">Enviar mensagem</button>
-    <div style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--text-soft);">
-      Ou fale pelo WhatsApp:<br>
-      <a href="#" style="color:var(--wine);font-weight:700;">(88) 9 9999-9999</a>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: Novo Ingrediente -->
-<div class="modal-overlay" id="modal-novoIngrediente">
-  <div class="modal">
-    <h3>Novo Ingrediente</h3>
-    <div class="form-group">
-      <label class="form-label">Nome</label>
-      <input class="form-input" placeholder="Ex: Farinha de Trigo">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Preço (R$)</label>
-      <input class="form-input" type="number" placeholder="0,00">
-    </div>
-    <div class="form-group" style="display:flex;gap:10px;">
-      <div style="flex:1">
-        <label class="form-label">Quantidade</label>
-        <input class="form-input" type="number" placeholder="1000">
-      </div>
-      <div style="flex:1">
-        <label class="form-label">Unidade</label>
-        <select class="form-select">
-          <option>g</option><option>kg</option><option>ml</option><option>l</option><option>un.</option><option>cm</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('novoIngrediente')">Cancelar</button>
-      <button class="modal-btn confirm" onclick="closeModal('novoIngrediente');showToast('Ingrediente adicionado! ✓')">Salvar</button>
-    </div>
+    <div class="form-group"><label class="form-label">Senha atual</label><input class="form-input" type="password" placeholder="••••••••"></div>
+    <div class="form-group"><label class="form-label">Nova senha</label><input class="form-input" type="password" placeholder="••••••••"></div>
+    <div class="form-group"><label class="form-label">Confirmar nova senha</label><input class="form-input" type="password" placeholder="••••••••"></div>
+    <button class="save-btn" onclick="showToast('Senha alterada! ✓')">Salvar nova senha</button>
   </div>
 </div>
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="bnav-item active" id="bnav-home" onclick="navigate('home')">
-    <span class="bicon">🏠</span> Início
-  </button>
-  <button class="bnav-item" id="bnav-receitas" onclick="navigate('receitas')">
-    <span class="bicon">📝</span> Receitas
-  </button>
-  <button class="bnav-item" id="bnav-ingredientes" onclick="navigate('ingredientes')">
-    <span class="bicon">🧂</span> Ingredientes
-  </button>
-  <button class="bnav-item" id="bnav-clientes" onclick="navigate('clientes')">
-    <span class="bicon">👥</span> Clientes
-  </button>
-  <button class="bnav-item" id="bnav-stats" onclick="navigate('stats')">
-    <span class="bicon">📊</span> Stats
-  </button>
+  <button class="bnav-item" id="bn-home" onclick="go('home')"><span class="bicon">🏠</span>Início</button>
+  <button class="bnav-item" id="bn-pedidos" onclick="go('pedidos')"><span class="bicon">📦</span>Pedidos</button>
+  <button class="bnav-item" id="bn-receitas" onclick="go('receitas')"><span class="bicon">📝</span>Receitas</button>
+  <button class="bnav-item" id="bn-clientes" onclick="go('clientes')"><span class="bicon">👥</span>Clientes</button>
+  <button class="bnav-item" id="bn-financeiro" onclick="go('financeiro')"><span class="bicon">💰</span>Financeiro</button>
 </nav>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<script>
-// ====== DATA ======
-let recipes = [
-  { id:1, name:'Bolo Alto', price:'R$ 140,00', qty:'12 fatias', warn:true },
-  { id:2, name:'Bolo de Pote Nutella', price:'R$ 22,00', qty:'1 unidade', warn:false },
-  { id:3, name:'Brownie Gourmet', price:'R$ 55,00', qty:'12 unidades', warn:true },
-  { id:4, name:'Trufa de Chocolate', price:'R$ 45,00', qty:'20 unidades', warn:true },
-  { id:5, name:'Cookie Recheado', price:'R$ 38,00', qty:'12 unidades', warn:false },
-  { id:6, name:'Brigadeiro (dz)', price:'R$ 18,00', qty:'12 unidades', warn:true },
-  { id:7, name:'Bolo de Aipim', price:'R$ 65,00', qty:'15 fatias', warn:true },
-  { id:8, name:'Bolo de Flocão', price:'', qty:'15 fatias', warn:true },
-];
+<!-- ======================================================= -->
+<!-- MODALS -->
+<!-- ======================================================= -->
 
-let openDropdown = null;
-
-// ====== NAVIGATION ======
-const pageMap = {
-  home: 'page-home',
-  receitas: 'page-receitas',
-  ingredientes: 'page-ingredientes',
-  pricing: 'page-pricing',
-  editar: 'page-editar',
-  nutri: 'page-nutri',
-  clientes: 'page-clientes',
-  stats: 'page-stats',
-  perfil: 'page-perfil',
-  cardapio: 'page-cardapio',
-  eletro: 'page-eletro',
-  senha: 'page-senha',
-  planos: 'page-planos',
-  aprender: 'page-aprender',
-  suporte: 'page-suporte',
-};
-
-const bnavMap = {
-  home: 'bnav-home',
-  receitas: 'bnav-receitas',
-  ingredientes: 'bnav-ingredientes',
-  clientes: 'bnav-clientes',
-  stats: 'bnav-stats',
-};
-
-const titles = {
-  home: 'Sweet Olivia',
-  receitas: 'Receitas',
-  ingredientes: 'Ingredientes e Insumos',
-  pricing: 'Precificação',
-  editar: 'Editar Receita',
-  nutri: 'Info Nutricional',
-  clientes: 'Clientes',
-  stats: 'Estatísticas',
-  perfil: 'Meu Perfil',
-  cardapio: 'Cardápio Digital',
-  eletro: 'Eletrodomésticos',
-  senha: 'Alterar Senha',
-  planos: 'Planos',
-  aprender: 'Aprenda a Usar',
-  suporte: 'Suporte',
-};
-
-function navigate(page) {
-  closeDropdowns();
-  closeSidebar();
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(pageMap[page]).classList.add('active');
-  document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
-  if(bnavMap[page]) document.getElementById(bnavMap[page]).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('topBarTitle').innerHTML = `<em>${titles[page] || 'Sweet Olivia'}</em>`;
-  if(page === 'receitas') renderRecipes();
-  window.scrollTo(0,0);
-}
-
-// ====== SIDEBAR ======
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebarOverlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('open');
-}
-
-// ====== RECIPES ======
-function renderRecipes(filter = '') {
-  const list = document.getElementById('recipeList');
-  const filtered = recipes.filter(r => r.name.toLowerCase().includes(filter.toLowerCase()));
-  list.innerHTML = filtered.map(r => `
-    <div class="recipe-item" id="ritem-${r.id}">
-      <div class="recipe-info">
-        <div class="recipe-name">${r.name} ${r.warn ? '<span class="warn-icon">⚠️</span>' : ''}</div>
-        ${r.price ? `<div class="recipe-price">${r.price}</div>` : ''}
-        <div class="recipe-meta">${r.qty}</div>
-      </div>
-      <button class="more-btn" onclick="toggleDropdown(event, ${r.id})">⋮</button>
-      <div class="dropdown-menu" id="dd-${r.id}" style="display:none;">
-        <button class="dropdown-item" onclick="editRecipe(${r.id})">✏️ Editar</button>
-        <button class="dropdown-item" onclick="copyRecipe(${r.id})">📋 Copiar</button>
-        <button class="dropdown-item" onclick="pricingRecipe(${r.id})">💰 Precificação</button>
-        <button class="dropdown-item" onclick="nutriRecipe(${r.id})">🥗 Info Nutricional</button>
-        <button class="dropdown-item danger" onclick="deleteRecipe(${r.id})">❌ Excluir</button>
+<!-- Modal Ingrediente -->
+<div class="modal-overlay" id="modal-ing">
+  <div class="modal">
+    <div class="modal-title" id="modal-ing-title">Novo Ingrediente</div>
+    <input type="hidden" id="mi-id">
+    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mi-nome" placeholder="Ex: Farinha de Trigo"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Preço (R$)</label><input class="form-input" id="mi-preco" type="number" step="0.01" placeholder="0,00"></div>
+      <div class="form-group"><label class="form-label">Quantidade</label><input class="form-input" id="mi-qty" type="number" placeholder="1000"></div>
+      <div class="form-group"><label class="form-label">Unidade</label>
+        <select class="form-select" id="mi-unit">
+          <option>g</option><option>kg</option><option>ml</option><option>l</option><option>un.</option><option>cm</option>
+        </select>
       </div>
     </div>
-  `).join('');
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('ing')">Cancelar</button>
+      <button class="modal-btn confirm" onclick="saveIng()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Confirmar Exclusão -->
+<div class="modal-overlay" id="modal-del">
+  <div class="modal">
+    <div class="modal-title">Confirmar exclusão</div>
+    <p id="del-msg" style="font-size:0.9rem;color:var(--text-soft);margin-bottom:8px;"></p>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('del')">Cancelar</button>
+      <button class="modal-btn danger-btn" onclick="confirmDel()">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cliente -->
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal">
+    <div class="modal-title" id="modal-cliente-title">Novo Cliente</div>
+    <input type="hidden" id="mc-id">
+    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mc-nome" placeholder="Nome completo"></div>
+    <div class="form-group"><label class="form-label">Telefone / WhatsApp</label><input class="form-input" id="mc-tel" placeholder="(88) 9 9999-9999"></div>
+    <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="mc-email" type="email" placeholder="email@exemplo.com"></div>
+    <div class="form-group"><label class="form-label">Endereço</label><input class="form-input" id="mc-end" placeholder="Rua, número, bairro"></div>
+    <div class="form-group"><label class="form-label">Observações</label><textarea class="form-textarea" id="mc-obs" placeholder="Preferências, alergias, etc."></textarea></div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('cliente')">Cancelar</button>
+      <button class="modal-btn confirm" onclick="saveCliente()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Eletro -->
+<div class="modal-overlay" id="modal-eletro">
+  <div class="modal">
+    <div class="modal-title">Novo Eletrodoméstico</div>
+    <input type="hidden" id="mel-id">
+    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mel-nome" placeholder="Ex: Batedeira"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Potência (W)</label><input class="form-input" id="mel-w" type="number" placeholder="300"></div>
+      <div class="form-group"><label class="form-label">kWh tarifa (R$)</label><input class="form-input" id="mel-kwh" type="number" step="0.01" placeholder="0.75"></div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('eletro')">Cancelar</button>
+      <button class="modal-btn confirm" onclick="saveEletro()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  ingredientes: [
+    {id:1,nome:'Açúcar agro vale',preco:4.29,qty:1000,unit:'g'},
+    {id:2,nome:'Manteiga Davaca',preco:9.20,qty:200,unit:'g'},
+    {id:3,nome:'Farinha de Trigo Finna',preco:4.69,qty:1000,unit:'g'},
+    {id:4,nome:'Leite condensado moça',preco:6.99,qty:395,unit:'g'},
+    {id:5,nome:'Creme de leite Nestlé',preco:6.98,qty:400,unit:'ml'},
+    {id:6,nome:'Chocolate 50%',preco:3.90,qty:100,unit:'g'},
+    {id:7,nome:'Leite Ninho',preco:39.90,qty:400,unit:'g'},
+    {id:8,nome:'Ovos',preco:0.90,qty:1,unit:'un.'},
+    {id:9,nome:'Fermento Dr. Oetker',preco:3.99,qty:100,unit:'g'},
+    {id:10,nome:'Leite de côco Sococo',preco:5.64,qty:200,unit:'ml'},
+  ],
+  receitas: [
+    {id:1,nome:'Bolo Alto',rendimento:12,medida:'fatias',tempo:120,gas:40,queimador:'Queimador médio',mao:8,preco:140,
+     ings:[{ingId:1,qty:265},{ingId:2,qty:160},{ingId:8,qty:5},{ingId:10,qty:200},{ingId:3,qty:267},{ingId:9,qty:13},
+           {ingId:4,qty:395},{ingId:5,qty:400},{ingId:6,qty:30},{ingId:2,qty:20},{ingId:7,qty:15}]},
+    {id:2,nome:'Bolo de Pote Nutella',rendimento:1,medida:'unidades',tempo:60,gas:30,queimador:'Forno a gás',mao:8,preco:22,ings:[]},
+    {id:3,nome:'Brownie Gourmet',rendimento:12,medida:'unidades',tempo:90,gas:40,queimador:'Forno elétrico',mao:8,preco:55,ings:[]},
+  ],
+  clientes: [
+    {id:1,nome:'Maria Silva',tel:'(88) 9 9999-1111',email:'maria@email.com',end:'Rua das Flores, 12',obs:''},
+    {id:2,nome:'João Pedro',tel:'(88) 9 9999-2222',email:'',end:'',obs:'Alérgico a amendoim'},
+    {id:3,nome:'Ana Carolina',tel:'(88) 9 8888-3333',email:'ana@email.com',end:'Av. Brasil, 55',obs:''},
+  ],
+  pedidos: [
+    {id:1,clienteId:3,data:'2026-03-20',entrega:'2026-03-27',pagamento:'pix',total:280,pago:280,dataPag:'2026-03-21',status:'pago',obs:'2 bolos alto + 4 potes',
+     itens:[{receita:'Bolo Alto',qty:2,preco:140},{receita:'Bolo de Pote Nutella',qty:4,preco:22}]},
+    {id:2,clienteId:1,data:'2026-03-24',entrega:'2026-03-29',pagamento:'dinheiro',total:55,pago:0,dataPag:'',status:'pendente',obs:'',
+     itens:[{receita:'Brownie Gourmet',qty:1,preco:55}]},
+    {id:3,clienteId:2,data:'2026-03-26',entrega:'2026-04-05',pagamento:'cartao',total:140,pago:70,dataPag:'2026-03-26',status:'parcial',obs:'Metade já pago',
+     itens:[{receita:'Bolo Alto',qty:1,preco:140}]},
+  ],
+  eletros: [
+    {id:1,nome:'Batedeira KitchenAid',w:300,kwh:0.75},
+    {id:2,nome:'Forno elétrico',w:1800,kwh:0.75},
+  ],
+  nextId: 100,
+  erIngs: [], // ingredientes sendo editados na receita
+  epItens: [], // itens sendo editados no pedido
+  currentClienteId: null,
+  delCb: null,
+  editClienteFromDetail: false,
+};
+
+function newId(){ return ++state.nextId; }
+
+// ============================================================
+// NAV
+// ============================================================
+const pageMap={home:'page-home',ingredientes:'page-ingredientes',receitas:'page-receitas','editar-receita':'page-editar-receita',pricing:'page-pricing',clientes:'page-clientes','cliente-detalhe':'page-cliente-detalhe',pedidos:'page-pedidos','editar-pedido':'page-editar-pedido',financeiro:'page-financeiro',perfil:'page-perfil',eletro:'page-eletro',senha:'page-senha'};
+const bnMap={home:'bn-home',pedidos:'bn-pedidos',receitas:'bn-receitas',clientes:'bn-clientes',financeiro:'bn-financeiro'};
+const titleMap={home:'Sweet Olivia',ingredientes:'Ingredientes e Insumos',receitas:'Receitas','editar-receita':'Receita',pricing:'Precificação',clientes:'Clientes','cliente-detalhe':'Cliente',pedidos:'Pedidos','editar-pedido':'Pedido',financeiro:'Financeiro',perfil:'Meu Perfil',eletro:'Eletrodomésticos',senha:'Alterar Senha'};
+
+function go(page){
+  closeSidebar(); closeDropdowns();
+  Object.keys(pageMap).forEach(k=>document.getElementById(pageMap[k]).classList.remove('active'));
+  document.getElementById(pageMap[page]).classList.add('active');
+  Object.keys(bnMap).forEach(k=>document.getElementById(bnMap[k]).classList.remove('active'));
+  if(bnMap[page]) document.getElementById(bnMap[page]).classList.add('active');
+  document.getElementById('topTitle').innerHTML=`<em>${titleMap[page]||'Sweet Olivia'}</em>`;
+  window.scrollTo(0,0);
+  if(page==='home') renderHome();
+  if(page==='ingredientes') renderIngs();
+  if(page==='receitas') renderReceitas();
+  if(page==='clientes') renderClientes();
+  if(page==='pedidos') renderPedidos();
+  if(page==='financeiro') renderFinanceiro();
+  if(page==='eletro') renderEletros();
 }
 
-function toggleDropdown(e, id) {
-  e.stopPropagation();
-  const dd = document.getElementById(`dd-${id}`);
-  if(openDropdown && openDropdown !== dd) openDropdown.style.display = 'none';
-  dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
-  openDropdown = dd.style.display === 'block' ? dd : null;
-}
+// ============================================================
+// SIDEBAR
+// ============================================================
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sbOverlay').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOverlay').classList.remove('open');}
 
-function closeDropdowns() {
-  document.querySelectorAll('.dropdown-menu').forEach(d => d.style.display = 'none');
-  openDropdown = null;
-}
-document.addEventListener('click', closeDropdowns);
+// ============================================================
+// DROPDOWNS
+// ============================================================
+let openDd=null;
+function toggleDd(e,el){e.stopPropagation();if(openDd&&openDd!==el){openDd.style.display='none';}el.style.display=el.style.display==='block'?'none':'block';openDd=el.style.display==='block'?el:null;}
+function closeDropdowns(){document.querySelectorAll('.dd').forEach(d=>d.style.display='none');openDd=null;}
+document.addEventListener('click',closeDropdowns);
 
-function editRecipe(id) {
-  const r = recipes.find(x => x.id === id);
-  document.getElementById('editarTitle').textContent = 'Editar Receita';
-  document.getElementById('editTitulo').value = r.name;
-  navigate('editar');
-}
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(id){document.getElementById('modal-'+id).classList.add('open');}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');}
 
-function openNewRecipe() {
-  document.getElementById('editarTitle').textContent = 'Nova Receita';
-  document.getElementById('editTitulo').value = '';
-  document.getElementById('editTempo').value = '';
-  document.getElementById('editGas').value = '';
-  document.getElementById('editRendimento').value = '';
-  document.getElementById('editPreco').value = '';
-  navigate('editar');
-}
-
-function saveRecipe() {
-  const titulo = document.getElementById('editTitulo').value;
-  if(!titulo) { showToast('Informe o título da receita!'); return; }
-  const precoVal = document.getElementById('editPreco').value;
-  const existing = recipes.find(r => r.name === titulo);
-  if(!existing) {
-    recipes.push({ id: Date.now(), name: titulo, price: precoVal ? `R$ ${precoVal}` : '', qty: `${document.getElementById('editRendimento').value || '?'} ${document.getElementById('editMedida').value}`, warn: false });
-  }
-  showToast('Receita salva! ✓');
-  navigate('receitas');
-}
-
-function copyRecipe(id) {
-  const r = recipes.find(x => x.id === id);
-  recipes.push({ ...r, id: Date.now(), name: r.name + ' (cópia)' });
-  renderRecipes();
-  showToast('Receita copiada! ✓');
-}
-
-function deleteRecipe(id) {
-  recipes = recipes.filter(r => r.id !== id);
-  renderRecipes();
-  showToast('Receita excluída.');
-}
-
-function pricingRecipe(id) {
-  const r = recipes.find(x => x.id === id);
-  document.getElementById('pricingRecipeName').textContent = r.name;
-  navigate('pricing');
-}
-
-function nutriRecipe(id) {
-  navigate('nutri');
-}
-
-function filterRecipes(val) { renderRecipes(val); }
-
-// ====== PRICING SLIDER ======
-function updatePricing(val) {
-  const custo = 77.31;
-  const margem = parseInt(val);
-  const lucro = custo * (margem / 100);
-  const preco = custo + lucro;
-  document.getElementById('margemVal').textContent = margem + '%';
-  document.getElementById('lucroVal').textContent = 'R$ ' + lucro.toFixed(2).replace('.', ',');
-  document.getElementById('precoFinal').value = 'R$ ' + preco.toFixed(2).replace('.', ',');
-}
-
-function updateFromPrice(val) {
-  const custo = 77.31;
-  const num = parseFloat(val.replace('R$','').replace(',','.').trim());
-  if(!isNaN(num) && num > 0) {
-    const margem = Math.round(((num - custo) / custo) * 100);
-    document.getElementById('margemVal').textContent = margem + '%';
-    document.getElementById('lucroVal').textContent = 'R$ ' + (num - custo).toFixed(2).replace('.', ',');
-    document.getElementById('lucroSlider').value = Math.min(Math.max(margem, 0), 200);
-  }
-}
-
-// ====== MODAL ======
-function showModal(id) {
-  document.getElementById('modal-' + id).classList.add('open');
-}
-function closeModal(id) {
-  document.getElementById('modal-' + id).classList.remove('open');
-}
-
-// ====== TOAST ======
+// ============================================================
+// TOAST
+// ============================================================
 let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2500);}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function fmtR(v){return 'R$ '+parseFloat(v||0).toFixed(2).replace('.',',');}
+function fmtDate(s){if(!s)return '-';const[y,m,d]=s.split('-');return`${d}/${m}/${y}`;}
+function getIng(id){return state.ingredientes.find(i=>i.id===id);}
+function getReceita(id){return state.receitas.find(r=>r.id===id);}
+function getCliente(id){return state.clientes.find(c=>c.id===id);}
+function avatarLetter(nome){return nome?nome[0].toUpperCase():'?';}
+function statusBadge(s){const m={pago:'badge-green',pendente:'badge-orange',parcial:'badge-blue',entregue:'badge-green',cancelado:'badge-red'};const l={pago:'Pago',pendente:'Pendente',parcial:'Parcial',entregue:'Entregue',cancelado:'Cancelado'};return`<span class="badge ${m[s]||''}">${l[s]||s}</span>`;}
+
+// Custo de ingredientes de uma receita
+function custoIngs(receita){
+  let total=0;
+  (receita.ings||[]).forEach(ri=>{
+    const ing=getIng(ri.ingId);
+    if(ing&&ing.qty>0) total+=(ing.preco/ing.qty)*ri.qty;
+  });
+  return total;
+}
+// Custo total (ingredientes + gás + mão de obra)
+function custoTotal(r){
+  const gastoCustoKg=120/12; // botijão 13kg ~12kg uteis → simplificado
+  const gasMin=parseFloat(document.getElementById('pf-gas')?document.getElementById('pf-gas').value:120)||120;
+  const custoGas=(r.gas||0)*(gasMin/720); // horas de gás
+  const mao=((r.tempo||0)/60)*(parseFloat(r.mao)||8);
+  return custoIngs(r)+custoGas+mao;
 }
 
-// ====== INIT ======
-renderRecipes();
+// ============================================================
+// HOME
+// ============================================================
+function renderHome(){
+  document.getElementById('hs-receitas').textContent=state.receitas.length;
+  document.getElementById('hs-ings').textContent=state.ingredientes.length;
+  document.getElementById('hs-clientes').textContent=state.clientes.length;
+  document.getElementById('hs-pedidos').textContent=state.pedidos.length;
+}
+
+// ============================================================
+// INGREDIENTES
+// ============================================================
+function renderIngs(filter=''){
+  const list=document.getElementById('ingList');
+  const items=state.ingredientes.filter(i=>i.nome.toLowerCase().includes(filter.toLowerCase()));
+  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">🧂</div><p>Nenhum ingrediente encontrado.</p></div>`;return;}
+  list.innerHTML=items.map(i=>`
+    <div class="list-item" id="ing-item-${i.id}">
+      <div class="item-main">
+        <div class="item-name">${i.nome}</div>
+        <div class="item-sub">${fmtR(i.preco)} / ${i.qty} ${i.unit}</div>
+      </div>
+      <div class="item-right">
+        <div class="item-val">${fmtR(i.preco/i.qty*100)} / 100${i.unit}</div>
+      </div>
+      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-ing-${i.id}'))">⋮</button>
+      <div class="dd" id="dd-ing-${i.id}" style="display:none;">
+        <button class="dd-item" onclick="openIngModal(${i.id})">✏️ Editar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir o ingrediente <b>${i.nome}</b>?',()=>delIng(${i.id}))">🗑️ Excluir</button>
+      </div>
+    </div>`).join('');
+}
+
+function openIngModal(id=null){
+  document.getElementById('mi-id').value=id||'';
+  document.getElementById('modal-ing-title').textContent=id?'Editar Ingrediente':'Novo Ingrediente';
+  if(id){const i=getIng(id);document.getElementById('mi-nome').value=i.nome;document.getElementById('mi-preco').value=i.preco;document.getElementById('mi-qty').value=i.qty;document.getElementById('mi-unit').value=i.unit;}
+  else{document.getElementById('mi-nome').value='';document.getElementById('mi-preco').value='';document.getElementById('mi-qty').value='';document.getElementById('mi-unit').value='g';}
+  openModal('ing');
+}
+
+function saveIng(){
+  const id=parseInt(document.getElementById('mi-id').value)||null;
+  const nome=document.getElementById('mi-nome').value.trim();
+  const preco=parseFloat(document.getElementById('mi-preco').value)||0;
+  const qty=parseFloat(document.getElementById('mi-qty').value)||1;
+  const unit=document.getElementById('mi-unit').value;
+  if(!nome){showToast('Informe o nome do ingrediente!');return;}
+  if(id){const i=getIng(id);i.nome=nome;i.preco=preco;i.qty=qty;i.unit=unit;}
+  else{state.ingredientes.push({id:newId(),nome,preco,qty,unit});}
+  closeModal('ing');renderIngs();showToast(id?'Ingrediente atualizado! ✓':'Ingrediente adicionado! ✓');
+}
+
+function delIng(id){
+  state.ingredientes=state.ingredientes.filter(i=>i.id!==id);
+  renderIngs();closeModal('del');showToast('Ingrediente excluído.');
+}
+
+// ============================================================
+// RECEITAS
+// ============================================================
+function renderReceitas(filter=''){
+  const list=document.getElementById('receitaList');
+  const items=state.receitas.filter(r=>r.nome.toLowerCase().includes(filter.toLowerCase()));
+  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">📝</div><p>Nenhuma receita encontrada.</p></div>`;return;}
+  list.innerHTML=items.map(r=>{
+    const ct=custoTotal(r);
+    const lucro=r.preco>0?((r.preco-ct)/r.preco*100).toFixed(0):null;
+    return`<div class="list-item" id="rec-item-${r.id}">
+      <div class="item-main">
+        <div class="item-name">${r.nome}</div>
+        <div class="item-sub">${r.rendimento} ${r.medida} · custo ${fmtR(ct)}</div>
+        ${r.preco?`<div class="item-sub" style="color:var(--wine);font-weight:600;">${fmtR(r.preco)} · margem ${lucro}%</div>`:'<div class="item-sub warn">⚠️ Sem preço definido</div>'}
+      </div>
+      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-rec-${r.id}'))">⋮</button>
+      <div class="dd" id="dd-rec-${r.id}" style="display:none;">
+        <button class="dd-item" onclick="openReceitaForm(${r.id})">✏️ Editar</button>
+        <button class="dd-item" onclick="openPricing(${r.id})">💰 Precificação</button>
+        <button class="dd-item" onclick="copyReceita(${r.id})">📋 Copiar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir a receita <b>${r.nome}</b>?',()=>delReceita(${r.id}))">🗑️ Excluir</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openReceitaForm(id=null){
+  state.erIngs=[];
+  document.getElementById('er-id').value=id||'';
+  document.getElementById('editReceitaTitle').textContent=id?'Editar Receita':'Nova Receita';
+  // popular select de ingredientes
+  const sel=document.getElementById('er-ing-sel');
+  sel.innerHTML=state.ingredientes.map(i=>`<option value="${i.id}">${i.nome} (${i.qty}${i.unit})</option>`).join('');
+  if(id){
+    const r=getReceita(id);
+    document.getElementById('er-nome').value=r.nome;
+    document.getElementById('er-rendimento').value=r.rendimento;
+    document.getElementById('er-medida').value=r.medida;
+    document.getElementById('er-tempo').value=r.tempo;
+    document.getElementById('er-gas').value=r.gas;
+    document.getElementById('er-queimador').value=r.queimador;
+    document.getElementById('er-mao').value=r.mao;
+    state.erIngs=r.ings.map(x=>({...x}));
+  } else {
+    document.getElementById('er-nome').value='';
+    document.getElementById('er-rendimento').value='';
+    document.getElementById('er-tempo').value='';
+    document.getElementById('er-gas').value='';
+    document.getElementById('er-mao').value='8.00';
+  }
+  renderErIngs();
+  go('editar-receita');
+}
+
+function renderErIngs(){
+  const div=document.getElementById('er-ings-list');
+  if(!state.erIngs.length){div.innerHTML='<p style="font-size:0.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum ingrediente adicionado ainda.</p>';return;}
+  div.innerHTML='<div style="display:flex;flex-wrap:wrap;margin-bottom:6px;">'+state.erIngs.map((ri,idx)=>{
+    const ing=getIng(ri.ingId);
+    return`<span class="ing-tag">${ing?ing.nome:'?'} (${ri.qty}${ing?ing.unit:''}) <span class="rm" onclick="removeIngFromRecipe(${idx})">×</span></span>`;
+  }).join('')+'</div>';
+}
+
+function addIngToRecipe(){
+  const ingId=parseInt(document.getElementById('er-ing-sel').value);
+  const qty=parseFloat(document.getElementById('er-ing-qty').value)||0;
+  if(!qty){showToast('Informe a quantidade!');return;}
+  state.erIngs.push({ingId,qty});
+  document.getElementById('er-ing-qty').value='';
+  renderErIngs();
+}
+
+function removeIngFromRecipe(idx){state.erIngs.splice(idx,1);renderErIngs();}
+
+function saveReceita(){
+  const id=parseInt(document.getElementById('er-id').value)||null;
+  const nome=document.getElementById('er-nome').value.trim();
+  if(!nome){showToast('Informe o nome da receita!');return;}
+  const data={
+    nome,
+    rendimento:parseFloat(document.getElementById('er-rendimento').value)||1,
+    medida:document.getElementById('er-medida').value,
+    tempo:parseFloat(document.getElementById('er-tempo').value)||0,
+    gas:parseFloat(document.getElementById('er-gas').value)||0,
+    queimador:document.getElementById('er-queimador').value,
+    mao:parseFloat(document.getElementById('er-mao').value)||8,
+    ings:[...state.erIngs],
+    preco: id?getReceita(id).preco:0,
+  };
+  if(id){Object.assign(getReceita(id),data);}
+  else{state.receitas.push({id:newId(),...data});}
+  showToast(id?'Receita atualizada! ✓':'Receita criada! ✓');
+  go('receitas');
+}
+
+function copyReceita(id){
+  const r=getReceita(id);
+  state.receitas.push({...r,id:newId(),nome:r.nome+' (cópia)',ings:r.ings.map(x=>({...x}))});
+  renderReceitas();showToast('Receita copiada!');
+}
+
+function delReceita(id){
+  state.receitas=state.receitas.filter(r=>r.id!==id);
+  closeModal('del');renderReceitas();showToast('Receita excluída.');
+}
+
+// ============================================================
+// PRECIFICAÇÃO
+// ============================================================
+function openPricing(id){
+  const r=getReceita(id);
+  document.getElementById('pricing-title').textContent=r.nome;
+  const ci=custoIngs(r);
+  const gasR=document.getElementById('pf-gas')?parseFloat(document.getElementById('pf-gas').value)||120:120;
+  const cGas=(r.gas/60)*(gasR/720*60);
+  const cMao=(r.tempo/60)*r.mao;
+  const ct=ci+cGas+cMao;
+  const custoPorcao=ct/r.rendimento;
+  const precoAtual=r.preco||ct*1.8;
+
+  const ingRows=(r.ings||[]).map(ri=>{
+    const ing=getIng(ri.ingId);if(!ing)return'';
+    const val=(ing.preco/ing.qty)*ri.qty;
+    return`<div class="price-row"><span>${ing.nome}<br><small style="color:var(--text-soft)">${ri.qty}${ing.unit}</small></span><span class="v">${fmtR(val)}</span></div>`;
+  }).join('');
+
+  const body=document.getElementById('pricing-body');
+  body.innerHTML=`
+    <div class="price-block">
+      <h4>🧂 Ingredientes</h4>
+      ${ingRows||'<p style="font-size:0.82rem;color:var(--text-soft)">Nenhum ingrediente cadastrado.</p>'}
+      <div class="price-row total"><span>Sub-total ingredientes</span><span class="v">${fmtR(ci)}</span></div>
+    </div>
+    <div class="price-block">
+      <h4>⚙️ Cálculo de Custos</h4>
+      <div class="price-row"><span>Custo ingredientes</span><span class="v">${fmtR(ci)}</span></div>
+      <div class="price-row"><span>Custo do gás (${r.gas} min)</span><span class="v">${fmtR(cGas)}</span></div>
+      <div class="price-row"><span>Mão de obra (${r.tempo} min · R${r.mao}/h)</span><span class="v">${fmtR(cMao)}</span></div>
+      <div class="price-row total"><span>Custo total</span><span class="v">${fmtR(ct)}</span></div>
+      <div class="price-row"><span>Custo por ${r.medida.slice(0,-1)||'unidade'}</span><span class="v">${fmtR(custoPorcao)}</span></div>
+    </div>
+    <div class="price-block" id="ajuste-block">
+      <h4>📊 Ajuste de Preço</h4>
+      <p style="font-size:0.78rem;color:var(--text-soft);margin-bottom:12px;">Ajuste o slider para definir sua margem de lucro desejada.</p>
+      <div class="slider-wrap">
+        <input type="range" min="0" max="200" value="${r.preco>0?Math.round((r.preco-ct)/ct*100):80}" oninput="updateSlider(this.value,${ct},${id})">
+      </div>
+      <div class="price-row"><span>Margem de lucro</span><span class="v" id="p-margem">${r.preco>0?Math.round((r.preco-ct)/ct*100):80}%</span></div>
+      <div class="price-row"><span>Seu lucro</span><span class="v" id="p-lucro" style="color:var(--pink)">${fmtR(r.preco>0?r.preco-ct:ct*0.8)}</span></div>
+      <div style="margin:12px 0 4px;font-size:0.78rem;color:var(--text-soft);">Preço final do produto</div>
+      <input class="price-final-input" id="p-final" type="number" value="${r.preco>0?r.preco:(ct*1.8).toFixed(2)}" oninput="updateFromFinal(this.value,${ct},${id})">
+      <button class="save-btn" style="margin-top:12px" onclick="savePreco(${id})">Salvar preço</button>
+    </div>`;
+  // init display
+  updateSlider(r.preco>0?Math.round((r.preco-ct)/ct*100):80,ct,id);
+  go('pricing');
+}
+
+function updateSlider(margem,ct,id){
+  margem=parseInt(margem);
+  const lucro=ct*(margem/100);
+  const preco=ct+lucro;
+  const el=document.getElementById('p-margem');if(el)el.textContent=margem+'%';
+  const el2=document.getElementById('p-lucro');if(el2)el2.textContent=fmtR(lucro);
+  const el3=document.getElementById('p-final');if(el3)el3.value=preco.toFixed(2);
+}
+function updateFromFinal(val,ct,id){
+  const p=parseFloat(val)||0;
+  const margem=ct>0?Math.round((p-ct)/ct*100):0;
+  const el=document.getElementById('p-margem');if(el)el.textContent=margem+'%';
+  const el2=document.getElementById('p-lucro');if(el2)el2.textContent=fmtR(p-ct);
+}
+function savePreco(id){
+  const r=getReceita(id);
+  r.preco=parseFloat(document.getElementById('p-final').value)||0;
+  showToast('Preço salvo! ✓');
+}
+
+// ============================================================
+// CLIENTES
+// ============================================================
+function renderClientes(filter=''){
+  const list=document.getElementById('clienteList');
+  const items=state.clientes.filter(c=>c.nome.toLowerCase().includes(filter.toLowerCase()));
+  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">👥</div><p>Nenhum cliente encontrado.</p></div>`;return;}
+  list.innerHTML=items.map(c=>{
+    const pedidos=state.pedidos.filter(p=>p.clienteId===c.id);
+    return`<div class="list-item" id="cli-item-${c.id}">
+      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-weight:700;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;">${avatarLetter(c.nome)}</div>
+      <div class="item-main" onclick="openClienteDetalhe(${c.id})" style="cursor:pointer;">
+        <div class="item-name">${c.nome}</div>
+        <div class="item-sub">${c.tel||'Sem telefone'} · ${pedidos.length} pedido(s)</div>
+      </div>
+      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-cli-${c.id}'))">⋮</button>
+      <div class="dd" id="dd-cli-${c.id}" style="display:none;">
+        <button class="dd-item" onclick="openClienteDetalhe(${c.id})">👁️ Ver perfil</button>
+        <button class="dd-item" onclick="openClienteModal(${c.id})">✏️ Editar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir o cliente <b>${c.nome}</b>?',()=>delCliente(${c.id}))">🗑️ Excluir</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openClienteModal(id=null){
+  document.getElementById('mc-id').value=id||'';
+  document.getElementById('modal-cliente-title').textContent=id?'Editar Cliente':'Novo Cliente';
+  if(id){const c=getCliente(id);document.getElementById('mc-nome').value=c.nome;document.getElementById('mc-tel').value=c.tel;document.getElementById('mc-email').value=c.email;document.getElementById('mc-end').value=c.end;document.getElementById('mc-obs').value=c.obs;}
+  else{document.getElementById('mc-nome').value='';document.getElementById('mc-tel').value='';document.getElementById('mc-email').value='';document.getElementById('mc-end').value='';document.getElementById('mc-obs').value='';}
+  openModal('cliente');
+}
+
+function saveCliente(){
+  const id=parseInt(document.getElementById('mc-id').value)||null;
+  const nome=document.getElementById('mc-nome').value.trim();
+  if(!nome){showToast('Informe o nome!');return;}
+  const data={nome,tel:document.getElementById('mc-tel').value.trim(),email:document.getElementById('mc-email').value.trim(),end:document.getElementById('mc-end').value.trim(),obs:document.getElementById('mc-obs').value.trim()};
+  if(id){Object.assign(getCliente(id),data);}
+  else{state.clientes.push({id:newId(),...data});}
+  closeModal('cliente');
+  showToast(id?'Cliente atualizado! ✓':'Cliente adicionado! ✓');
+  if(state.editClienteFromDetail){state.editClienteFromDetail=false;openClienteDetalhe(id||state.clientes[state.clientes.length-1].id);}
+  else renderClientes();
+}
+
+function delCliente(id){
+  state.clientes=state.clientes.filter(c=>c.id!==id);
+  closeModal('del');renderClientes();showToast('Cliente excluído.');
+}
+
+function openClienteDetalhe(id){
+  state.currentClienteId=id;
+  const c=getCliente(id);
+  document.getElementById('cd-title').textContent=c.nome;
+  const pedidos=state.pedidos.filter(p=>p.clienteId===id);
+  const total=pedidos.reduce((s,p)=>s+p.total,0);
+  const pago=pedidos.reduce((s,p)=>s+p.pago,0);
+  document.getElementById('cd-body').innerHTML=`
+    <div class="client-header">
+      <div class="client-avatar-big">${avatarLetter(c.nome)}</div>
+      <div class="client-name-big">${c.nome}</div>
+      <div class="client-meta-big">${c.tel||''} ${c.email?'· '+c.email:''}</div>
+      ${c.end?`<div class="client-meta-big" style="margin-top:2px;">📍 ${c.end}</div>`:''}
+      ${c.obs?`<div style="margin-top:8px;font-size:0.82rem;color:var(--wine);background:#fce8f2;border-radius:8px;padding:6px 12px;">💬 ${c.obs}</div>`:''}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:14px 14px 0;">
+      <div class="stat-card"><div class="stat-num">${pedidos.length}</div><div class="stat-label">Pedidos</div></div>
+      <div class="stat-card"><div class="stat-num" style="font-size:1rem;">${fmtR(total)}</div><div class="stat-label">Total gasto</div></div>
+      <div class="stat-card"><div class="stat-num" style="font-size:1rem;color:var(--warning);">${fmtR(total-pago)}</div><div class="stat-label">Em aberto</div></div>
+    </div>
+    <div style="padding:14px 16px 0;">
+      <div style="font-weight:700;color:var(--wine);font-size:0.9rem;margin-bottom:8px;">📦 Histórico de Pedidos</div>
+      ${pedidos.length?pedidos.map(p=>`
+        <div class="list-item" style="border-radius:12px;margin-bottom:8px;" onclick="editPedidoById(${p.id})">
+          <div class="item-main">
+            <div class="item-name">${p.obs||p.itens.map(i=>i.receita).join(', ')||'Pedido #'+p.id}</div>
+            <div class="item-sub">Entrega: ${fmtDate(p.entrega)} · ${statusBadge(p.status)}</div>
+          </div>
+          <div class="item-right"><div class="item-val">${fmtR(p.total)}</div><div class="item-qty">${fmtR(p.pago)} pago</div></div>
+        </div>`).join(''):`<div class="empty-state" style="padding:20px"><p>Nenhum pedido ainda.</p></div>`}
+    </div>`;
+  go('cliente-detalhe');
+}
+
+function editClienteAtual(){
+  state.editClienteFromDetail=true;
+  openClienteModal(state.currentClienteId);
+}
+
+// ============================================================
+// PEDIDOS
+// ============================================================
+function renderPedidos(filter=''){
+  const list=document.getElementById('pedidoList');
+  const items=state.pedidos.filter(p=>{
+    const c=getCliente(p.clienteId);
+    return (c&&c.nome.toLowerCase().includes(filter.toLowerCase()))||(p.obs&&p.obs.toLowerCase().includes(filter.toLowerCase()));
+  });
+  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">📦</div><p>Nenhum pedido encontrado.</p></div>`;return;}
+  // sort by entrega
+  const sorted=[...items].sort((a,b)=>a.entrega<b.entrega?-1:1);
+  list.innerHTML=sorted.map(p=>{
+    const c=getCliente(p.clienteId);
+    return`<div class="list-item" id="ped-item-${p.id}">
+      <div class="item-main" onclick="editPedidoById(${p.id})" style="cursor:pointer;">
+        <div class="item-name">${c?c.nome:'Cliente removido'}</div>
+        <div class="item-sub">Entrega: ${fmtDate(p.entrega)} · ${p.pagamento} ${statusBadge(p.status)}</div>
+        <div class="item-sub" style="margin-top:2px;">${p.itens.map(i=>`${i.qty}× ${i.receita}`).join(', ')||p.obs||''}</div>
+      </div>
+      <div class="item-right">
+        <div class="item-val">${fmtR(p.total)}</div>
+        <div class="item-qty" style="${p.total-p.pago>0?'color:var(--warning)':''}">${p.total-p.pago>0?'Falta '+fmtR(p.total-p.pago):'Pago ✓'}</div>
+      </div>
+      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-ped-${p.id}'))">⋮</button>
+      <div class="dd" id="dd-ped-${p.id}" style="display:none;">
+        <button class="dd-item" onclick="editPedidoById(${p.id})">✏️ Editar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir este pedido?',()=>delPedido(${p.id}))">🗑️ Excluir</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openPedidoForm(id=null){
+  state.epItens=[];
+  document.getElementById('ep-id').value=id||'';
+  document.getElementById('editPedidoTitle').textContent=id?'Editar Pedido':'Novo Pedido';
+  // popular clientes
+  const cSel=document.getElementById('ep-cliente');
+  cSel.innerHTML='<option value="">Selecionar cliente...</option>'+state.clientes.map(c=>`<option value="${c.id}">${c.nome}</option>`).join('');
+  // popular receitas
+  const rSel=document.getElementById('ep-item-receita');
+  rSel.innerHTML='<option value="">Selecionar receita...</option>'+state.receitas.map(r=>`<option value="${r.id}">${r.nome}</option>`).join('');
+  const hoje=new Date().toISOString().slice(0,10);
+  if(id){
+    const p=state.pedidos.find(x=>x.id===id);
+    document.getElementById('ep-cliente').value=p.clienteId;
+    document.getElementById('ep-data').value=p.data;
+    document.getElementById('ep-entrega').value=p.entrega;
+    document.getElementById('ep-pagamento').value=p.pagamento;
+    document.getElementById('ep-total').value=p.total;
+    document.getElementById('ep-pago').value=p.pago;
+    document.getElementById('ep-data-pag').value=p.dataPag;
+    document.getElementById('ep-status').value=p.status;
+    document.getElementById('ep-obs').value=p.obs;
+    state.epItens=p.itens.map(x=>({...x}));
+  } else {
+    document.getElementById('ep-cliente').value='';
+    document.getElementById('ep-data').value=hoje;
+    document.getElementById('ep-entrega').value='';
+    document.getElementById('ep-pagamento').value='pix';
+    document.getElementById('ep-total').value='';
+    document.getElementById('ep-pago').value='0';
+    document.getElementById('ep-data-pag').value='';
+    document.getElementById('ep-status').value='pendente';
+    document.getElementById('ep-obs').value='';
+  }
+  renderEpItens();
+  go('editar-pedido');
+}
+
+function editPedidoById(id){openPedidoForm(id);}
+
+// auto-fill preço ao selecionar receita
+document.getElementById('ep-item-receita').addEventListener('change',function(){
+  const r=getReceita(parseInt(this.value));
+  if(r&&r.preco) document.getElementById('ep-item-preco').value=r.preco;
+});
+
+function renderEpItens(){
+  const div=document.getElementById('ep-itens-list');
+  if(!state.epItens.length){div.innerHTML='<p style="font-size:0.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum item adicionado.</p>';return;}
+  let total=0;
+  div.innerHTML='<div style="background:var(--white);border-radius:12px;padding:12px;margin-bottom:8px;">'+
+    state.epItens.map((it,i)=>{
+      total+=it.qty*it.preco;
+      return`<div class="fin-list-item"><span>${it.qty}× ${it.receita}</span><span style="display:flex;align-items:center;gap:8px;">${fmtR(it.qty*it.preco)}<button onclick="removeEpItem(${i})" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:1.1rem;">×</button></span></div>`;
+    }).join('')+
+    `<div style="display:flex;justify-content:space-between;font-weight:700;padding-top:8px;border-top:1px solid var(--border)"><span>Subtotal</span><span style="color:var(--wine)">${fmtR(total)}</span></div></div>`;
+  // auto-fill total
+  document.getElementById('ep-total').value=total.toFixed(2);
+}
+
+function addItemPedido(){
+  const rId=parseInt(document.getElementById('ep-item-receita').value);
+  const qty=parseInt(document.getElementById('ep-item-qty').value)||1;
+  const preco=parseFloat(document.getElementById('ep-item-preco').value)||0;
+  if(!rId){showToast('Selecione uma receita!');return;}
+  const r=getReceita(rId);
+  state.epItens.push({receita:r.nome,qty,preco});
+  document.getElementById('ep-item-qty').value='1';
+  document.getElementById('ep-item-preco').value='';
+  document.getElementById('ep-item-receita').value='';
+  renderEpItens();
+}
+function removeEpItem(i){state.epItens.splice(i,1);renderEpItens();}
+
+function savePedido(){
+  const id=parseInt(document.getElementById('ep-id').value)||null;
+  const clienteId=parseInt(document.getElementById('ep-cliente').value)||null;
+  if(!clienteId){showToast('Selecione um cliente!');return;}
+  const data={
+    clienteId,
+    data:document.getElementById('ep-data').value,
+    entrega:document.getElementById('ep-entrega').value,
+    pagamento:document.getElementById('ep-pagamento').value,
+    total:parseFloat(document.getElementById('ep-total').value)||0,
+    pago:parseFloat(document.getElementById('ep-pago').value)||0,
+    dataPag:document.getElementById('ep-data-pag').value,
+    status:document.getElementById('ep-status').value,
+    obs:document.getElementById('ep-obs').value.trim(),
+    itens:[...state.epItens],
+  };
+  if(id){Object.assign(state.pedidos.find(p=>p.id===id),data);}
+  else{state.pedidos.push({id:newId(),...data});}
+  showToast(id?'Pedido atualizado! ✓':'Pedido salvo! ✓');
+  go('pedidos');
+}
+function delPedido(id){state.pedidos=state.pedidos.filter(p=>p.id!==id);closeModal('del');renderPedidos();showToast('Pedido excluído.');}
+
+// ============================================================
+// FINANCEIRO
+// ============================================================
+function renderFinanceiro(){
+  const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const hoje=new Date();
+  const mesAtual=hoje.getMonth();
+  const anoAtual=hoje.getFullYear();
+
+  const pedidosMes=state.pedidos.filter(p=>{
+    const d=new Date(p.data);return d.getMonth()===mesAtual&&d.getFullYear()===anoAtual;
+  });
+  const totalMes=pedidosMes.reduce((s,p)=>s+p.total,0);
+  const pagoMes=pedidosMes.reduce((s,p)=>s+p.pago,0);
+  const pendenteMes=totalMes-pagoMes;
+
+  const allPendentes=state.pedidos.filter(p=>p.total-p.pago>0&&p.status!=='cancelado');
+  const totalPendente=allPendentes.reduce((s,p)=>s+(p.total-p.pago),0);
+
+  // lucro estimado
+  let lucroMes=0;
+  pedidosMes.forEach(p=>{
+    p.itens.forEach(it=>{
+      const r=state.receitas.find(rx=>rx.nome===it.receita);
+      if(r){const ct=custoTotal(r);lucroMes+=(it.preco-ct)*it.qty;}
+    });
+  });
+
+  const pedidosPorStatus={pago:0,pendente:0,parcial:0,entregue:0,cancelado:0};
+  state.pedidos.forEach(p=>{ if(pedidosPorStatus[p.status]!==undefined) pedidosPorStatus[p.status]++; });
+
+  document.getElementById('fin-body').innerHTML=`
+    <div class="fin-card">
+      <h3>Receita — ${meses[mesAtual]}/${anoAtual}</h3>
+      <div class="fin-big">${fmtR(totalMes)}</div>
+      <div class="fin-sub">${pedidosMes.length} pedido(s) no mês</div>
+    </div>
+    <div class="fin-grid">
+      <div class="fin-mini"><h4>Recebido</h4><div class="val green">${fmtR(pagoMes)}</div></div>
+      <div class="fin-mini"><h4>A receber (mês)</h4><div class="val orange">${fmtR(pendenteMes)}</div></div>
+      <div class="fin-mini"><h4>Lucro estimado</h4><div class="val">${fmtR(lucroMes)}</div></div>
+      <div class="fin-mini"><h4>Total pendente (geral)</h4><div class="val orange">${fmtR(totalPendente)}</div></div>
+    </div>
+    <div class="fin-card" style="margin-top:14px;">
+      <h3>Status dos Pedidos</h3>
+      <div class="fin-list-item"><span>✅ Pagos</span><span>${pedidosPorStatus.pago}</span></div>
+      <div class="fin-list-item"><span>⏳ Pendentes</span><span style="color:var(--warning)">${pedidosPorStatus.pendente}</span></div>
+      <div class="fin-list-item"><span>🔵 Pagamento parcial</span><span style="color:#1565c0">${pedidosPorStatus.parcial}</span></div>
+      <div class="fin-list-item"><span>📬 Entregues</span><span>${pedidosPorStatus.entregue}</span></div>
+      <div class="fin-list-item"><span>❌ Cancelados</span><span style="color:var(--danger)">${pedidosPorStatus.cancelado}</span></div>
+    </div>
+    ${allPendentes.length?`<div class="fin-card" style="margin-top:14px;margin-bottom:16px;">
+      <h3>⚠️ Cobranças Pendentes</h3>
+      ${allPendentes.map(p=>{const c=getCliente(p.clienteId);return`
+        <div class="fin-list-item">
+          <div><div style="font-weight:600;font-size:0.88rem;">${c?c.nome:'?'}</div><div style="font-size:0.76rem;color:var(--text-soft)">Entrega: ${fmtDate(p.entrega)}</div></div>
+          <div style="text-align:right"><div style="color:var(--warning);font-weight:700">${fmtR(p.total-p.pago)}</div><div style="font-size:0.74rem;color:var(--text-soft)">${p.pagamento}</div></div>
+        </div>`;}).join('')}
+    </div>`:``}`;
+}
+
+// ============================================================
+// ELETROS
+// ============================================================
+function renderEletros(){
+  const div=document.getElementById('eletroList');
+  if(!state.eletros.length){div.innerHTML='<p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:12px;">Nenhum eletrodoméstico cadastrado.</p>';return;}
+  div.innerHTML=state.eletros.map(e=>`
+    <div class="list-item" style="border-radius:12px;margin-bottom:8px;">
+      <div class="item-main">
+        <div class="item-name">${e.nome}</div>
+        <div class="item-sub">${e.w}W · tarifa R$ ${e.kwh}/kWh · custo R$ ${((e.w/1000)*e.kwh).toFixed(3)}/h</div>
+      </div>
+      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-el-${e.id}'))">⋮</button>
+      <div class="dd" id="dd-el-${e.id}" style="display:none;">
+        <button class="dd-item" onclick="openEletroModal(${e.id})">✏️ Editar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir este eletrodoméstico?',()=>delEletro(${e.id}))">🗑️ Excluir</button>
+      </div>
+    </div>`).join('');
+}
+
+function openEletroModal(id=null){
+  document.getElementById('mel-id').value=id||'';
+  if(id){const e=state.eletros.find(x=>x.id===id);document.getElementById('mel-nome').value=e.nome;document.getElementById('mel-w').value=e.w;document.getElementById('mel-kwh').value=e.kwh;}
+  else{document.getElementById('mel-nome').value='';document.getElementById('mel-w').value='';document.getElementById('mel-kwh').value='0.75';}
+  openModal('eletro');
+}
+function saveEletro(){
+  const id=parseInt(document.getElementById('mel-id').value)||null;
+  const nome=document.getElementById('mel-nome').value.trim();
+  if(!nome){showToast('Informe o nome!');return;}
+  const w=parseFloat(document.getElementById('mel-w').value)||0;
+  const kwh=parseFloat(document.getElementById('mel-kwh').value)||0;
+  if(id){const e=state.eletros.find(x=>x.id===id);e.nome=nome;e.w=w;e.kwh=kwh;}
+  else{state.eletros.push({id:newId(),nome,w,kwh});}
+  closeModal('eletro');renderEletros();showToast('Salvo! ✓');
+}
+function delEletro(id){state.eletros=state.eletros.filter(e=>e.id!==id);closeModal('del');renderEletros();showToast('Excluído.');}
+
+// ============================================================
+// DELETE CONFIRM
+// ============================================================
+function askDel(msg,cb){
+  document.getElementById('del-msg').innerHTML=msg;
+  state.delCb=cb;
+  closeDropdowns();
+  openModal('del');
+}
+function confirmDel(){if(state.delCb)state.delCb();state.delCb=null;}
+
+// ============================================================
+// INIT
+// ============================================================
+renderHome();
 </script>
 </body>
 </html>
