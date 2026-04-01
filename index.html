@@ -436,110 +436,105 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 </div></div>
 
 <style>
-.status-pill{padding:6px 13px;border-radius:20px;font-size:.78rem;font-weight:700;border:2px solid var(--border);background:var(--white);cursor:pointer;color:var(--text-soft);transition:all .15s;font-family:'Nunito',sans-serif;}
-.sp-pag-pago{background:#e8f5e9;border-color:var(--success);color:var(--success);}
-.sp-pag-pendente{background:#fff3e0;border-color:var(--warning);color:var(--warning);}
+.status-pill{padding:6px 13px;border-radius:20px;font-size:.78rem;font-weight:700;border:2px solid var(--border);background:var(--white);cursor:pointer;color:var(--text-soft);font-family:'Nunito',sans-serif;}
+.sp-pag-pago{background:#e8f5e9;border-color:#4caf50;color:#4caf50;}
+.sp-pag-pendente{background:#fff3e0;border-color:#f5a623;color:#f5a623;}
 .sp-pag-parcial{background:#e3f2fd;border-color:#1565c0;color:#1565c0;}
-.sp-pag-cancelado{background:#ffebee;border-color:var(--danger);color:var(--danger);}
+.sp-pag-cancelado{background:#ffebee;border-color:#e53935;color:#e53935;}
 .sp-ent-confirmado{background:#f3e5f5;border-color:#7b1fa2;color:#7b1fa2;}
 .sp-ent-producao{background:#fff8e1;border-color:#f9a825;color:#f9a825;}
 .sp-ent-concluido{background:#e8f5e9;border-color:#388e3c;color:#388e3c;}
 .sp-ent-entregue{background:#e0f2f1;border-color:#00897b;color:#00897b;}
 .status-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
 .ep-item-card{background:var(--white);border-radius:11px;padding:11px 13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow);}
-.ep-item-card .ep-item-info{flex:1;}
-.ep-item-card .ep-item-name{font-weight:600;font-size:.9rem;}
-.ep-item-card .ep-item-meta{font-size:.77rem;color:var(--text-soft);margin-top:2px;}
-.ep-item-card .ep-item-rm{background:none;border:none;cursor:pointer;color:var(--danger);font-size:1.2rem;padding:4px;}
-#loading-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--wine),var(--wine-light));z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;}
-#loading-screen .ls-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:2.2rem;margin-bottom:8px;}
-#loading-screen .ls-logo span{color:#f8bdd0;}
-#loading-screen .ls-sub{font-size:.85rem;opacity:.8;margin-bottom:28px;}
+.ep-item-info{flex:1;}
+.ep-item-name{font-weight:600;font-size:.9rem;}
+.ep-item-meta{font-size:.77rem;color:var(--text-soft);margin-top:2px;}
+.ep-item-rm{background:none;border:none;cursor:pointer;color:#e53935;font-size:1.2rem;padding:4px;}
+#loading-screen{position:fixed;inset:0;background:linear-gradient(135deg,#7B2D4E,#9B3D64);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;gap:8px;}
+.ls-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:2.2rem;}
+.ls-logo span{color:#f8bdd0;}
+.ls-sub{font-size:.85rem;opacity:.8;margin-bottom:16px;}
 .spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 </style>
 
-<!-- LOADING SCREEN -->
 <div id="loading-screen">
   <div class="ls-logo">Sweet <span>Olivia</span></div>
   <div class="ls-sub">Carregando seus dados... ☁️</div>
   <div class="spinner"></div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+<script>
+// ================================================================
+// JSONBIN CONFIG
+// ================================================================
+const BIN_ID = '69cda069aaba882197b770fc';
+const API_KEY = '$2a$10$nZrAh4mF2/mlVXag5nXJWuvX703WekdUaN9jaa0/E9J9dxjb4tlPG';
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
 // ================================================================
-// FIREBASE CONFIG
+// STATE
 // ================================================================
-const firebaseConfig = {
-  apiKey: "AIzaSyBuRX_OFmUNy9-jA6MWLUvd6P6OwS8EoI0",
-  authDomain: "meuapp-79e93.firebaseapp.com",
-  projectId: "meuapp-79e93",
-  storageBucket: "meuapp-79e93.firebasestorage.app",
-  messagingSenderId: "655492133078",
-  appId: "1:655492133078:web:653aac9787ee3e348c1977"
-};
-const fireApp = initializeApp(firebaseConfig);
-const db = getFirestore(fireApp);
+let S = { ingredientes:[], receitas:[], clientes:[], pedidos:[], eletros:[], compras:[] };
+let _saving = false;
+let _saveQueue = false;
 
-// ================================================================
-// STATE LOCAL (cache em memória)
-// ================================================================
-let S = {
-  ingredientes:[], receitas:[], clientes:[], pedidos:[],
-  eletros:[], compras:[], nextId: Date.now()
-};
-
-// ================================================================
-// FIREBASE — SALVAR / CARREGAR
-// ================================================================
-// Cada coleção vira uma collection no Firestore.
-// IDs são strings para compatibilidade com Firestore doc IDs.
-
-function newId(){ return 'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); }
-
-async function fbSet(col, id, data){
-  try { await setDoc(doc(db, col, String(id)), data); }
-  catch(e){ console.error('fbSet erro:', e); showToast('Erro ao salvar ☁️'); }
-}
-async function fbDel(col, id){
-  try { await deleteDoc(doc(db, col, String(id))); }
-  catch(e){ console.error('fbDel erro:', e); }
-}
-async function fbGetAll(col){
-  try {
-    const snap = await getDocs(collection(db, col));
-    return snap.docs.map(d => d.data());
-  } catch(e){ console.error('fbGetAll erro:', e); return []; }
-}
-
-// Carrega todos os dados do Firebase na inicialização
-async function loadAll(){
+// Carrega dados do JSONBin
+async function loadAll() {
   showLoading(true);
   try {
-    const [ings, recs, clis, peds, els, comps] = await Promise.all([
-      fbGetAll('ingredientes'), fbGetAll('receitas'), fbGetAll('clientes'),
-      fbGetAll('pedidos'), fbGetAll('eletros'), fbGetAll('compras'),
-    ]);
-    S.ingredientes = ings;
-    S.receitas = recs;
-    S.clientes = clis;
-    S.pedidos = peds;
-    S.eletros = els;
-    S.compras = comps;
-  } catch(e){
-    console.error('Erro ao carregar dados:', e);
-    showToast('Erro ao conectar com a nuvem ☁️');
+    const res = await fetch(BIN_URL + '/latest', {
+      headers: { 'X-Master-Key': API_KEY }
+    });
+    if (!res.ok) throw new Error('Erro HTTP ' + res.status);
+    const json = await res.json();
+    const data = json.record;
+    S.ingredientes = data.ingredientes || [];
+    S.receitas     = data.receitas     || [];
+    S.clientes     = data.clientes     || [];
+    S.pedidos      = data.pedidos      || [];
+    S.eletros      = data.eletros      || [];
+    S.compras      = data.compras      || [];
+  } catch(e) {
+    console.error('Erro ao carregar:', e);
+    showToast('Erro ao conectar ☁️ Verifique a internet');
   }
   showLoading(false);
   renderHome();
 }
 
-function showLoading(show){
+// Salva TUDO no JSONBin (debounced para não sobrecarregar)
+async function save() {
+  if (_saving) { _saveQueue = true; return; }
+  _saving = true;
+  try {
+    const res = await fetch(BIN_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+      body: JSON.stringify({
+        ingredientes: S.ingredientes,
+        receitas:     S.receitas,
+        clientes:     S.clientes,
+        pedidos:      S.pedidos,
+        eletros:      S.eletros,
+        compras:      S.compras,
+      })
+    });
+    if (!res.ok) throw new Error('Erro HTTP ' + res.status);
+  } catch(e) {
+    console.error('Erro ao salvar:', e);
+    showToast('Erro ao salvar ☁️');
+  }
+  _saving = false;
+  if (_saveQueue) { _saveQueue = false; save(); }
+}
+
+function showLoading(show) {
   document.getElementById('loading-screen').style.display = show ? 'flex' : 'none';
 }
+
+function newId() { return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,6); }
 
 // ================================================================
 // HELPERS
@@ -568,20 +563,19 @@ const ENT_BADGE={confirmado:'badge-purple',producao:'badge-orange',concluido:'ba
 function pagBadge(s){const c=PAG_CFG[s];return c?`<span class="badge ${PAG_BADGE[s]}">${c.lbl}</span>`:'';}
 function entBadge(s){const c=ENT_CFG[s];return c?`<span class="badge ${ENT_BADGE[s]}">${c.lbl}</span>`:'';}
 
-function buildStatusPills(grpId,cfg,hidId,cur){
-  const grp=document.getElementById(grpId);
-  if(!grp) return;
-  grp.innerHTML=Object.entries(cfg).map(([val,{cls,lbl}])=>
-    `<button type="button" class="status-pill ${cur===val?cls:''}" data-val="${val}" data-grp="${grpId}" data-hid="${hidId}">${lbl}</button>`
+function buildStatusPills(grpId, cfg, hidId, cur) {
+  const grp = document.getElementById(grpId);
+  if (!grp) return;
+  grp.innerHTML = Object.entries(cfg).map(([val,{cls,lbl}]) =>
+    `<button type="button" class="status-pill ${cur===val?cls:''}"
+      onclick="selPill('${grpId}','${hidId}',${JSON.stringify(Object.keys(cfg))},'${val}')">${lbl}</button>`
   ).join('');
-  document.getElementById(hidId).value=cur;
-  grp.querySelectorAll('.status-pill').forEach(b=>{
-    b.addEventListener('click',()=>{
-      const v=b.dataset.val, g=b.dataset.grp, h=b.dataset.hid;
-      document.getElementById(h).value=v;
-      buildStatusPills(g,g.includes('pag')?PAG_CFG:ENT_CFG,h,v);
-    });
-  });
+  document.getElementById(hidId).value = cur;
+}
+function selPill(grpId, hidId, keys, val) {
+  document.getElementById(hidId).value = val;
+  const cfg = grpId.includes('pag') ? PAG_CFG : ENT_CFG;
+  buildStatusPills(grpId, cfg, hidId, val);
 }
 
 function custoIngs(r){let t=0;(r.ings||[]).forEach(ri=>{const i=getIng(ri.ingId);if(i&&i.qty>0)t+=(i.preco/i.qty)*ri.qty;});return t;}
@@ -607,25 +601,20 @@ function go(page){
   window.scrollTo(0,0);
   ({home:renderHome,ingredientes:renderIngs,receitas:renderReceitas,clientes:renderClientes,pedidos:renderPedidos,financeiro:renderFinanceiro,eletro:renderEletros,compras:renderCompras}[page]||function(){})();
 }
-window.go = go;
 
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sbOverlay').classList.toggle('open');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOverlay').classList.remove('open');}
-window.toggleSidebar=toggleSidebar;
 
 let _dd=null;
 function toggleDd(e,el){e.stopPropagation();if(_dd&&_dd!==el)_dd.style.display='none';el.style.display=el.style.display==='block'?'none':'block';_dd=el.style.display==='block'?el:null;}
 function closeDropdowns(){document.querySelectorAll('.dd').forEach(d=>d.style.display='none');_dd=null;}
 document.addEventListener('click',closeDropdowns);
-window.toggleDd=toggleDd;
 
 function openModal(id){document.getElementById('modal-'+id).classList.add('open');}
 function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');}
-window.openModal=openModal; window.closeModal=closeModal;
 
 let _tt;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2800);}
-window.showToast=showToast;
 
 // ================================================================
 // HOME
@@ -653,7 +642,6 @@ function renderIngs(f=''){
     </div>
   </div>`).join('');
 }
-window.renderIngs=renderIngs;
 
 function openIngModal(id=null){
   document.getElementById('mi-id').value=id||'';
@@ -662,7 +650,6 @@ function openIngModal(id=null){
   else{['mi-nome','mi-preco','mi-qty'].forEach(x=>document.getElementById(x).value='');document.getElementById('mi-unit').value='g';}
   openModal('ing');
 }
-window.openIngModal=openIngModal;
 
 async function saveIng(){
   const id=document.getElementById('mi-id').value||null;
@@ -673,18 +660,16 @@ async function saveIng(){
   const unit=document.getElementById('mi-unit').value;
   const docId=id||newId();
   const data={id:docId,nome,preco,qty,unit};
-  await fbSet('ingredientes',docId,data);
   if(id){Object.assign(getIng(id),data);}else{S.ingredientes.push(data);}
   closeModal('ing');renderIngs();showToast(id?'Atualizado! ✓':'Adicionado! ✓');
+  await save();
 }
-window.saveIng=saveIng;
 
 async function delIng(id){
-  await fbDel('ingredientes',id);
   S.ingredientes=S.ingredientes.filter(i=>String(i.id)!==String(id));
   closeModal('del');renderIngs();showToast('Excluído.');
+  await save();
 }
-window.delIng=delIng;
 
 // ================================================================
 // RECEITAS
@@ -708,7 +693,6 @@ function renderReceitas(f=''){
     </div>`;
   }).join('');
 }
-window.renderReceitas=renderReceitas;
 
 let _erIngs=[];
 function openReceitaForm(id=null){
@@ -721,15 +705,12 @@ function openReceitaForm(id=null){
   else{['er-nome','er-rendimento','er-tempo','er-gas'].forEach(x=>document.getElementById(x).value='');document.getElementById('er-mao').value='8.00';}
   renderErIngs();go('editar-receita');
 }
-window.openReceitaForm=openReceitaForm;
 
 function renderErIngs(){
   const div=document.getElementById('er-ings-list');
   if(!_erIngs.length){div.innerHTML='<p style="font-size:.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum ingrediente ainda.</p>';return;}
-  div.innerHTML='<div style="display:flex;flex-wrap:wrap;margin-bottom:6px;">'+_erIngs.map((ri,idx)=>{const i=getIng(ri.ingId);return`<span class="ing-tag">${i?i.nome:'?'} (${ri.qty}${i?i.unit:''}) <span class="rm" onclick="removeErIng(${idx})">×</span></span>`;}).join('')+'</div>';
+  div.innerHTML='<div style="display:flex;flex-wrap:wrap;margin-bottom:6px;">'+_erIngs.map((ri,idx)=>{const i=getIng(ri.ingId);return`<span class="ing-tag">${i?i.nome:'?'} (${ri.qty}${i?i.unit:''}) <span class="rm" onclick="_erIngs.splice(${idx},1);renderErIngs()">×</span></span>`;}).join('')+'</div>';
 }
-function removeErIng(idx){_erIngs.splice(idx,1);renderErIngs();}
-window.removeErIng=removeErIng;
 
 function addIngToRecipe(){
   const ingId=document.getElementById('er-ing-sel').value;
@@ -737,7 +718,6 @@ function addIngToRecipe(){
   if(!qty){showToast('Informe a quantidade!');return;}
   _erIngs.push({ingId,qty});document.getElementById('er-ing-qty').value='';renderErIngs();
 }
-window.addIngToRecipe=addIngToRecipe;
 
 async function saveReceita(){
   const id=document.getElementById('er-id').value||null;
@@ -745,24 +725,21 @@ async function saveReceita(){
   if(!nome){showToast('Informe o nome!');return;}
   const docId=id||newId();
   const data={id:docId,nome,rendimento:parseFloat(document.getElementById('er-rendimento').value)||1,medida:document.getElementById('er-medida').value,tempo:parseFloat(document.getElementById('er-tempo').value)||0,gas:parseFloat(document.getElementById('er-gas').value)||0,queimador:document.getElementById('er-queimador').value,mao:parseFloat(document.getElementById('er-mao').value)||8,ings:[..._erIngs],preco:id&&getReceita(id)?getReceita(id).preco:0};
-  await fbSet('receitas',docId,data);
   if(id){Object.assign(getReceita(id),data);}else{S.receitas.push(data);}
   showToast(id?'Receita atualizada! ✓':'Receita criada! ✓');go('receitas');
+  await save();
 }
-window.saveReceita=saveReceita;
 
 async function copyReceita(id){
   const r=getReceita(id);const docId=newId();
-  const data={...r,id:docId,nome:r.nome+' (cópia)',ings:(r.ings||[]).map(x=>({...x}))};
-  await fbSet('receitas',docId,data);S.receitas.push(data);renderReceitas();showToast('Copiada!');
+  S.receitas.push({...r,id:docId,nome:r.nome+' (cópia)',ings:(r.ings||[]).map(x=>({...x}))});
+  renderReceitas();showToast('Copiada!');await save();
 }
-window.copyReceita=copyReceita;
 
 async function delReceita(id){
-  await fbDel('receitas',id);S.receitas=S.receitas.filter(r=>String(r.id)!==String(id));
-  closeModal('del');renderReceitas();showToast('Excluída.');
+  S.receitas=S.receitas.filter(r=>String(r.id)!==String(id));
+  closeModal('del');renderReceitas();showToast('Excluída.');await save();
 }
-window.delReceita=delReceita;
 
 // ================================================================
 // PRECIFICAÇÃO
@@ -799,17 +776,9 @@ function openPricing(id){
     </div>`;
   go('pricing');
 }
-window.openPricing=openPricing;
-
 function updSlider(m,ct){m=parseInt(m);const l=ct*(m/100);const p=ct+l;const e1=document.getElementById('p-margem');if(e1)e1.textContent=m+'%';const e2=document.getElementById('p-lucro');if(e2)e2.textContent=fmtR(l);const e3=document.getElementById('p-final');if(e3)e3.value=p.toFixed(2);}
 function updFinal(v,ct){const p=parseFloat(v)||0;const m=ct>0?Math.round((p-ct)/ct*100):0;const e1=document.getElementById('p-margem');if(e1)e1.textContent=m+'%';const e2=document.getElementById('p-lucro');if(e2)e2.textContent=fmtR(p-ct);}
-window.updSlider=updSlider; window.updFinal=updFinal;
-
-async function savePreco(id){
-  const r=getReceita(id);r.preco=parseFloat(document.getElementById('p-final').value)||0;
-  await fbSet('receitas',id,r);showToast('Preço salvo! ✓');
-}
-window.savePreco=savePreco;
+async function savePreco(id){const r=getReceita(id);r.preco=parseFloat(document.getElementById('p-final').value)||0;showToast('Preço salvo! ✓');await save();}
 
 // ================================================================
 // CLIENTES
@@ -832,7 +801,6 @@ function renderClientes(f=''){
     </div>`;
   }).join('');
 }
-window.renderClientes=renderClientes;
 
 let _curCliId=null,_editCliDetail=false;
 function openClienteModal(id=null){
@@ -843,7 +811,6 @@ function openClienteModal(id=null){
   else{['mc-nome','mc-tel','mc-email','mc-end','mc-obs'].forEach(x=>document.getElementById(x).value='');}
   openModal('cliente');
 }
-window.openClienteModal=openClienteModal;
 
 async function saveCliente(){
   const id=document.getElementById('mc-id').value||null;
@@ -851,18 +818,16 @@ async function saveCliente(){
   if(!nome){showToast('Informe o nome!');return;}
   const docId=id||newId();
   const data={id:docId,nome,tel:document.getElementById('mc-tel').value.trim(),email:document.getElementById('mc-email').value.trim(),end:document.getElementById('mc-end').value.trim(),obs:document.getElementById('mc-obs').value.trim()};
-  await fbSet('clientes',docId,data);
   if(id){Object.assign(getCliente(id),data);}else{S.clientes.push(data);}
   closeModal('cliente');showToast(id?'Cliente atualizado! ✓':'Cliente adicionado! ✓');
   if(_editCliDetail){_editCliDetail=false;openClienteDetalhe(docId);}else renderClientes();
+  await save();
 }
-window.saveCliente=saveCliente;
 
 async function delCliente(id){
-  await fbDel('clientes',id);S.clientes=S.clientes.filter(c=>String(c.id)!==String(id));
-  closeModal('del');renderClientes();showToast('Excluído.');
+  S.clientes=S.clientes.filter(c=>String(c.id)!==String(id));
+  closeModal('del');renderClientes();showToast('Excluído.');await save();
 }
-window.delCliente=delCliente;
 
 function openClienteDetalhe(id){
   _curCliId=id;const c=getCliente(id);document.getElementById('cd-title').textContent=c.nome;
@@ -895,9 +860,7 @@ function openClienteDetalhe(id){
     </div>`;
   go('cliente-detalhe');
 }
-window.openClienteDetalhe=openClienteDetalhe;
 function editClienteAtual(){openClienteModal(_curCliId);}
-window.editClienteAtual=editClienteAtual;
 
 // ================================================================
 // PEDIDOS
@@ -928,7 +891,6 @@ function renderPedidos(f=''){
     </div>`;
   }).join('');
 }
-window.renderPedidos=renderPedidos;
 
 let _epItens=[];
 function openPedidoForm(id=null){
@@ -970,7 +932,6 @@ function openPedidoForm(id=null){
   document.getElementById('ep-item-preco').value='';
   renderEpItens();go('editar-pedido');
 }
-window.openPedidoForm=openPedidoForm;
 
 function autoFillPreco(){
   const rId=document.getElementById('ep-item-receita').value;
@@ -978,18 +939,15 @@ function autoFillPreco(){
   if(r&&r.preco)document.getElementById('ep-item-preco').value=r.preco;
   document.getElementById('ep-item-nome-livre').value='';
 }
-window.autoFillPreco=autoFillPreco;
 
 function renderEpItens(){
   const div=document.getElementById('ep-itens-list');
   if(!_epItens.length){div.innerHTML='<p style="font-size:.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum item adicionado.</p>';return;}
   let total=0;
-  div.innerHTML=_epItens.map((it,i)=>{const sub=it.qty*it.preco;total+=sub;return`<div class="ep-item-card"><div class="ep-item-info"><div class="ep-item-name">${it.qty}× ${it.nome}</div><div class="ep-item-meta">${fmtR(it.preco)} un. · total ${fmtR(sub)}</div></div><button class="ep-item-rm" onclick="removeEpItem(${i})">×</button></div>`;}).join('')
+  div.innerHTML=_epItens.map((it,i)=>{const sub=it.qty*it.preco;total+=sub;return`<div class="ep-item-card"><div class="ep-item-info"><div class="ep-item-name">${it.qty}× ${it.nome}</div><div class="ep-item-meta">${fmtR(it.preco)} un. · total ${fmtR(sub)}</div></div><button class="ep-item-rm" onclick="_epItens.splice(${i},1);renderEpItens()">×</button></div>`;}).join('')
   +`<div style="display:flex;justify-content:space-between;font-weight:700;padding:6px 2px;font-size:.9rem;border-top:1px solid var(--border);"><span>Subtotal</span><span style="color:var(--wine)">${fmtR(total)}</span></div>`;
   document.getElementById('ep-total').value=total.toFixed(2);
 }
-function removeEpItem(i){_epItens.splice(i,1);renderEpItens();}
-window.removeEpItem=removeEpItem;
 
 function addItemPedido(){
   const rId=document.getElementById('ep-item-receita').value;
@@ -1005,7 +963,6 @@ function addItemPedido(){
   document.getElementById('ep-item-qty').value='1';document.getElementById('ep-item-preco').value='';
   renderEpItens();
 }
-window.addItemPedido=addItemPedido;
 
 async function savePedido(){
   const id=document.getElementById('ep-id').value||null;
@@ -1014,17 +971,15 @@ async function savePedido(){
   if(!_epItens.length){showToast('Adicione pelo menos um item!');return;}
   const docId=id||newId();
   const data={id:docId,clienteId,data:document.getElementById('ep-data').value,entrega:document.getElementById('ep-entrega').value,pagamento:document.getElementById('ep-pagamento').value,total:parseFloat(document.getElementById('ep-total').value)||0,pago:parseFloat(document.getElementById('ep-pago').value)||0,dataPag:document.getElementById('ep-data-pag').value,statusPag:document.getElementById('ep-status-pag').value,statusEnt:document.getElementById('ep-status-ent').value,obs:document.getElementById('ep-obs').value.trim(),itens:[..._epItens]};
-  await fbSet('pedidos',docId,data);
   if(id){Object.assign(S.pedidos.find(p=>String(p.id)===String(id)),data);}else{S.pedidos.push(data);}
   showToast(id?'Pedido atualizado! ✓':'Pedido salvo! ✓');go('pedidos');
+  await save();
 }
-window.savePedido=savePedido;
 
 async function delPedido(id){
-  await fbDel('pedidos',id);S.pedidos=S.pedidos.filter(p=>String(p.id)!==String(id));
-  closeModal('del');renderPedidos();showToast('Excluído.');
+  S.pedidos=S.pedidos.filter(p=>String(p.id)!==String(id));
+  closeModal('del');renderPedidos();showToast('Excluído.');await save();
 }
-window.delPedido=delPedido;
 
 // ================================================================
 // FINANCEIRO
@@ -1088,20 +1043,15 @@ function renderCompras(f=''){
   if(done.length)html+=`<div class="compra-section-header">Comprados (${done.length})</div>`+'<div style="opacity:.6">'+done.map(row).join('')+'</div>';
   el.innerHTML=html;
 }
-window.renderCompras=renderCompras;
 
 async function toggleCompra(id){
   const c=S.compras.find(x=>String(x.id)===String(id));
-  if(c){c.feito=!c.feito;await fbSet('compras',id,c);renderCompras();}
+  if(c){c.feito=!c.feito;renderCompras();await save();}
 }
-window.toggleCompra=toggleCompra;
 
 async function limparCompradas(){
-  const done=S.compras.filter(c=>c.feito);
-  await Promise.all(done.map(c=>fbDel('compras',c.id)));
-  S.compras=S.compras.filter(c=>!c.feito);renderCompras();showToast('Itens comprados removidos!');
+  S.compras=S.compras.filter(c=>!c.feito);renderCompras();showToast('Removidos!');await save();
 }
-window.limparCompradas=limparCompradas;
 
 function openCompraModal(id=null){
   document.getElementById('mco-id').value=id||'';
@@ -1110,7 +1060,6 @@ function openCompraModal(id=null){
   else{['mco-nome','mco-qty'].forEach(x=>document.getElementById(x).value='');document.getElementById('mco-cat').value='ingredientes';}
   openModal('compra');
 }
-window.openCompraModal=openCompraModal;
 
 async function saveCompra(){
   const id=document.getElementById('mco-id').value||null;
@@ -1120,17 +1069,14 @@ async function saveCompra(){
   const qty=document.getElementById('mco-qty').value.trim();const cat=document.getElementById('mco-cat').value;
   const feito=id?(S.compras.find(x=>String(x.id)===String(id))?.feito||false):false;
   const data={id:docId,nome,qty,cat,feito};
-  await fbSet('compras',docId,data);
   if(id){Object.assign(S.compras.find(x=>String(x.id)===String(id)),data);}else{S.compras.push(data);}
-  closeModal('compra');renderCompras();showToast(id?'Atualizado! ✓':'Adicionado! ✓');
+  closeModal('compra');renderCompras();showToast(id?'Atualizado! ✓':'Adicionado! ✓');await save();
 }
-window.saveCompra=saveCompra;
 
 async function delCompra(id){
-  await fbDel('compras',id);S.compras=S.compras.filter(c=>String(c.id)!==String(id));
-  closeModal('del');renderCompras();showToast('Excluído.');
+  S.compras=S.compras.filter(c=>String(c.id)!==String(id));
+  closeModal('del');renderCompras();showToast('Excluído.');await save();
 }
-window.delCompra=delCompra;
 
 // ================================================================
 // ELETROS
@@ -1154,25 +1100,20 @@ function openEletroModal(id=null){
   else{['mel-nome','mel-w'].forEach(x=>document.getElementById(x).value='');document.getElementById('mel-kwh').value='0.75';}
   openModal('eletro');
 }
-window.openEletroModal=openEletroModal;
 
 async function saveEletro(){
   const id=document.getElementById('mel-id').value||null;
   const nome=document.getElementById('mel-nome').value.trim();if(!nome){showToast('Informe o nome!');return;}
-  const docId=id||newId();
-  const w=parseFloat(document.getElementById('mel-w').value)||0;const kwh=parseFloat(document.getElementById('mel-kwh').value)||0;
+  const docId=id||newId();const w=parseFloat(document.getElementById('mel-w').value)||0;const kwh=parseFloat(document.getElementById('mel-kwh').value)||0;
   const data={id:docId,nome,w,kwh};
-  await fbSet('eletros',docId,data);
   if(id){Object.assign(S.eletros.find(x=>String(x.id)===String(id)),data);}else{S.eletros.push(data);}
-  closeModal('eletro');renderEletros();showToast('Salvo! ✓');
+  closeModal('eletro');renderEletros();showToast('Salvo! ✓');await save();
 }
-window.saveEletro=saveEletro;
 
 async function delEletro(id){
-  await fbDel('eletros',id);S.eletros=S.eletros.filter(e=>String(e.id)!==String(id));
-  closeModal('del');renderEletros();showToast('Excluído.');
+  S.eletros=S.eletros.filter(e=>String(e.id)!==String(id));
+  closeModal('del');renderEletros();showToast('Excluído.');await save();
 }
-window.delEletro=delEletro;
 
 // ================================================================
 // DELETE CONFIRM
@@ -1180,7 +1121,6 @@ window.delEletro=delEletro;
 let _delCb=null;
 function askDel(msg,cb){document.getElementById('del-msg').innerHTML=msg;_delCb=cb;closeDropdowns();openModal('del');}
 function confirmDel(){if(_delCb)_delCb();_delCb=null;}
-window.askDel=askDel; window.confirmDel=confirmDel;
 
 // ================================================================
 // INIT
