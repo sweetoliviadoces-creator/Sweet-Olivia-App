@@ -567,12 +567,11 @@ function buildStatusPills(grpId, cfg, hidId, cur) {
   const grp = document.getElementById(grpId);
   if (!grp) return;
   grp.innerHTML = Object.entries(cfg).map(([val,{cls,lbl}]) =>
-    `<button type="button" class="status-pill ${cur===val?cls:''}"
-      onclick="selPill('${grpId}','${hidId}',${JSON.stringify(Object.keys(cfg))},'${val}')">${lbl}</button>`
+    `<button type="button" class="status-pill ${cur===val?cls:''}" onclick="selPill('${grpId}','${hidId}','${val}')">${lbl}</button>`
   ).join('');
   document.getElementById(hidId).value = cur;
 }
-function selPill(grpId, hidId, keys, val) {
+function selPill(grpId, hidId, val) {
   document.getElementById(hidId).value = val;
   const cfg = grpId.includes('pag') ? PAG_CFG : ENT_CFG;
   buildStatusPills(grpId, cfg, hidId, val);
