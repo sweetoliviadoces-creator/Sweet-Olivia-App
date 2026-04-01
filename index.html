@@ -6,205 +6,164 @@
 <title>Sweet Olivia</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --pink:#E8649A; --dark-pink:#C1537F; --wine:#7B2D4E; --wine-light:#9B3D64;
-  --bg:#EAF4F8; --bg2:#F7FBFD; --white:#ffffff;
-  --text:#3a2030; --text-soft:#7a5068; --border:#dce8ef;
-  --success:#4caf50; --warning:#f5a623; --danger:#e53935;
-  --shadow:0 2px 12px rgba(123,45,78,0.10); --shadow-lg:0 8px 32px rgba(123,45,78,0.15);
+:root{
+  --pink:#E8649A;--dark-pink:#C1537F;--wine:#7B2D4E;--wine-light:#9B3D64;
+  --bg:#EAF4F8;--bg2:#F7FBFD;--white:#ffffff;
+  --text:#3a2030;--text-soft:#7a5068;--border:#dce8ef;
+  --success:#4caf50;--warning:#f5a623;--danger:#e53935;
+  --shadow:0 2px 12px rgba(123,45,78,.10);--shadow-lg:0 8px 32px rgba(123,45,78,.15);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:430px;margin:0 auto;position:relative;overflow-x:hidden;}
-
-/* TOP BAR */
-.top-bar{background:var(--white);display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(123,45,78,0.07);}
+.top-bar{background:var(--white);display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(123,45,78,.07);}
 .top-bar .brand{font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;color:var(--wine);}
 .menu-btn{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;}
 .menu-btn span{display:block;width:22px;height:2px;background:var(--wine);border-radius:2px;}
-
-/* SIDEBAR */
-.sidebar-overlay{position:fixed;inset:0;background:rgba(58,32,48,0.4);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.sidebar-overlay{position:fixed;inset:0;background:rgba(58,32,48,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
 .sidebar-overlay.open{opacity:1;pointer-events:all;}
-.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:280px;background:var(--white);z-index:201;transition:left 0.3s ease;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;}
+.sidebar{position:fixed;left:-285px;top:0;bottom:0;width:285px;background:var(--white);z-index:201;transition:left .3s ease;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;}
 .sidebar.open{left:0;}
 .sidebar-header{padding:28px 22px 18px;border-bottom:1px solid var(--border);}
-.sidebar-header .brand-big{font-family:'Playfair Display',serif;font-style:italic;font-size:1.7rem;color:var(--wine);}
-.sidebar-header .brand-big span{color:var(--pink);}
+.brand-big{font-family:'Playfair Display',serif;font-style:italic;font-size:1.7rem;color:var(--wine);}
+.brand-big span{color:var(--pink);}
 .sidebar nav{flex:1;overflow-y:auto;padding:10px 0;}
-.nav-item{display:flex;align-items:center;gap:14px;padding:13px 22px;cursor:pointer;color:var(--text);font-size:0.95rem;font-weight:500;transition:background 0.15s;border:none;background:none;width:100%;text-align:left;}
+.nav-item{display:flex;align-items:center;gap:14px;padding:13px 22px;cursor:pointer;color:var(--text);font-size:.95rem;font-weight:500;transition:background .15s;border:none;background:none;width:100%;text-align:left;}
 .nav-item:hover,.nav-item.active{background:linear-gradient(90deg,#fce8f2 0%,transparent 100%);color:var(--wine);}
-.nav-item .nav-icon{font-size:1.1rem;width:20px;text-align:center;}
-.nav-item.danger{color:var(--danger);}
-
-/* PAGES */
+.nav-icon{font-size:1.1rem;width:20px;text-align:center;}
 .page{display:none;padding-bottom:90px;min-height:calc(100vh - 60px);}
 .page.active{display:block;}
-
-/* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid var(--border);display:flex;z-index:100;box-shadow:0 -2px 12px rgba(123,45,78,0.08);}
-.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 10px;cursor:pointer;border:none;background:none;color:var(--text-soft);font-size:0.6rem;font-family:'Nunito',sans-serif;font-weight:600;gap:3px;transition:color 0.15s;}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid var(--border);display:flex;z-index:100;box-shadow:0 -2px 12px rgba(123,45,78,.08);}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 10px;cursor:pointer;border:none;background:none;color:var(--text-soft);font-size:.58rem;font-family:'Nunito',sans-serif;font-weight:600;gap:3px;transition:color .15s;}
 .bnav-item.active{color:var(--wine);}
-.bnav-item .bicon{font-size:1.25rem;}
-
-/* SECTION HEADER */
-.page-header{background:var(--white);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-.page-header h2{font-size:1.02rem;font-weight:700;flex:1;}
+.bnav-item .bicon{font-size:1.2rem;}
+.page-header{background:var(--white);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;position:sticky;top:57px;z-index:90;}
+.page-header h2{font-size:1rem;font-weight:700;flex:1;}
 .back-btn{background:none;border:none;cursor:pointer;color:var(--wine);font-size:1.3rem;padding:2px 6px 2px 0;}
-
-/* SEARCH */
 .search-wrap{padding:10px 16px;}
 .search-inner{position:relative;}
-.search-box{width:100%;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:9px 14px 9px 36px;font-size:0.88rem;color:var(--text);font-family:'Nunito',sans-serif;outline:none;}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-soft);font-size:0.9rem;pointer-events:none;}
-
-/* LIST ITEMS */
-.list-item{background:var(--white);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:relative;}
+.search-box{width:100%;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:9px 14px 9px 36px;font-size:.88rem;color:var(--text);font-family:'Nunito',sans-serif;outline:none;}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-soft);pointer-events:none;}
+.list-item{background:var(--white);padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;position:relative;}
 .list-item:first-child{border-top:1px solid var(--border);}
-.item-main{flex:1;}
-.item-name{font-weight:600;font-size:0.94rem;}
-.item-sub{font-size:0.78rem;color:var(--text-soft);margin-top:2px;}
+.item-main{flex:1;min-width:0;}
+.item-name{font-weight:600;font-size:.93rem;}
+.item-sub{font-size:.77rem;color:var(--text-soft);margin-top:2px;}
 .item-right{text-align:right;flex-shrink:0;margin-left:8px;}
-.item-val{font-size:0.88rem;font-weight:600;color:var(--wine);}
-.item-qty{font-size:0.78rem;color:var(--text-soft);}
-
-/* MORE BTN + DROPDOWN */
-.more-btn{background:none;border:none;cursor:pointer;color:var(--text-soft);padding:6px 10px;font-size:1.2rem;flex-shrink:0;}
-.dd{position:absolute;right:8px;top:44px;background:var(--white);border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.18);z-index:50;min-width:155px;overflow:hidden;animation:fadeIn 0.15s ease;}
-.dd-item{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:0.87rem;cursor:pointer;border:none;background:none;width:100%;color:var(--text);font-family:'Nunito',sans-serif;font-weight:500;}
+.item-val{font-size:.88rem;font-weight:600;color:var(--wine);}
+.item-qty{font-size:.76rem;color:var(--text-soft);}
+.more-btn{background:none;border:none;cursor:pointer;color:var(--text-soft);padding:6px 8px;font-size:1.2rem;flex-shrink:0;}
+.dd{position:absolute;right:8px;top:46px;background:var(--white);border-radius:12px;box-shadow:0 4px 22px rgba(0,0,0,.18);z-index:60;min-width:160px;overflow:hidden;animation:fadeIn .15s ease;}
+.dd-item{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.87rem;cursor:pointer;border:none;background:none;width:100%;color:var(--text);font-family:'Nunito',sans-serif;font-weight:500;}
 .dd-item:hover{background:#fce8f2;}
 .dd-item.danger{color:var(--danger);}
 .dd-item.danger:hover{background:#fff0f0;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
-
-/* FAB */
-.fab{position:fixed;bottom:72px;right:16px;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;border:none;border-radius:24px;padding:13px 20px;font-size:0.88rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 4px 18px rgba(123,45,78,0.35);display:flex;align-items:center;gap:8px;transition:transform 0.15s;z-index:90;}
+.fab{position:fixed;bottom:74px;right:16px;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;border:none;border-radius:24px;padding:13px 20px;font-size:.88rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 4px 18px rgba(123,45,78,.35);display:flex;align-items:center;gap:8px;z-index:89;transition:transform .15s;}
 .fab:hover{transform:scale(1.04);}
-
-/* FORMS */
-.form-page{padding:16px 16px 90px;}
-.form-group{margin-bottom:14px;}
-.form-label{font-size:0.76rem;color:var(--text-soft);display:block;margin-bottom:5px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;}
-.form-input,.form-select,.form-textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:0.92rem;font-family:'Nunito',sans-serif;color:var(--text);outline:none;background:var(--white);transition:border-color 0.2s;}
+.form-page{padding:16px 16px 20px;}
+.form-group{margin-bottom:13px;}
+.form-label{font-size:.74rem;color:var(--text-soft);display:block;margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:11px;font-size:.91rem;font-family:'Nunito',sans-serif;color:var(--text);outline:none;background:var(--white);transition:border-color .2s;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--pink);}
-.form-textarea{resize:vertical;min-height:80px;}
+.form-textarea{resize:vertical;min-height:70px;}
 .form-row{display:flex;gap:10px;}
 .form-row .form-group{flex:1;}
-.save-btn{width:100%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;border:none;border-radius:12px;padding:13px;font-size:0.95rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-top:6px;transition:opacity 0.2s;}
-.save-btn:hover{opacity:0.92;}
-.cancel-btn{width:100%;background:var(--border);color:var(--text);border:none;border-radius:12px;padding:13px;font-size:0.95rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-top:8px;}
-.section-label{font-weight:700;color:var(--wine);font-size:0.9rem;margin:18px 0 8px;display:block;}
-
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(58,32,48,0.5);z-index:300;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.save-btn{width:100%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;border:none;border-radius:12px;padding:13px;font-size:.95rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-top:6px;transition:opacity .2s;}
+.save-btn:hover{opacity:.92;}
+.cancel-btn{width:100%;background:var(--border);color:var(--text);border:none;border-radius:12px;padding:12px;font-size:.92rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-top:8px;}
+.section-label{font-weight:700;color:var(--wine);font-size:.88rem;margin:16px 0 8px;display:block;border-bottom:1px solid var(--border);padding-bottom:6px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(58,32,48,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
-.modal{background:var(--white);border-radius:20px 20px 0 0;width:100%;max-width:430px;padding:24px 20px 36px;transform:translateY(100%);transition:transform 0.3s ease;box-shadow:0 -4px 30px rgba(0,0,0,0.15);max-height:90vh;overflow-y:auto;}
+.modal{background:var(--white);border-radius:20px 20px 0 0;width:100%;max-width:430px;padding:22px 18px 36px;transform:translateY(100%);transition:transform .3s ease;box-shadow:0 -4px 30px rgba(0,0,0,.15);max-height:88vh;overflow-y:auto;}
 .modal-overlay.open .modal{transform:translateY(0);}
-.modal-title{font-size:1.1rem;font-weight:700;color:var(--wine);margin-bottom:18px;}
-.modal-btns{display:flex;gap:10px;margin-top:16px;}
-.modal-btn{flex:1;padding:12px;border-radius:12px;border:none;font-size:0.9rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;}
+.modal-title{font-size:1.05rem;font-weight:700;color:var(--wine);margin-bottom:16px;}
+.modal-btns{display:flex;gap:10px;margin-top:14px;}
+.modal-btn{flex:1;padding:12px;border-radius:12px;border:none;font-size:.9rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;}
 .modal-btn.cancel{background:var(--border);color:var(--text);}
 .modal-btn.confirm{background:linear-gradient(135deg,var(--pink),var(--wine));color:white;}
 .modal-btn.danger-btn{background:var(--danger);color:white;}
-
-/* TOAST */
-.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--wine);color:white;padding:10px 22px;border-radius:24px;font-size:0.88rem;font-weight:600;z-index:500;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--wine);color:white;padding:10px 22px;border-radius:24px;font-size:.88rem;font-weight:600;z-index:500;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* HOME */
 .home-welcome{background:linear-gradient(135deg,var(--wine) 0%,var(--wine-light) 100%);padding:24px 20px 28px;color:white;}
-.home-welcome .greeting{font-size:0.85rem;opacity:0.85;margin-bottom:4px;}
-.home-welcome h1{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:4px;}
+.home-welcome .greeting{font-size:.85rem;opacity:.85;margin-bottom:4px;}
+.home-welcome h1{font-family:'Playfair Display',serif;font-size:1.55rem;margin-bottom:4px;}
 .home-welcome h1 span{color:#f8bdd0;}
-.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;padding:14px 14px 0;}
-.stat-card{background:var(--white);border-radius:14px;padding:12px 8px;text-align:center;box-shadow:var(--shadow);}
-.stat-num{font-size:1.3rem;font-weight:700;color:var(--wine);font-family:'Playfair Display',serif;}
-.stat-label{font-size:0.66rem;color:var(--text-soft);margin-top:2px;}
-.home-sections{padding:14px 14px 0;display:flex;flex-direction:column;gap:12px;}
-.home-card{background:var(--white);border-radius:16px;padding:16px;box-shadow:var(--shadow);cursor:pointer;}
-.home-card-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:0.97rem;color:var(--wine);margin-bottom:6px;}
-.home-card p{font-size:0.82rem;color:var(--text-soft);}
-
-/* FINANCEIRO */
-.fin-card{background:var(--white);border-radius:16px;padding:18px;margin:14px 14px 0;box-shadow:var(--shadow);}
-.fin-card h3{font-size:0.82rem;color:var(--text-soft);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
-.fin-big{font-family:'Playfair Display',serif;font-size:2rem;color:var(--wine);font-weight:700;}
-.fin-sub{font-size:0.78rem;color:var(--text-soft);margin-top:2px;}
-.fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 14px 0;}
-.fin-mini{background:var(--white);border-radius:14px;padding:14px;box-shadow:var(--shadow);}
-.fin-mini h4{font-size:0.74rem;color:var(--text-soft);margin-bottom:4px;}
-.fin-mini .val{font-size:1.1rem;font-weight:700;color:var(--wine);}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:13px 13px 0;}
+.stat-card{background:var(--white);border-radius:13px;padding:11px 6px;text-align:center;box-shadow:var(--shadow);}
+.stat-num{font-size:1.25rem;font-weight:700;color:var(--wine);font-family:'Playfair Display',serif;}
+.stat-label{font-size:.63rem;color:var(--text-soft);margin-top:2px;}
+.home-sections{padding:13px 13px 0;display:flex;flex-direction:column;gap:11px;}
+.home-card{background:var(--white);border-radius:16px;padding:15px;box-shadow:var(--shadow);cursor:pointer;}
+.home-card-title{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.95rem;color:var(--wine);margin-bottom:5px;}
+.home-card p{font-size:.81rem;color:var(--text-soft);}
+.fin-card{background:var(--white);border-radius:16px;padding:17px;margin:13px 13px 0;box-shadow:var(--shadow);}
+.fin-card h3{font-size:.78rem;color:var(--text-soft);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.fin-big{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--wine);font-weight:700;}
+.fin-sub{font-size:.76rem;color:var(--text-soft);margin-top:1px;}
+.fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:13px 13px 0;}
+.fin-mini{background:var(--white);border-radius:13px;padding:13px;box-shadow:var(--shadow);}
+.fin-mini h4{font-size:.72rem;color:var(--text-soft);margin-bottom:4px;}
+.fin-mini .val{font-size:1.05rem;font-weight:700;color:var(--wine);}
 .fin-mini .val.green{color:var(--success);}
 .fin-mini .val.orange{color:var(--warning);}
-.fin-list-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:0.88rem;}
+.fin-list-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:.87rem;}
 .fin-list-item:last-child{border:none;}
-.badge{display:inline-block;font-size:0.68rem;font-weight:700;border-radius:20px;padding:2px 8px;}
+.badge{display:inline-block;font-size:.67rem;font-weight:700;border-radius:20px;padding:2px 7px;}
 .badge-green{background:#e8f5e9;color:var(--success);}
 .badge-orange{background:#fff3e0;color:var(--warning);}
 .badge-red{background:#ffebee;color:var(--danger);}
 .badge-blue{background:#e3f2fd;color:#1565c0;}
-
-/* PEDIDO DETAIL */
-.pedido-section{padding:12px 16px 0;}
-.pedido-section h4{font-size:0.78rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
-.pedido-item-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.88rem;}
-.pedido-item-row:last-child{border:none;}
-.timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--pink);flex-shrink:0;margin-top:3px;}
-
-/* INGREDIENTE em receita */
-.ing-tag{display:inline-flex;align-items:center;gap:6px;background:#fce8f2;color:var(--wine);border-radius:20px;padding:5px 12px;font-size:0.82rem;font-weight:600;margin:4px;}
-.ing-tag .rm{cursor:pointer;font-size:1rem;color:var(--dark-pink);}
-.add-ing-row{display:flex;gap:8px;align-items:flex-end;}
-.add-ing-row .form-group{flex:1;margin-bottom:0;}
-.add-ing-row .form-group:last-child{flex:0 0 80px;}
-
-/* WARN */
-.warn{color:var(--warning);font-size:0.8rem;}
-
-/* PRICING VIEW */
-.price-section{padding:0 16px;}
-.price-block{background:var(--white);border-radius:14px;padding:16px;margin-top:12px;box-shadow:var(--shadow);}
-.price-block h4{font-size:0.88rem;font-weight:700;color:var(--wine);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-.price-row{display:flex;justify-content:space-between;padding:7px 0;font-size:0.88rem;border-bottom:1px solid #f0e8ec;}
-.price-row:last-child{border:none;}
-.price-row.total{font-weight:700;font-size:0.95rem;border-top:1.5px solid var(--border);padding-top:10px;margin-top:4px;}
-.price-row .v{font-weight:600;color:var(--wine);}
-.slider-wrap{margin:10px 0;}
-.slider-wrap input[type=range]{width:100%;accent-color:var(--wine);}
-.price-final-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:1.05rem;font-weight:700;font-family:'Nunito',sans-serif;color:var(--wine);outline:none;}
-.price-final-input:focus{border-color:var(--pink);}
-
-/* CLIENTE DETAIL */
-.client-header{padding:20px 16px;background:var(--white);text-align:center;border-bottom:1px solid var(--border);}
-.client-avatar-big{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-weight:700;font-size:1.5rem;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
-.client-name-big{font-size:1.1rem;font-weight:700;}
-.client-meta-big{font-size:0.82rem;color:var(--text-soft);}
-
-.empty-state{text-align:center;padding:50px 20px;color:var(--text-soft);}
-.empty-state .emoji{font-size:3rem;margin-bottom:12px;}
-.empty-state p{font-size:0.9rem;}
-
-/* PERFIL */
+.badge-purple{background:#f3e5f5;color:#7b1fa2;}
+.badge-gray{background:#f5f5f5;color:#616161;}
+.ing-tag{display:inline-flex;align-items:center;gap:5px;background:#fce8f2;color:var(--wine);border-radius:20px;padding:4px 11px;font-size:.81rem;font-weight:600;margin:3px;}
+.ing-tag .rm{cursor:pointer;font-size:1rem;color:var(--dark-pink);line-height:1;}
+.compra-item{background:var(--white);padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;position:relative;}
+.compra-item:first-child{border-top:1px solid var(--border);}
+.compra-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:.85rem;font-weight:700;color:white;}
+.compra-check.checked{background:var(--wine);border-color:var(--wine);}
+.compra-label{flex:1;font-size:.92rem;font-weight:500;}
+.compra-label.done{text-decoration:line-through;color:var(--text-soft);}
+.compra-qty{font-size:.78rem;color:var(--text-soft);}
+.compra-section-header{padding:10px 16px 4px;font-size:.76rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:.5px;background:var(--bg);}
 .perfil-hero{background:linear-gradient(135deg,var(--wine),var(--wine-light));padding:28px 20px;text-align:center;color:white;}
-.perfil-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,0.2);font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
-.perfil-name{font-family:'Playfair Display',serif;font-size:1.4rem;}
-.perfil-sub{font-size:0.82rem;opacity:0.8;margin-top:4px;}
+.perfil-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.perfil-name{font-family:'Playfair Display',serif;font-size:1.35rem;}
+.perfil-sub{font-size:.81rem;opacity:.8;margin-top:3px;}
+.client-header{padding:20px 16px;background:var(--white);text-align:center;border-bottom:1px solid var(--border);}
+.client-avatar-big{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-weight:700;font-size:1.4rem;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
+.empty-state{text-align:center;padding:48px 20px;color:var(--text-soft);}
+.empty-state .emoji{font-size:2.8rem;margin-bottom:12px;}
+.empty-state p{font-size:.88rem;}
+.ep-item-card{background:var(--white);border-radius:11px;padding:11px 13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow);}
+.ep-item-card .ep-item-info{flex:1;}
+.ep-item-card .ep-item-name{font-weight:600;font-size:.9rem;}
+.ep-item-card .ep-item-meta{font-size:.77rem;color:var(--text-soft);margin-top:2px;}
+.ep-item-card .ep-item-rm{background:none;border:none;cursor:pointer;color:var(--danger);font-size:1.2rem;padding:4px;}
+.status-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.status-pill{padding:6px 13px;border-radius:20px;font-size:.78rem;font-weight:700;border:2px solid var(--border);background:var(--white);cursor:pointer;color:var(--text-soft);transition:all .15s;font-family:'Nunito',sans-serif;}
+.sp-pag-pago{background:#e8f5e9;border-color:var(--success);color:var(--success);}
+.sp-pag-pendente{background:#fff3e0;border-color:var(--warning);color:var(--warning);}
+.sp-pag-parcial{background:#e3f2fd;border-color:#1565c0;color:#1565c0;}
+.sp-pag-cancelado{background:#ffebee;border-color:var(--danger);color:var(--danger);}
+.sp-ent-confirmado{background:#f3e5f5;border-color:#7b1fa2;color:#7b1fa2;}
+.sp-ent-producao{background:#fff8e1;border-color:#f9a825;color:#f9a825;}
+.sp-ent-concluido{background:#e8f5e9;border-color:#388e3c;color:#388e3c;}
+.sp-ent-entregue{background:#e0f2f1;border-color:#00897b;color:#00897b;}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
   <button class="menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
   <div class="brand" id="topTitle"><em>Sweet Olivia</em></div>
   <div style="width:28px"></div>
 </div>
 
-<!-- SIDEBAR -->
 <div class="sidebar-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="brand-big">Sweet <span>Olivia</span></div>
-    <div style="font-size:0.75rem;color:var(--text-soft);margin-top:2px;">Doces Gourmet</div>
+    <div style="font-size:.74rem;color:var(--text-soft);margin-top:2px;">Doces Gourmet</div>
   </div>
   <nav>
     <button class="nav-item" onclick="go('home')"><span class="nav-icon">🏠</span> Início</button>
@@ -214,294 +173,170 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <button class="nav-item" onclick="go('ingredientes')"><span class="nav-icon">🧂</span> Ingredientes e Insumos</button>
     <button class="nav-item" onclick="go('eletro')"><span class="nav-icon">🔌</span> Eletrodomésticos</button>
     <button class="nav-item" onclick="go('clientes')"><span class="nav-icon">👥</span> Clientes</button>
+    <button class="nav-item" onclick="go('compras')"><span class="nav-icon">🛒</span> Lista de Compras</button>
     <button class="nav-item" onclick="go('perfil')"><span class="nav-icon">👤</span> Meu Perfil</button>
     <button class="nav-item" onclick="go('senha')"><span class="nav-icon">🔑</span> Alterar Senha</button>
   </nav>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: HOME -->
-<!-- ======================================================= -->
+<!-- HOME -->
 <div class="page active" id="page-home">
-  <div class="home-welcome">
-    <div class="greeting">Bem-vinda de volta! 🍬</div>
-    <h1>Olá, <span>Sweet Olivia!</span></h1>
-  </div>
+  <div class="home-welcome"><div class="greeting">Bem-vinda de volta! 🍬</div><h1>Olá, <span>Sweet Olivia!</span></h1></div>
   <div class="stats-row">
-    <div class="stat-card"><div class="stat-num" id="hs-receitas">0</div><div class="stat-label">Receitas</div></div>
-    <div class="stat-card"><div class="stat-num" id="hs-ings">0</div><div class="stat-label">Ingredientes</div></div>
-    <div class="stat-card"><div class="stat-num" id="hs-clientes">0</div><div class="stat-label">Clientes</div></div>
-    <div class="stat-card"><div class="stat-num" id="hs-pedidos">0</div><div class="stat-label">Pedidos</div></div>
+    <div class="stat-card"><div class="stat-num" id="hs-r">0</div><div class="stat-label">Receitas</div></div>
+    <div class="stat-card"><div class="stat-num" id="hs-i">0</div><div class="stat-label">Ingredientes</div></div>
+    <div class="stat-card"><div class="stat-num" id="hs-c">0</div><div class="stat-label">Clientes</div></div>
+    <div class="stat-card"><div class="stat-num" id="hs-p">0</div><div class="stat-label">Pedidos</div></div>
   </div>
   <div class="home-sections">
-    <div class="home-card" onclick="go('pedidos')">
-      <div class="home-card-title">📦 Pedidos</div>
-      <p>Registre encomendas, clientes, itens, pagamentos e datas de entrega.</p>
-    </div>
-    <div class="home-card" onclick="go('financeiro')">
-      <div class="home-card-title">💰 Financeiro</div>
-      <p>Veja receita, lucro estimado, pendências de pagamento e resumo mensal.</p>
-    </div>
-    <div class="home-card" onclick="go('receitas')">
-      <div class="home-card-title">📝 Receitas</div>
-      <p>Cadastre receitas, adicione ingredientes e calcule precificação automática.</p>
-    </div>
-    <div class="home-card" onclick="go('ingredientes')">
-      <div class="home-card-title">🧂 Ingredientes e Insumos</div>
-      <p>Gerencie ingredientes e preços para cálculo correto de custos.</p>
-    </div>
+    <div class="home-card" onclick="go('pedidos')"><div class="home-card-title">📦 Pedidos</div><p>Registre encomendas, itens, pagamentos e datas de entrega.</p></div>
+    <div class="home-card" onclick="go('financeiro')"><div class="home-card-title">💰 Financeiro</div><p>Receita, lucro, pendências e resumo mensal.</p></div>
+    <div class="home-card" onclick="go('compras')"><div class="home-card-title">🛒 Lista de Compras</div><p>Adicione itens e dê check conforme for comprando.</p></div>
+    <div class="home-card" onclick="go('receitas')"><div class="home-card-title">📝 Receitas</div><p>Cadastre receitas, ingredientes e calcule precificação.</p></div>
   </div>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: INGREDIENTES -->
-<!-- ======================================================= -->
+<!-- INGREDIENTES -->
 <div class="page" id="page-ingredientes">
-  <div class="search-wrap">
-    <div class="search-inner">
-      <span class="search-icon">🔍</span>
-      <input class="search-box" placeholder="Buscar ingredientes..." oninput="renderIngs(this.value)">
-    </div>
-  </div>
+  <div class="search-wrap"><div class="search-inner"><span class="search-icon">🔍</span><input class="search-box" placeholder="Buscar ingredientes..." oninput="renderIngs(this.value)"></div></div>
   <div id="ingList"></div>
   <button class="fab" onclick="openIngModal()">+ Novo Ingrediente</button>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: RECEITAS -->
-<!-- ======================================================= -->
+<!-- RECEITAS -->
 <div class="page" id="page-receitas">
-  <div class="search-wrap">
-    <div class="search-inner">
-      <span class="search-icon">🔍</span>
-      <input class="search-box" placeholder="Buscar receitas..." oninput="renderReceitas(this.value)">
-    </div>
-  </div>
+  <div class="search-wrap"><div class="search-inner"><span class="search-icon">🔍</span><input class="search-box" placeholder="Buscar receitas..." oninput="renderReceitas(this.value)"></div></div>
   <div id="receitaList"></div>
   <button class="fab" onclick="openReceitaForm()">+ Nova Receita</button>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: EDITAR RECEITA -->
-<!-- ======================================================= -->
+<!-- EDITAR RECEITA -->
 <div class="page" id="page-editar-receita">
-  <div class="page-header">
-    <button class="back-btn" onclick="go('receitas')">‹</button>
-    <h2 id="editReceitaTitle">Nova Receita</h2>
-  </div>
+  <div class="page-header"><button class="back-btn" onclick="go('receitas')">‹</button><h2 id="editReceitaTitle">Nova Receita</h2></div>
   <div class="form-page">
     <input type="hidden" id="er-id">
-    <div class="form-group">
-      <label class="form-label">Título da Receita</label>
-      <input class="form-input" id="er-nome" placeholder="Ex: Bolo de Chocolate">
+    <div class="form-group"><label class="form-label">Título</label><input class="form-input" id="er-nome" placeholder="Ex: Bolo de Chocolate"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Rendimento</label><input class="form-input" id="er-rendimento" type="number" placeholder="12"></div>
+      <div class="form-group"><label class="form-label">Medida</label><select class="form-select" id="er-medida"><option>fatias</option><option>unidades</option><option>porções</option></select></div>
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Rendimento</label>
-        <input class="form-input" id="er-rendimento" type="number" placeholder="12">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Medida</label>
-        <select class="form-select" id="er-medida">
-          <option>fatias</option><option>unidades</option><option>porções</option>
-        </select>
-      </div>
+      <div class="form-group"><label class="form-label">Tempo trabalho (min)</label><input class="form-input" id="er-tempo" type="number" placeholder="120"></div>
+      <div class="form-group"><label class="form-label">Tempo gás (min)</label><input class="form-input" id="er-gas" type="number" placeholder="40"></div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Tempo trabalho (min)</label>
-        <input class="form-input" id="er-tempo" type="number" placeholder="120">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Tempo gás (min)</label>
-        <input class="form-input" id="er-gas" type="number" placeholder="40">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Tipo queimador/forno</label>
-      <select class="form-select" id="er-queimador">
-        <option>Queimador médio</option><option>Queimador pequeno</option>
-        <option>Queimador grande</option><option>Forno elétrico</option><option>Forno a gás</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Custo mão de obra (R$/hora)</label>
-      <input class="form-input" id="er-mao" type="number" placeholder="8.00" value="8.00">
-    </div>
-
+    <div class="form-group"><label class="form-label">Queimador/Forno</label><select class="form-select" id="er-queimador"><option>Queimador médio</option><option>Queimador pequeno</option><option>Queimador grande</option><option>Forno elétrico</option><option>Forno a gás</option></select></div>
+    <div class="form-group"><label class="form-label">Custo mão de obra (R$/hora)</label><input class="form-input" id="er-mao" type="number" placeholder="8.00" value="8.00"></div>
     <span class="section-label">🧂 Ingredientes da Receita</span>
-    <div id="er-ings-list" style="margin-bottom:10px;"></div>
-    <div class="add-ing-row">
-      <div class="form-group">
-        <label class="form-label">Ingrediente</label>
-        <select class="form-select" id="er-ing-sel"></select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Qtd</label>
-        <input class="form-input" id="er-ing-qty" type="number" placeholder="100">
-      </div>
+    <div id="er-ings-list" style="margin-bottom:10px;min-height:30px;"></div>
+    <div class="form-row" style="align-items:flex-end;gap:8px;">
+      <div class="form-group" style="flex:2;"><label class="form-label">Ingrediente</label><select class="form-select" id="er-ing-sel"></select></div>
+      <div class="form-group" style="flex:1;"><label class="form-label">Qtd</label><input class="form-input" id="er-ing-qty" type="number" placeholder="100"></div>
     </div>
-    <button type="button" style="width:100%;background:#fce8f2;color:var(--wine);border:none;border-radius:12px;padding:10px;font-size:0.88rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-bottom:14px;" onclick="addIngToRecipe()">+ Adicionar Ingrediente</button>
-
+    <button type="button" style="width:100%;background:#fce8f2;color:var(--wine);border:none;border-radius:11px;padding:10px;font-size:.87rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-bottom:14px;" onclick="addIngToRecipe()">+ Adicionar Ingrediente</button>
     <button class="save-btn" onclick="saveReceita()">Salvar Receita</button>
     <button class="cancel-btn" onclick="go('receitas')">Cancelar</button>
   </div>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: PRECIFICAÇÃO -->
-<!-- ======================================================= -->
+<!-- PRECIFICAÇÃO -->
 <div class="page" id="page-pricing">
-  <div class="page-header">
-    <button class="back-btn" onclick="go('receitas')">‹</button>
-    <h2 id="pricing-title">Precificação</h2>
-  </div>
-  <div class="price-section" id="pricing-body" style="padding-bottom:20px;"></div>
+  <div class="page-header"><button class="back-btn" onclick="go('receitas')">‹</button><h2 id="pricing-title">Precificação</h2></div>
+  <div id="pricing-body" style="padding:0 14px 24px;"></div>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: CLIENTES -->
-<!-- ======================================================= -->
+<!-- CLIENTES -->
 <div class="page" id="page-clientes">
-  <div class="search-wrap">
-    <div class="search-inner">
-      <span class="search-icon">🔍</span>
-      <input class="search-box" placeholder="Buscar clientes..." oninput="renderClientes(this.value)">
-    </div>
-  </div>
+  <div class="search-wrap"><div class="search-inner"><span class="search-icon">🔍</span><input class="search-box" placeholder="Buscar clientes..." oninput="renderClientes(this.value)"></div></div>
   <div id="clienteList"></div>
   <button class="fab" onclick="openClienteModal()">+ Novo Cliente</button>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: DETALHE CLIENTE -->
-<!-- ======================================================= -->
+<!-- DETALHE CLIENTE -->
 <div class="page" id="page-cliente-detalhe">
-  <div class="page-header">
-    <button class="back-btn" onclick="go('clientes')">‹</button>
-    <h2 id="cd-title">Cliente</h2>
-    <button class="more-btn" style="margin-left:auto" onclick="editClienteAtual()">✏️</button>
-  </div>
+  <div class="page-header"><button class="back-btn" onclick="go('clientes')">‹</button><h2 id="cd-title">Cliente</h2><button class="more-btn" style="margin-left:auto" onclick="editClienteAtual()">✏️</button></div>
   <div id="cd-body"></div>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: PEDIDOS -->
-<!-- ======================================================= -->
+<!-- PEDIDOS -->
 <div class="page" id="page-pedidos">
-  <div class="search-wrap">
-    <div class="search-inner">
-      <span class="search-icon">🔍</span>
-      <input class="search-box" placeholder="Buscar pedidos..." oninput="renderPedidos(this.value)">
-    </div>
-  </div>
+  <div class="search-wrap"><div class="search-inner"><span class="search-icon">🔍</span><input class="search-box" placeholder="Buscar por cliente ou produto..." oninput="renderPedidos(this.value)"></div></div>
   <div id="pedidoList"></div>
   <button class="fab" onclick="openPedidoForm()">+ Novo Pedido</button>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: EDITAR PEDIDO -->
-<!-- ======================================================= -->
+<!-- EDITAR PEDIDO -->
 <div class="page" id="page-editar-pedido">
-  <div class="page-header">
-    <button class="back-btn" onclick="go('pedidos')">‹</button>
-    <h2 id="editPedidoTitle">Novo Pedido</h2>
-  </div>
+  <div class="page-header"><button class="back-btn" onclick="go('pedidos')">‹</button><h2 id="editPedidoTitle">Novo Pedido</h2></div>
   <div class="form-page">
     <input type="hidden" id="ep-id">
-    <div class="form-group">
-      <label class="form-label">Cliente</label>
-      <select class="form-select" id="ep-cliente"></select>
-    </div>
+    <div class="form-group"><label class="form-label">Cliente</label><select class="form-select" id="ep-cliente"></select></div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Data do pedido</label>
-        <input class="form-input" id="ep-data" type="date">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Data de entrega</label>
-        <input class="form-input" id="ep-entrega" type="date">
-      </div>
+      <div class="form-group"><label class="form-label">Data do pedido</label><input class="form-input" id="ep-data" type="date"></div>
+      <div class="form-group"><label class="form-label">Data de entrega</label><input class="form-input" id="ep-entrega" type="date"></div>
     </div>
 
     <span class="section-label">🎂 Itens do Pedido</span>
     <div id="ep-itens-list" style="margin-bottom:10px;"></div>
-    <div class="form-row" style="align-items:flex-end;gap:8px;">
-      <div class="form-group" style="flex:2;">
-        <label class="form-label">Receita / Produto</label>
-        <select class="form-select" id="ep-item-receita">
-          <option value="">Selecionar receita...</option>
-        </select>
-      </div>
-      <div class="form-group" style="flex:1;">
-        <label class="form-label">Qtd</label>
-        <input class="form-input" id="ep-item-qty" type="number" value="1" min="1">
-      </div>
-      <div class="form-group" style="flex:1;">
-        <label class="form-label">Preço unit. R$</label>
-        <input class="form-input" id="ep-item-preco" type="number" placeholder="0,00">
-      </div>
-    </div>
-    <button type="button" style="width:100%;background:#fce8f2;color:var(--wine);border:none;border-radius:12px;padding:10px;font-size:0.88rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-bottom:14px;" onclick="addItemPedido()">+ Adicionar Item</button>
-
     <div class="form-group">
-      <label class="form-label">Modo de Pagamento</label>
-      <select class="form-select" id="ep-pagamento">
-        <option value="pix">Pix</option>
-        <option value="dinheiro">Dinheiro</option>
-        <option value="cartao">Cartão</option>
-        <option value="outro">Outro</option>
+      <label class="form-label">Selecionar receita cadastrada</label>
+      <select class="form-select" id="ep-item-receita" onchange="autoFillPreco()">
+        <option value="">— Receita cadastrada (opcional) —</option>
       </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Ou digitar nome do produto</label>
+      <input class="form-input" id="ep-item-nome-livre" placeholder="Ex: Bolo personalizado, Doce especial...">
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Valor total (R$)</label>
-        <input class="form-input" id="ep-total" type="number" placeholder="0,00">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Valor pago (R$)</label>
-        <input class="form-input" id="ep-pago" type="number" placeholder="0,00">
-      </div>
+      <div class="form-group"><label class="form-label">Quantidade</label><input class="form-input" id="ep-item-qty" type="number" value="1" min="1"></div>
+      <div class="form-group"><label class="form-label">Preço unit. (R$)</label><input class="form-input" id="ep-item-preco" type="number" placeholder="0,00"></div>
     </div>
+    <button type="button" style="width:100%;background:#fce8f2;color:var(--wine);border:none;border-radius:11px;padding:10px;font-size:.87rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;margin-bottom:4px;" onclick="addItemPedido()">+ Adicionar Item</button>
+
+    <span class="section-label">💳 Pagamento</span>
+    <div class="form-group"><label class="form-label">Modo de Pagamento</label>
+      <select class="form-select" id="ep-pagamento"><option value="pix">Pix</option><option value="dinheiro">Dinheiro</option><option value="cartao">Cartão</option><option value="outro">Outro</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Valor total (R$)</label><input class="form-input" id="ep-total" type="number" placeholder="0,00"></div>
+      <div class="form-group"><label class="form-label">Valor pago (R$)</label><input class="form-input" id="ep-pago" type="number" placeholder="0,00" value="0"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Data do pagamento</label><input class="form-input" id="ep-data-pag" type="date"></div>
     <div class="form-group">
-      <label class="form-label">Data do pagamento</label>
-      <input class="form-input" id="ep-data-pag" type="date">
+      <label class="form-label">Status do Pagamento</label>
+      <div class="status-group" id="grp-pag"></div>
+      <input type="hidden" id="ep-status-pag" value="pendente">
     </div>
+
+    <span class="section-label">🚚 Entrega</span>
     <div class="form-group">
-      <label class="form-label">Status</label>
-      <select class="form-select" id="ep-status">
-        <option value="pendente">Pendente</option>
-        <option value="pago">Pago</option>
-        <option value="parcial">Parcialmente pago</option>
-        <option value="entregue">Entregue</option>
-        <option value="cancelado">Cancelado</option>
-      </select>
+      <label class="form-label">Status da Entrega</label>
+      <div class="status-group" id="grp-ent"></div>
+      <input type="hidden" id="ep-status-ent" value="confirmado">
     </div>
-    <div class="form-group">
-      <label class="form-label">Observações</label>
-      <textarea class="form-textarea" id="ep-obs" placeholder="Notas sobre o pedido..."></textarea>
-    </div>
+
+    <div class="form-group"><label class="form-label">Observações</label><textarea class="form-textarea" id="ep-obs" placeholder="Sabor, decoração, endereço de entrega..."></textarea></div>
     <button class="save-btn" onclick="savePedido()">Salvar Pedido</button>
     <button class="cancel-btn" onclick="go('pedidos')">Cancelar</button>
   </div>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: FINANCEIRO -->
-<!-- ======================================================= -->
-<div class="page" id="page-financeiro">
-  <div id="fin-body"></div>
+<!-- FINANCEIRO -->
+<div class="page" id="page-financeiro"><div id="fin-body" style="padding-bottom:16px;"></div></div>
+
+<!-- LISTA DE COMPRAS -->
+<div class="page" id="page-compras">
+  <div style="display:flex;align-items:center;padding:10px 16px 6px;gap:10px;">
+    <div class="search-inner" style="flex:1;position:relative;"><span class="search-icon">🔍</span><input class="search-box" placeholder="Buscar item..." oninput="renderCompras(this.value)"></div>
+    <button onclick="limparCompradas()" style="background:none;border:none;cursor:pointer;color:var(--text-soft);font-size:.8rem;font-weight:700;white-space:nowrap;">Limpar ✓</button>
+  </div>
+  <div id="compraList"></div>
+  <button class="fab" onclick="openCompraModal()">+ Adicionar Item</button>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: PERFIL -->
-<!-- ======================================================= -->
+<!-- PERFIL -->
 <div class="page" id="page-perfil">
-  <div class="perfil-hero">
-    <div class="perfil-avatar">🎂</div>
-    <div class="perfil-name">Sweet Olivia</div>
-    <div class="perfil-sub">Doces Gourmet · Juazeiro do Norte, CE</div>
-  </div>
+  <div class="perfil-hero"><div class="perfil-avatar">🎂</div><div class="perfil-name">Sweet Olivia</div><div class="perfil-sub">Doces Gourmet · Juazeiro do Norte, CE</div></div>
   <div class="form-page">
     <div class="form-group"><label class="form-label">Nome do negócio</label><input class="form-input" id="pf-nome" value="Sweet Olivia"></div>
     <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="pf-email" type="email" value="contato@sweetolivia.com"></div>
@@ -514,629 +349,610 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: ELETRO -->
-<!-- ======================================================= -->
+<!-- ELETRO -->
 <div class="page" id="page-eletro">
   <div class="form-page">
     <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:12px;">Eletrodomésticos</h2>
-    <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:16px;">Cadastre seus eletrodomésticos para calcular o custo de energia nas receitas.</p>
     <div id="eletroList"></div>
-    <button class="save-btn" onclick="openEletroModal()">+ Novo Eletrodoméstico</button>
+    <button class="save-btn" style="margin-top:8px;" onclick="openEletroModal()">+ Novo Eletrodoméstico</button>
   </div>
 </div>
 
-<!-- ======================================================= -->
-<!-- PAGE: SENHA -->
-<!-- ======================================================= -->
+<!-- SENHA -->
 <div class="page" id="page-senha">
   <div class="form-page">
     <h2 style="font-family:'Playfair Display',serif;color:var(--wine);margin-bottom:20px;">Alterar Senha</h2>
     <div class="form-group"><label class="form-label">Senha atual</label><input class="form-input" type="password" placeholder="••••••••"></div>
     <div class="form-group"><label class="form-label">Nova senha</label><input class="form-input" type="password" placeholder="••••••••"></div>
-    <div class="form-group"><label class="form-label">Confirmar nova senha</label><input class="form-input" type="password" placeholder="••••••••"></div>
+    <div class="form-group"><label class="form-label">Confirmar</label><input class="form-input" type="password" placeholder="••••••••"></div>
     <button class="save-btn" onclick="showToast('Senha alterada! ✓')">Salvar nova senha</button>
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="bnav-item" id="bn-home" onclick="go('home')"><span class="bicon">🏠</span>Início</button>
   <button class="bnav-item" id="bn-pedidos" onclick="go('pedidos')"><span class="bicon">📦</span>Pedidos</button>
   <button class="bnav-item" id="bn-receitas" onclick="go('receitas')"><span class="bicon">📝</span>Receitas</button>
   <button class="bnav-item" id="bn-clientes" onclick="go('clientes')"><span class="bicon">👥</span>Clientes</button>
-  <button class="bnav-item" id="bn-financeiro" onclick="go('financeiro')"><span class="bicon">💰</span>Financeiro</button>
+  <button class="bnav-item" id="bn-compras" onclick="go('compras')"><span class="bicon">🛒</span>Compras</button>
 </nav>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- ======================================================= -->
 <!-- MODALS -->
-<!-- ======================================================= -->
+<div class="modal-overlay" id="modal-ing"><div class="modal">
+  <div class="modal-title" id="modal-ing-title">Novo Ingrediente</div>
+  <input type="hidden" id="mi-id">
+  <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mi-nome" placeholder="Ex: Farinha de Trigo"></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Preço (R$)</label><input class="form-input" id="mi-preco" type="number" step="0.01" placeholder="0,00"></div>
+    <div class="form-group"><label class="form-label">Quantidade</label><input class="form-input" id="mi-qty" type="number" placeholder="1000"></div>
+    <div class="form-group"><label class="form-label">Unidade</label><select class="form-select" id="mi-unit"><option>g</option><option>kg</option><option>ml</option><option>l</option><option>un.</option><option>cm</option></select></div>
+  </div>
+  <div class="modal-btns"><button class="modal-btn cancel" onclick="closeModal('ing')">Cancelar</button><button class="modal-btn confirm" onclick="saveIng()">Salvar</button></div>
+</div></div>
 
-<!-- Modal Ingrediente -->
-<div class="modal-overlay" id="modal-ing">
-  <div class="modal">
-    <div class="modal-title" id="modal-ing-title">Novo Ingrediente</div>
-    <input type="hidden" id="mi-id">
-    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mi-nome" placeholder="Ex: Farinha de Trigo"></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Preço (R$)</label><input class="form-input" id="mi-preco" type="number" step="0.01" placeholder="0,00"></div>
-      <div class="form-group"><label class="form-label">Quantidade</label><input class="form-input" id="mi-qty" type="number" placeholder="1000"></div>
-      <div class="form-group"><label class="form-label">Unidade</label>
-        <select class="form-select" id="mi-unit">
-          <option>g</option><option>kg</option><option>ml</option><option>l</option><option>un.</option><option>cm</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('ing')">Cancelar</button>
-      <button class="modal-btn confirm" onclick="saveIng()">Salvar</button>
+<div class="modal-overlay" id="modal-del"><div class="modal">
+  <div class="modal-title">Confirmar exclusão</div>
+  <p id="del-msg" style="font-size:.9rem;color:var(--text-soft);margin-bottom:8px;"></p>
+  <div class="modal-btns"><button class="modal-btn cancel" onclick="closeModal('del')">Cancelar</button><button class="modal-btn danger-btn" onclick="confirmDel()">Excluir</button></div>
+</div></div>
+
+<div class="modal-overlay" id="modal-cliente"><div class="modal">
+  <div class="modal-title" id="modal-cliente-title">Novo Cliente</div>
+  <input type="hidden" id="mc-id">
+  <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mc-nome" placeholder="Nome completo"></div>
+  <div class="form-group"><label class="form-label">Telefone / WhatsApp</label><input class="form-input" id="mc-tel" placeholder="(88) 9 9999-9999"></div>
+  <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="mc-email" type="email" placeholder="email@exemplo.com"></div>
+  <div class="form-group"><label class="form-label">Endereço</label><input class="form-input" id="mc-end" placeholder="Rua, número, bairro"></div>
+  <div class="form-group"><label class="form-label">Observações</label><textarea class="form-textarea" id="mc-obs" placeholder="Preferências, alergias..."></textarea></div>
+  <div class="modal-btns"><button class="modal-btn cancel" onclick="closeModal('cliente')">Cancelar</button><button class="modal-btn confirm" onclick="saveCliente()">Salvar</button></div>
+</div></div>
+
+<div class="modal-overlay" id="modal-eletro"><div class="modal">
+  <div class="modal-title">Eletrodoméstico</div>
+  <input type="hidden" id="mel-id">
+  <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mel-nome" placeholder="Ex: Batedeira"></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Potência (W)</label><input class="form-input" id="mel-w" type="number" placeholder="300"></div>
+    <div class="form-group"><label class="form-label">Tarifa kWh (R$)</label><input class="form-input" id="mel-kwh" type="number" step="0.01" placeholder="0.75"></div>
+  </div>
+  <div class="modal-btns"><button class="modal-btn cancel" onclick="closeModal('eletro')">Cancelar</button><button class="modal-btn confirm" onclick="saveEletro()">Salvar</button></div>
+</div></div>
+
+<div class="modal-overlay" id="modal-compra"><div class="modal">
+  <div class="modal-title" id="modal-compra-title">Novo Item</div>
+  <input type="hidden" id="mco-id">
+  <div class="form-group"><label class="form-label">Item</label><input class="form-input" id="mco-nome" placeholder="Ex: Chocolate 50%"></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Quantidade</label><input class="form-input" id="mco-qty" placeholder="Ex: 500g, 2 un."></div>
+    <div class="form-group"><label class="form-label">Categoria</label>
+      <select class="form-select" id="mco-cat">
+        <option value="ingredientes">Ingredientes</option><option value="embalagem">Embalagem</option>
+        <option value="decoracao">Decoração</option><option value="limpeza">Limpeza</option><option value="outros">Outros</option>
+      </select>
     </div>
   </div>
+  <div class="modal-btns"><button class="modal-btn cancel" onclick="closeModal('compra')">Cancelar</button><button class="modal-btn confirm" onclick="saveCompra()">Adicionar</button></div>
+</div></div>
+
+<style>
+.status-pill{padding:6px 13px;border-radius:20px;font-size:.78rem;font-weight:700;border:2px solid var(--border);background:var(--white);cursor:pointer;color:var(--text-soft);transition:all .15s;font-family:'Nunito',sans-serif;}
+.sp-pag-pago{background:#e8f5e9;border-color:var(--success);color:var(--success);}
+.sp-pag-pendente{background:#fff3e0;border-color:var(--warning);color:var(--warning);}
+.sp-pag-parcial{background:#e3f2fd;border-color:#1565c0;color:#1565c0;}
+.sp-pag-cancelado{background:#ffebee;border-color:var(--danger);color:var(--danger);}
+.sp-ent-confirmado{background:#f3e5f5;border-color:#7b1fa2;color:#7b1fa2;}
+.sp-ent-producao{background:#fff8e1;border-color:#f9a825;color:#f9a825;}
+.sp-ent-concluido{background:#e8f5e9;border-color:#388e3c;color:#388e3c;}
+.sp-ent-entregue{background:#e0f2f1;border-color:#00897b;color:#00897b;}
+.status-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.ep-item-card{background:var(--white);border-radius:11px;padding:11px 13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow);}
+.ep-item-card .ep-item-info{flex:1;}
+.ep-item-card .ep-item-name{font-weight:600;font-size:.9rem;}
+.ep-item-card .ep-item-meta{font-size:.77rem;color:var(--text-soft);margin-top:2px;}
+.ep-item-card .ep-item-rm{background:none;border:none;cursor:pointer;color:var(--danger);font-size:1.2rem;padding:4px;}
+#loading-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--wine),var(--wine-light));z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;}
+#loading-screen .ls-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:2.2rem;margin-bottom:8px;}
+#loading-screen .ls-logo span{color:#f8bdd0;}
+#loading-screen .ls-sub{font-size:.85rem;opacity:.8;margin-bottom:28px;}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="ls-logo">Sweet <span>Olivia</span></div>
+  <div class="ls-sub">Carregando seus dados... ☁️</div>
+  <div class="spinner"></div>
 </div>
 
-<!-- Modal Confirmar Exclusão -->
-<div class="modal-overlay" id="modal-del">
-  <div class="modal">
-    <div class="modal-title">Confirmar exclusão</div>
-    <p id="del-msg" style="font-size:0.9rem;color:var(--text-soft);margin-bottom:8px;"></p>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('del')">Cancelar</button>
-      <button class="modal-btn danger-btn" onclick="confirmDel()">Excluir</button>
-    </div>
-  </div>
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-<!-- Modal Cliente -->
-<div class="modal-overlay" id="modal-cliente">
-  <div class="modal">
-    <div class="modal-title" id="modal-cliente-title">Novo Cliente</div>
-    <input type="hidden" id="mc-id">
-    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mc-nome" placeholder="Nome completo"></div>
-    <div class="form-group"><label class="form-label">Telefone / WhatsApp</label><input class="form-input" id="mc-tel" placeholder="(88) 9 9999-9999"></div>
-    <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="mc-email" type="email" placeholder="email@exemplo.com"></div>
-    <div class="form-group"><label class="form-label">Endereço</label><input class="form-input" id="mc-end" placeholder="Rua, número, bairro"></div>
-    <div class="form-group"><label class="form-label">Observações</label><textarea class="form-textarea" id="mc-obs" placeholder="Preferências, alergias, etc."></textarea></div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('cliente')">Cancelar</button>
-      <button class="modal-btn confirm" onclick="saveCliente()">Salvar</button>
-    </div>
-  </div>
-</div>
+// ================================================================
+// FIREBASE CONFIG
+// ================================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBuRX_OFmUNy9-jA6MWLUvd6P6OwS8EoI0",
+  authDomain: "meuapp-79e93.firebaseapp.com",
+  projectId: "meuapp-79e93",
+  storageBucket: "meuapp-79e93.firebasestorage.app",
+  messagingSenderId: "655492133078",
+  appId: "1:655492133078:web:653aac9787ee3e348c1977"
+};
+const fireApp = initializeApp(firebaseConfig);
+const db = getFirestore(fireApp);
 
-<!-- Modal Eletro -->
-<div class="modal-overlay" id="modal-eletro">
-  <div class="modal">
-    <div class="modal-title">Novo Eletrodoméstico</div>
-    <input type="hidden" id="mel-id">
-    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="mel-nome" placeholder="Ex: Batedeira"></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Potência (W)</label><input class="form-input" id="mel-w" type="number" placeholder="300"></div>
-      <div class="form-group"><label class="form-label">kWh tarifa (R$)</label><input class="form-input" id="mel-kwh" type="number" step="0.01" placeholder="0.75"></div>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('eletro')">Cancelar</button>
-      <button class="modal-btn confirm" onclick="saveEletro()">Salvar</button>
-    </div>
-  </div>
-</div>
-
-<script>
-// ============================================================
-// STATE
-// ============================================================
-let state = {
-  ingredientes: [
-    {id:1,nome:'Açúcar agro vale',preco:4.29,qty:1000,unit:'g'},
-    {id:2,nome:'Manteiga Davaca',preco:9.20,qty:200,unit:'g'},
-    {id:3,nome:'Farinha de Trigo Finna',preco:4.69,qty:1000,unit:'g'},
-    {id:4,nome:'Leite condensado moça',preco:6.99,qty:395,unit:'g'},
-    {id:5,nome:'Creme de leite Nestlé',preco:6.98,qty:400,unit:'ml'},
-    {id:6,nome:'Chocolate 50%',preco:3.90,qty:100,unit:'g'},
-    {id:7,nome:'Leite Ninho',preco:39.90,qty:400,unit:'g'},
-    {id:8,nome:'Ovos',preco:0.90,qty:1,unit:'un.'},
-    {id:9,nome:'Fermento Dr. Oetker',preco:3.99,qty:100,unit:'g'},
-    {id:10,nome:'Leite de côco Sococo',preco:5.64,qty:200,unit:'ml'},
-  ],
-  receitas: [
-    {id:1,nome:'Bolo Alto',rendimento:12,medida:'fatias',tempo:120,gas:40,queimador:'Queimador médio',mao:8,preco:140,
-     ings:[{ingId:1,qty:265},{ingId:2,qty:160},{ingId:8,qty:5},{ingId:10,qty:200},{ingId:3,qty:267},{ingId:9,qty:13},
-           {ingId:4,qty:395},{ingId:5,qty:400},{ingId:6,qty:30},{ingId:2,qty:20},{ingId:7,qty:15}]},
-    {id:2,nome:'Bolo de Pote Nutella',rendimento:1,medida:'unidades',tempo:60,gas:30,queimador:'Forno a gás',mao:8,preco:22,ings:[]},
-    {id:3,nome:'Brownie Gourmet',rendimento:12,medida:'unidades',tempo:90,gas:40,queimador:'Forno elétrico',mao:8,preco:55,ings:[]},
-  ],
-  clientes: [
-    {id:1,nome:'Maria Silva',tel:'(88) 9 9999-1111',email:'maria@email.com',end:'Rua das Flores, 12',obs:''},
-    {id:2,nome:'João Pedro',tel:'(88) 9 9999-2222',email:'',end:'',obs:'Alérgico a amendoim'},
-    {id:3,nome:'Ana Carolina',tel:'(88) 9 8888-3333',email:'ana@email.com',end:'Av. Brasil, 55',obs:''},
-  ],
-  pedidos: [
-    {id:1,clienteId:3,data:'2026-03-20',entrega:'2026-03-27',pagamento:'pix',total:280,pago:280,dataPag:'2026-03-21',status:'pago',obs:'2 bolos alto + 4 potes',
-     itens:[{receita:'Bolo Alto',qty:2,preco:140},{receita:'Bolo de Pote Nutella',qty:4,preco:22}]},
-    {id:2,clienteId:1,data:'2026-03-24',entrega:'2026-03-29',pagamento:'dinheiro',total:55,pago:0,dataPag:'',status:'pendente',obs:'',
-     itens:[{receita:'Brownie Gourmet',qty:1,preco:55}]},
-    {id:3,clienteId:2,data:'2026-03-26',entrega:'2026-04-05',pagamento:'cartao',total:140,pago:70,dataPag:'2026-03-26',status:'parcial',obs:'Metade já pago',
-     itens:[{receita:'Bolo Alto',qty:1,preco:140}]},
-  ],
-  eletros: [
-    {id:1,nome:'Batedeira KitchenAid',w:300,kwh:0.75},
-    {id:2,nome:'Forno elétrico',w:1800,kwh:0.75},
-  ],
-  nextId: 100,
-  erIngs: [], // ingredientes sendo editados na receita
-  epItens: [], // itens sendo editados no pedido
-  currentClienteId: null,
-  delCb: null,
-  editClienteFromDetail: false,
+// ================================================================
+// STATE LOCAL (cache em memória)
+// ================================================================
+let S = {
+  ingredientes:[], receitas:[], clientes:[], pedidos:[],
+  eletros:[], compras:[], nextId: Date.now()
 };
 
-function newId(){ return ++state.nextId; }
+// ================================================================
+// FIREBASE — SALVAR / CARREGAR
+// ================================================================
+// Cada coleção vira uma collection no Firestore.
+// IDs são strings para compatibilidade com Firestore doc IDs.
 
-// ============================================================
-// NAV
-// ============================================================
-const pageMap={home:'page-home',ingredientes:'page-ingredientes',receitas:'page-receitas','editar-receita':'page-editar-receita',pricing:'page-pricing',clientes:'page-clientes','cliente-detalhe':'page-cliente-detalhe',pedidos:'page-pedidos','editar-pedido':'page-editar-pedido',financeiro:'page-financeiro',perfil:'page-perfil',eletro:'page-eletro',senha:'page-senha'};
-const bnMap={home:'bn-home',pedidos:'bn-pedidos',receitas:'bn-receitas',clientes:'bn-clientes',financeiro:'bn-financeiro'};
-const titleMap={home:'Sweet Olivia',ingredientes:'Ingredientes e Insumos',receitas:'Receitas','editar-receita':'Receita',pricing:'Precificação',clientes:'Clientes','cliente-detalhe':'Cliente',pedidos:'Pedidos','editar-pedido':'Pedido',financeiro:'Financeiro',perfil:'Meu Perfil',eletro:'Eletrodomésticos',senha:'Alterar Senha'};
+function newId(){ return 'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); }
 
-function go(page){
-  closeSidebar(); closeDropdowns();
-  Object.keys(pageMap).forEach(k=>document.getElementById(pageMap[k]).classList.remove('active'));
-  document.getElementById(pageMap[page]).classList.add('active');
-  Object.keys(bnMap).forEach(k=>document.getElementById(bnMap[k]).classList.remove('active'));
-  if(bnMap[page]) document.getElementById(bnMap[page]).classList.add('active');
-  document.getElementById('topTitle').innerHTML=`<em>${titleMap[page]||'Sweet Olivia'}</em>`;
-  window.scrollTo(0,0);
-  if(page==='home') renderHome();
-  if(page==='ingredientes') renderIngs();
-  if(page==='receitas') renderReceitas();
-  if(page==='clientes') renderClientes();
-  if(page==='pedidos') renderPedidos();
-  if(page==='financeiro') renderFinanceiro();
-  if(page==='eletro') renderEletros();
+async function fbSet(col, id, data){
+  try { await setDoc(doc(db, col, String(id)), data); }
+  catch(e){ console.error('fbSet erro:', e); showToast('Erro ao salvar ☁️'); }
+}
+async function fbDel(col, id){
+  try { await deleteDoc(doc(db, col, String(id))); }
+  catch(e){ console.error('fbDel erro:', e); }
+}
+async function fbGetAll(col){
+  try {
+    const snap = await getDocs(collection(db, col));
+    return snap.docs.map(d => d.data());
+  } catch(e){ console.error('fbGetAll erro:', e); return []; }
 }
 
-// ============================================================
-// SIDEBAR
-// ============================================================
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sbOverlay').classList.toggle('open');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOverlay').classList.remove('open');}
+// Carrega todos os dados do Firebase na inicialização
+async function loadAll(){
+  showLoading(true);
+  try {
+    const [ings, recs, clis, peds, els, comps] = await Promise.all([
+      fbGetAll('ingredientes'), fbGetAll('receitas'), fbGetAll('clientes'),
+      fbGetAll('pedidos'), fbGetAll('eletros'), fbGetAll('compras'),
+    ]);
+    S.ingredientes = ings;
+    S.receitas = recs;
+    S.clientes = clis;
+    S.pedidos = peds;
+    S.eletros = els;
+    S.compras = comps;
+  } catch(e){
+    console.error('Erro ao carregar dados:', e);
+    showToast('Erro ao conectar com a nuvem ☁️');
+  }
+  showLoading(false);
+  renderHome();
+}
 
-// ============================================================
-// DROPDOWNS
-// ============================================================
-let openDd=null;
-function toggleDd(e,el){e.stopPropagation();if(openDd&&openDd!==el){openDd.style.display='none';}el.style.display=el.style.display==='block'?'none':'block';openDd=el.style.display==='block'?el:null;}
-function closeDropdowns(){document.querySelectorAll('.dd').forEach(d=>d.style.display='none');openDd=null;}
-document.addEventListener('click',closeDropdowns);
+function showLoading(show){
+  document.getElementById('loading-screen').style.display = show ? 'flex' : 'none';
+}
 
-// ============================================================
-// MODAL
-// ============================================================
-function openModal(id){document.getElementById('modal-'+id).classList.add('open');}
-function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');}
-
-// ============================================================
-// TOAST
-// ============================================================
-let toastTimer;
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2500);}
-
-// ============================================================
+// ================================================================
 // HELPERS
-// ============================================================
+// ================================================================
 function fmtR(v){return 'R$ '+parseFloat(v||0).toFixed(2).replace('.',',');}
 function fmtDate(s){if(!s)return '-';const[y,m,d]=s.split('-');return`${d}/${m}/${y}`;}
-function getIng(id){return state.ingredientes.find(i=>i.id===id);}
-function getReceita(id){return state.receitas.find(r=>r.id===id);}
-function getCliente(id){return state.clientes.find(c=>c.id===id);}
-function avatarLetter(nome){return nome?nome[0].toUpperCase():'?';}
-function statusBadge(s){const m={pago:'badge-green',pendente:'badge-orange',parcial:'badge-blue',entregue:'badge-green',cancelado:'badge-red'};const l={pago:'Pago',pendente:'Pendente',parcial:'Parcial',entregue:'Entregue',cancelado:'Cancelado'};return`<span class="badge ${m[s]||''}">${l[s]||s}</span>`;}
+function getIng(id){return S.ingredientes.find(i=>String(i.id)===String(id));}
+function getReceita(id){return S.receitas.find(r=>String(r.id)===String(id));}
+function getCliente(id){return S.clientes.find(c=>String(c.id)===String(id));}
+function al(n){return n?n[0].toUpperCase():'?';}
 
-// Custo de ingredientes de uma receita
-function custoIngs(receita){
-  let total=0;
-  (receita.ings||[]).forEach(ri=>{
-    const ing=getIng(ri.ingId);
-    if(ing&&ing.qty>0) total+=(ing.preco/ing.qty)*ri.qty;
+const PAG_CFG={
+  pago:{cls:'sp-pag-pago',lbl:'✅ Pago'},
+  pendente:{cls:'sp-pag-pendente',lbl:'⏳ Pendente'},
+  parcial:{cls:'sp-pag-parcial',lbl:'🔵 Parcial'},
+  cancelado:{cls:'sp-pag-cancelado',lbl:'❌ Cancelado'},
+};
+const ENT_CFG={
+  confirmado:{cls:'sp-ent-confirmado',lbl:'📋 Confirmado'},
+  producao:{cls:'sp-ent-producao',lbl:'👩‍🍳 Em produção'},
+  concluido:{cls:'sp-ent-concluido',lbl:'✅ Concluído'},
+  entregue:{cls:'sp-ent-entregue',lbl:'📬 Entregue'},
+};
+const PAG_BADGE={pago:'badge-green',pendente:'badge-orange',parcial:'badge-blue',cancelado:'badge-red'};
+const ENT_BADGE={confirmado:'badge-purple',producao:'badge-orange',concluido:'badge-green',entregue:'badge-green'};
+function pagBadge(s){const c=PAG_CFG[s];return c?`<span class="badge ${PAG_BADGE[s]}">${c.lbl}</span>`:'';}
+function entBadge(s){const c=ENT_CFG[s];return c?`<span class="badge ${ENT_BADGE[s]}">${c.lbl}</span>`:'';}
+
+function buildStatusPills(grpId,cfg,hidId,cur){
+  const grp=document.getElementById(grpId);
+  if(!grp) return;
+  grp.innerHTML=Object.entries(cfg).map(([val,{cls,lbl}])=>
+    `<button type="button" class="status-pill ${cur===val?cls:''}" data-val="${val}" data-grp="${grpId}" data-hid="${hidId}">${lbl}</button>`
+  ).join('');
+  document.getElementById(hidId).value=cur;
+  grp.querySelectorAll('.status-pill').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const v=b.dataset.val, g=b.dataset.grp, h=b.dataset.hid;
+      document.getElementById(h).value=v;
+      buildStatusPills(g,g.includes('pag')?PAG_CFG:ENT_CFG,h,v);
+    });
   });
-  return total;
 }
-// Custo total (ingredientes + gás + mão de obra)
+
+function custoIngs(r){let t=0;(r.ings||[]).forEach(ri=>{const i=getIng(ri.ingId);if(i&&i.qty>0)t+=(i.preco/i.qty)*ri.qty;});return t;}
 function custoTotal(r){
-  const gastoCustoKg=120/12; // botijão 13kg ~12kg uteis → simplificado
-  const gasMin=parseFloat(document.getElementById('pf-gas')?document.getElementById('pf-gas').value:120)||120;
-  const custoGas=(r.gas||0)*(gasMin/720); // horas de gás
-  const mao=((r.tempo||0)/60)*(parseFloat(r.mao)||8);
-  return custoIngs(r)+custoGas+mao;
+  const gasR=parseFloat(document.getElementById('pf-gas')?document.getElementById('pf-gas').value:120)||120;
+  return custoIngs(r)+((r.gas||0)*(gasR/720))+((r.tempo||0)/60*(parseFloat(r.mao)||8));
 }
 
-// ============================================================
+// ================================================================
+// NAV
+// ================================================================
+const PM={home:'page-home',ingredientes:'page-ingredientes',receitas:'page-receitas','editar-receita':'page-editar-receita',pricing:'page-pricing',clientes:'page-clientes','cliente-detalhe':'page-cliente-detalhe',pedidos:'page-pedidos','editar-pedido':'page-editar-pedido',financeiro:'page-financeiro',compras:'page-compras',perfil:'page-perfil',eletro:'page-eletro',senha:'page-senha'};
+const BN={home:'bn-home',pedidos:'bn-pedidos',receitas:'bn-receitas',clientes:'bn-clientes',compras:'bn-compras'};
+const TM={home:'Sweet Olivia',ingredientes:'Ingredientes',receitas:'Receitas','editar-receita':'Receita',pricing:'Precificação',clientes:'Clientes','cliente-detalhe':'Cliente',pedidos:'Pedidos','editar-pedido':'Pedido',financeiro:'Financeiro',compras:'Lista de Compras',perfil:'Meu Perfil',eletro:'Eletrodomésticos',senha:'Alterar Senha'};
+
+function go(page){
+  closeSidebar();closeDropdowns();
+  Object.values(PM).forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active');});
+  document.getElementById(PM[page]).classList.add('active');
+  Object.values(BN).forEach(id=>document.getElementById(id).classList.remove('active'));
+  if(BN[page])document.getElementById(BN[page]).classList.add('active');
+  document.getElementById('topTitle').innerHTML=`<em>${TM[page]||'Sweet Olivia'}</em>`;
+  window.scrollTo(0,0);
+  ({home:renderHome,ingredientes:renderIngs,receitas:renderReceitas,clientes:renderClientes,pedidos:renderPedidos,financeiro:renderFinanceiro,eletro:renderEletros,compras:renderCompras}[page]||function(){})();
+}
+window.go = go;
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sbOverlay').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOverlay').classList.remove('open');}
+window.toggleSidebar=toggleSidebar;
+
+let _dd=null;
+function toggleDd(e,el){e.stopPropagation();if(_dd&&_dd!==el)_dd.style.display='none';el.style.display=el.style.display==='block'?'none':'block';_dd=el.style.display==='block'?el:null;}
+function closeDropdowns(){document.querySelectorAll('.dd').forEach(d=>d.style.display='none');_dd=null;}
+document.addEventListener('click',closeDropdowns);
+window.toggleDd=toggleDd;
+
+function openModal(id){document.getElementById('modal-'+id).classList.add('open');}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');}
+window.openModal=openModal; window.closeModal=closeModal;
+
+let _tt;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2800);}
+window.showToast=showToast;
+
+// ================================================================
 // HOME
-// ============================================================
+// ================================================================
 function renderHome(){
-  document.getElementById('hs-receitas').textContent=state.receitas.length;
-  document.getElementById('hs-ings').textContent=state.ingredientes.length;
-  document.getElementById('hs-clientes').textContent=state.clientes.length;
-  document.getElementById('hs-pedidos').textContent=state.pedidos.length;
+  document.getElementById('hs-r').textContent=S.receitas.length;
+  document.getElementById('hs-i').textContent=S.ingredientes.length;
+  document.getElementById('hs-c').textContent=S.clientes.length;
+  document.getElementById('hs-p').textContent=S.pedidos.length;
 }
 
-// ============================================================
+// ================================================================
 // INGREDIENTES
-// ============================================================
-function renderIngs(filter=''){
-  const list=document.getElementById('ingList');
-  const items=state.ingredientes.filter(i=>i.nome.toLowerCase().includes(filter.toLowerCase()));
-  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">🧂</div><p>Nenhum ingrediente encontrado.</p></div>`;return;}
-  list.innerHTML=items.map(i=>`
-    <div class="list-item" id="ing-item-${i.id}">
-      <div class="item-main">
-        <div class="item-name">${i.nome}</div>
-        <div class="item-sub">${fmtR(i.preco)} / ${i.qty} ${i.unit}</div>
-      </div>
-      <div class="item-right">
-        <div class="item-val">${fmtR(i.preco/i.qty*100)} / 100${i.unit}</div>
-      </div>
-      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-ing-${i.id}'))">⋮</button>
-      <div class="dd" id="dd-ing-${i.id}" style="display:none;">
-        <button class="dd-item" onclick="openIngModal(${i.id})">✏️ Editar</button>
-        <button class="dd-item danger" onclick="askDel('Excluir o ingrediente <b>${i.nome}</b>?',()=>delIng(${i.id}))">🗑️ Excluir</button>
-      </div>
-    </div>`).join('');
+// ================================================================
+function renderIngs(f=''){
+  const el=document.getElementById('ingList');
+  const items=S.ingredientes.filter(i=>i.nome.toLowerCase().includes(f.toLowerCase()));
+  if(!items.length){el.innerHTML='<div class="empty-state"><div class="emoji">🧂</div><p>Nenhum ingrediente.</p></div>';return;}
+  el.innerHTML=items.map(i=>`<div class="list-item">
+    <div class="item-main"><div class="item-name">${i.nome}</div><div class="item-sub">${fmtR(i.preco)} por ${i.qty}${i.unit} · ${fmtR(i.preco/i.qty*100)}/100${i.unit}</div></div>
+    <button class="more-btn" onclick="toggleDd(event,this.nextElementSibling)">⋮</button>
+    <div class="dd" style="display:none;">
+      <button class="dd-item" onclick="openIngModal('${i.id}')">✏️ Editar</button>
+      <button class="dd-item danger" onclick="askDel('Excluir <b>${i.nome}</b>?',()=>delIng('${i.id}'))">🗑️ Excluir</button>
+    </div>
+  </div>`).join('');
 }
+window.renderIngs=renderIngs;
 
 function openIngModal(id=null){
   document.getElementById('mi-id').value=id||'';
   document.getElementById('modal-ing-title').textContent=id?'Editar Ingrediente':'Novo Ingrediente';
   if(id){const i=getIng(id);document.getElementById('mi-nome').value=i.nome;document.getElementById('mi-preco').value=i.preco;document.getElementById('mi-qty').value=i.qty;document.getElementById('mi-unit').value=i.unit;}
-  else{document.getElementById('mi-nome').value='';document.getElementById('mi-preco').value='';document.getElementById('mi-qty').value='';document.getElementById('mi-unit').value='g';}
+  else{['mi-nome','mi-preco','mi-qty'].forEach(x=>document.getElementById(x).value='');document.getElementById('mi-unit').value='g';}
   openModal('ing');
 }
+window.openIngModal=openIngModal;
 
-function saveIng(){
-  const id=parseInt(document.getElementById('mi-id').value)||null;
+async function saveIng(){
+  const id=document.getElementById('mi-id').value||null;
   const nome=document.getElementById('mi-nome').value.trim();
+  if(!nome){showToast('Informe o nome!');return;}
   const preco=parseFloat(document.getElementById('mi-preco').value)||0;
   const qty=parseFloat(document.getElementById('mi-qty').value)||1;
   const unit=document.getElementById('mi-unit').value;
-  if(!nome){showToast('Informe o nome do ingrediente!');return;}
-  if(id){const i=getIng(id);i.nome=nome;i.preco=preco;i.qty=qty;i.unit=unit;}
-  else{state.ingredientes.push({id:newId(),nome,preco,qty,unit});}
-  closeModal('ing');renderIngs();showToast(id?'Ingrediente atualizado! ✓':'Ingrediente adicionado! ✓');
+  const docId=id||newId();
+  const data={id:docId,nome,preco,qty,unit};
+  await fbSet('ingredientes',docId,data);
+  if(id){Object.assign(getIng(id),data);}else{S.ingredientes.push(data);}
+  closeModal('ing');renderIngs();showToast(id?'Atualizado! ✓':'Adicionado! ✓');
 }
+window.saveIng=saveIng;
 
-function delIng(id){
-  state.ingredientes=state.ingredientes.filter(i=>i.id!==id);
-  renderIngs();closeModal('del');showToast('Ingrediente excluído.');
+async function delIng(id){
+  await fbDel('ingredientes',id);
+  S.ingredientes=S.ingredientes.filter(i=>String(i.id)!==String(id));
+  closeModal('del');renderIngs();showToast('Excluído.');
 }
+window.delIng=delIng;
 
-// ============================================================
+// ================================================================
 // RECEITAS
-// ============================================================
-function renderReceitas(filter=''){
-  const list=document.getElementById('receitaList');
-  const items=state.receitas.filter(r=>r.nome.toLowerCase().includes(filter.toLowerCase()));
-  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">📝</div><p>Nenhuma receita encontrada.</p></div>`;return;}
-  list.innerHTML=items.map(r=>{
-    const ct=custoTotal(r);
-    const lucro=r.preco>0?((r.preco-ct)/r.preco*100).toFixed(0):null;
-    return`<div class="list-item" id="rec-item-${r.id}">
-      <div class="item-main">
-        <div class="item-name">${r.nome}</div>
-        <div class="item-sub">${r.rendimento} ${r.medida} · custo ${fmtR(ct)}</div>
-        ${r.preco?`<div class="item-sub" style="color:var(--wine);font-weight:600;">${fmtR(r.preco)} · margem ${lucro}%</div>`:'<div class="item-sub warn">⚠️ Sem preço definido</div>'}
-      </div>
-      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-rec-${r.id}'))">⋮</button>
-      <div class="dd" id="dd-rec-${r.id}" style="display:none;">
-        <button class="dd-item" onclick="openReceitaForm(${r.id})">✏️ Editar</button>
-        <button class="dd-item" onclick="openPricing(${r.id})">💰 Precificação</button>
-        <button class="dd-item" onclick="copyReceita(${r.id})">📋 Copiar</button>
-        <button class="dd-item danger" onclick="askDel('Excluir a receita <b>${r.nome}</b>?',()=>delReceita(${r.id}))">🗑️ Excluir</button>
+// ================================================================
+function renderReceitas(f=''){
+  const el=document.getElementById('receitaList');
+  const items=S.receitas.filter(r=>r.nome.toLowerCase().includes(f.toLowerCase()));
+  if(!items.length){el.innerHTML='<div class="empty-state"><div class="emoji">📝</div><p>Nenhuma receita.</p></div>';return;}
+  el.innerHTML=items.map(r=>{
+    const ct=custoTotal(r);const lp=r.preco>0?((r.preco-ct)/r.preco*100).toFixed(0):null;
+    return`<div class="list-item">
+      <div class="item-main"><div class="item-name">${r.nome}</div><div class="item-sub">${r.rendimento} ${r.medida} · custo ${fmtR(ct)}</div>
+      ${r.preco?`<div class="item-sub" style="color:var(--wine);font-weight:600;">${fmtR(r.preco)} · margem ${lp}%</div>`:`<div class="item-sub" style="color:var(--warning);">⚠️ Sem preço</div>`}</div>
+      <button class="more-btn" onclick="toggleDd(event,this.nextElementSibling)">⋮</button>
+      <div class="dd" style="display:none;">
+        <button class="dd-item" onclick="openReceitaForm('${r.id}')">✏️ Editar</button>
+        <button class="dd-item" onclick="openPricing('${r.id}')">💰 Precificação</button>
+        <button class="dd-item" onclick="copyReceita('${r.id}')">📋 Copiar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir <b>${r.nome}</b>?',()=>delReceita('${r.id}'))">🗑️ Excluir</button>
       </div>
     </div>`;
   }).join('');
 }
+window.renderReceitas=renderReceitas;
 
+let _erIngs=[];
 function openReceitaForm(id=null){
-  state.erIngs=[];
+  _erIngs=[];
   document.getElementById('er-id').value=id||'';
   document.getElementById('editReceitaTitle').textContent=id?'Editar Receita':'Nova Receita';
-  // popular select de ingredientes
   const sel=document.getElementById('er-ing-sel');
-  sel.innerHTML=state.ingredientes.map(i=>`<option value="${i.id}">${i.nome} (${i.qty}${i.unit})</option>`).join('');
-  if(id){
-    const r=getReceita(id);
-    document.getElementById('er-nome').value=r.nome;
-    document.getElementById('er-rendimento').value=r.rendimento;
-    document.getElementById('er-medida').value=r.medida;
-    document.getElementById('er-tempo').value=r.tempo;
-    document.getElementById('er-gas').value=r.gas;
-    document.getElementById('er-queimador').value=r.queimador;
-    document.getElementById('er-mao').value=r.mao;
-    state.erIngs=r.ings.map(x=>({...x}));
-  } else {
-    document.getElementById('er-nome').value='';
-    document.getElementById('er-rendimento').value='';
-    document.getElementById('er-tempo').value='';
-    document.getElementById('er-gas').value='';
-    document.getElementById('er-mao').value='8.00';
-  }
-  renderErIngs();
-  go('editar-receita');
+  sel.innerHTML=S.ingredientes.map(i=>`<option value="${i.id}">${i.nome} (${i.qty}${i.unit})</option>`).join('');
+  if(id){const r=getReceita(id);document.getElementById('er-nome').value=r.nome;document.getElementById('er-rendimento').value=r.rendimento;document.getElementById('er-medida').value=r.medida;document.getElementById('er-tempo').value=r.tempo;document.getElementById('er-gas').value=r.gas;document.getElementById('er-queimador').value=r.queimador;document.getElementById('er-mao').value=r.mao;_erIngs=(r.ings||[]).map(x=>({...x}));}
+  else{['er-nome','er-rendimento','er-tempo','er-gas'].forEach(x=>document.getElementById(x).value='');document.getElementById('er-mao').value='8.00';}
+  renderErIngs();go('editar-receita');
 }
+window.openReceitaForm=openReceitaForm;
 
 function renderErIngs(){
   const div=document.getElementById('er-ings-list');
-  if(!state.erIngs.length){div.innerHTML='<p style="font-size:0.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum ingrediente adicionado ainda.</p>';return;}
-  div.innerHTML='<div style="display:flex;flex-wrap:wrap;margin-bottom:6px;">'+state.erIngs.map((ri,idx)=>{
-    const ing=getIng(ri.ingId);
-    return`<span class="ing-tag">${ing?ing.nome:'?'} (${ri.qty}${ing?ing.unit:''}) <span class="rm" onclick="removeIngFromRecipe(${idx})">×</span></span>`;
-  }).join('')+'</div>';
+  if(!_erIngs.length){div.innerHTML='<p style="font-size:.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum ingrediente ainda.</p>';return;}
+  div.innerHTML='<div style="display:flex;flex-wrap:wrap;margin-bottom:6px;">'+_erIngs.map((ri,idx)=>{const i=getIng(ri.ingId);return`<span class="ing-tag">${i?i.nome:'?'} (${ri.qty}${i?i.unit:''}) <span class="rm" onclick="removeErIng(${idx})">×</span></span>`;}).join('')+'</div>';
 }
+function removeErIng(idx){_erIngs.splice(idx,1);renderErIngs();}
+window.removeErIng=removeErIng;
 
 function addIngToRecipe(){
-  const ingId=parseInt(document.getElementById('er-ing-sel').value);
+  const ingId=document.getElementById('er-ing-sel').value;
   const qty=parseFloat(document.getElementById('er-ing-qty').value)||0;
   if(!qty){showToast('Informe a quantidade!');return;}
-  state.erIngs.push({ingId,qty});
-  document.getElementById('er-ing-qty').value='';
-  renderErIngs();
+  _erIngs.push({ingId,qty});document.getElementById('er-ing-qty').value='';renderErIngs();
 }
+window.addIngToRecipe=addIngToRecipe;
 
-function removeIngFromRecipe(idx){state.erIngs.splice(idx,1);renderErIngs();}
-
-function saveReceita(){
-  const id=parseInt(document.getElementById('er-id').value)||null;
+async function saveReceita(){
+  const id=document.getElementById('er-id').value||null;
   const nome=document.getElementById('er-nome').value.trim();
-  if(!nome){showToast('Informe o nome da receita!');return;}
-  const data={
-    nome,
-    rendimento:parseFloat(document.getElementById('er-rendimento').value)||1,
-    medida:document.getElementById('er-medida').value,
-    tempo:parseFloat(document.getElementById('er-tempo').value)||0,
-    gas:parseFloat(document.getElementById('er-gas').value)||0,
-    queimador:document.getElementById('er-queimador').value,
-    mao:parseFloat(document.getElementById('er-mao').value)||8,
-    ings:[...state.erIngs],
-    preco: id?getReceita(id).preco:0,
-  };
-  if(id){Object.assign(getReceita(id),data);}
-  else{state.receitas.push({id:newId(),...data});}
-  showToast(id?'Receita atualizada! ✓':'Receita criada! ✓');
-  go('receitas');
+  if(!nome){showToast('Informe o nome!');return;}
+  const docId=id||newId();
+  const data={id:docId,nome,rendimento:parseFloat(document.getElementById('er-rendimento').value)||1,medida:document.getElementById('er-medida').value,tempo:parseFloat(document.getElementById('er-tempo').value)||0,gas:parseFloat(document.getElementById('er-gas').value)||0,queimador:document.getElementById('er-queimador').value,mao:parseFloat(document.getElementById('er-mao').value)||8,ings:[..._erIngs],preco:id&&getReceita(id)?getReceita(id).preco:0};
+  await fbSet('receitas',docId,data);
+  if(id){Object.assign(getReceita(id),data);}else{S.receitas.push(data);}
+  showToast(id?'Receita atualizada! ✓':'Receita criada! ✓');go('receitas');
 }
+window.saveReceita=saveReceita;
 
-function copyReceita(id){
-  const r=getReceita(id);
-  state.receitas.push({...r,id:newId(),nome:r.nome+' (cópia)',ings:r.ings.map(x=>({...x}))});
-  renderReceitas();showToast('Receita copiada!');
+async function copyReceita(id){
+  const r=getReceita(id);const docId=newId();
+  const data={...r,id:docId,nome:r.nome+' (cópia)',ings:(r.ings||[]).map(x=>({...x}))};
+  await fbSet('receitas',docId,data);S.receitas.push(data);renderReceitas();showToast('Copiada!');
 }
+window.copyReceita=copyReceita;
 
-function delReceita(id){
-  state.receitas=state.receitas.filter(r=>r.id!==id);
-  closeModal('del');renderReceitas();showToast('Receita excluída.');
+async function delReceita(id){
+  await fbDel('receitas',id);S.receitas=S.receitas.filter(r=>String(r.id)!==String(id));
+  closeModal('del');renderReceitas();showToast('Excluída.');
 }
+window.delReceita=delReceita;
 
-// ============================================================
+// ================================================================
 // PRECIFICAÇÃO
-// ============================================================
+// ================================================================
 function openPricing(id){
-  const r=getReceita(id);
-  document.getElementById('pricing-title').textContent=r.nome;
-  const ci=custoIngs(r);
-  const gasR=document.getElementById('pf-gas')?parseFloat(document.getElementById('pf-gas').value)||120:120;
-  const cGas=(r.gas/60)*(gasR/720*60);
-  const cMao=(r.tempo/60)*r.mao;
-  const ct=ci+cGas+cMao;
-  const custoPorcao=ct/r.rendimento;
-  const precoAtual=r.preco||ct*1.8;
-
-  const ingRows=(r.ings||[]).map(ri=>{
-    const ing=getIng(ri.ingId);if(!ing)return'';
-    const val=(ing.preco/ing.qty)*ri.qty;
-    return`<div class="price-row"><span>${ing.nome}<br><small style="color:var(--text-soft)">${ri.qty}${ing.unit}</small></span><span class="v">${fmtR(val)}</span></div>`;
-  }).join('');
-
-  const body=document.getElementById('pricing-body');
-  body.innerHTML=`
-    <div class="price-block">
-      <h4>🧂 Ingredientes</h4>
-      ${ingRows||'<p style="font-size:0.82rem;color:var(--text-soft)">Nenhum ingrediente cadastrado.</p>'}
-      <div class="price-row total"><span>Sub-total ingredientes</span><span class="v">${fmtR(ci)}</span></div>
+  const r=getReceita(id);document.getElementById('pricing-title').textContent=r.nome;
+  const ci=custoIngs(r);const gasR=parseFloat(document.getElementById('pf-gas').value)||120;
+  const cGas=(r.gas/60)*(gasR/720*60);const cMao=(r.tempo/60)*r.mao;const ct=ci+cGas+cMao;
+  const initM=r.preco>0&&ct>0?Math.round((r.preco-ct)/ct*100):80;const initP=r.preco>0?r.preco:ct*(1+initM/100);
+  const ingRows=(r.ings||[]).map(ri=>{const i=getIng(ri.ingId);if(!i)return'';const v=(i.preco/i.qty)*ri.qty;return`<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:.87rem;border-bottom:1px solid #f0e8ec"><span>${i.nome}<br><small style="color:var(--text-soft)">${ri.qty}${i.unit}</small></span><span style="color:var(--wine);font-weight:600">${fmtR(v)}</span></div>`;}).join('');
+  document.getElementById('pricing-body').innerHTML=`
+    <div style="background:var(--white);border-radius:14px;padding:16px;margin-top:12px;box-shadow:var(--shadow);">
+      <div style="font-weight:700;color:var(--wine);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">🧂 Ingredientes</div>
+      ${ingRows||'<p style="font-size:.82rem;color:var(--text-soft)">Sem ingredientes nesta receita.</p>'}
+      <div style="display:flex;justify-content:space-between;font-weight:700;padding-top:8px;border-top:1px solid var(--border);margin-top:4px;font-size:.88rem;"><span>Sub-total ingredientes</span><span style="color:var(--wine)">${fmtR(ci)}</span></div>
     </div>
-    <div class="price-block">
-      <h4>⚙️ Cálculo de Custos</h4>
-      <div class="price-row"><span>Custo ingredientes</span><span class="v">${fmtR(ci)}</span></div>
-      <div class="price-row"><span>Custo do gás (${r.gas} min)</span><span class="v">${fmtR(cGas)}</span></div>
-      <div class="price-row"><span>Mão de obra (${r.tempo} min · R${r.mao}/h)</span><span class="v">${fmtR(cMao)}</span></div>
-      <div class="price-row total"><span>Custo total</span><span class="v">${fmtR(ct)}</span></div>
-      <div class="price-row"><span>Custo por ${r.medida.slice(0,-1)||'unidade'}</span><span class="v">${fmtR(custoPorcao)}</span></div>
+    <div style="background:var(--white);border-radius:14px;padding:16px;margin-top:12px;box-shadow:var(--shadow);">
+      <div style="font-weight:700;color:var(--wine);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">⚙️ Custos</div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;font-size:.88rem;border-bottom:1px solid #f0e8ec"><span>Ingredientes</span><span style="color:var(--wine);font-weight:600">${fmtR(ci)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;font-size:.88rem;border-bottom:1px solid #f0e8ec"><span>Gás (${r.gas} min)</span><span style="color:var(--wine);font-weight:600">${fmtR(cGas)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;font-size:.88rem;border-bottom:1px solid #f0e8ec"><span>Mão de obra (${r.tempo} min · R$${r.mao}/h)</span><span style="color:var(--wine);font-weight:600">${fmtR(cMao)}</span></div>
+      <div style="display:flex;justify-content:space-between;font-weight:700;padding-top:8px;border-top:1px solid var(--border);margin-top:4px;font-size:.95rem"><span>Custo total</span><span style="color:var(--wine)">${fmtR(ct)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:.82rem;color:var(--text-soft)"><span>Por ${r.medida.slice(0,-1)||'un.'}</span><span>${fmtR(ct/r.rendimento)}</span></div>
     </div>
-    <div class="price-block" id="ajuste-block">
-      <h4>📊 Ajuste de Preço</h4>
-      <p style="font-size:0.78rem;color:var(--text-soft);margin-bottom:12px;">Ajuste o slider para definir sua margem de lucro desejada.</p>
-      <div class="slider-wrap">
-        <input type="range" min="0" max="200" value="${r.preco>0?Math.round((r.preco-ct)/ct*100):80}" oninput="updateSlider(this.value,${ct},${id})">
-      </div>
-      <div class="price-row"><span>Margem de lucro</span><span class="v" id="p-margem">${r.preco>0?Math.round((r.preco-ct)/ct*100):80}%</span></div>
-      <div class="price-row"><span>Seu lucro</span><span class="v" id="p-lucro" style="color:var(--pink)">${fmtR(r.preco>0?r.preco-ct:ct*0.8)}</span></div>
-      <div style="margin:12px 0 4px;font-size:0.78rem;color:var(--text-soft);">Preço final do produto</div>
-      <input class="price-final-input" id="p-final" type="number" value="${r.preco>0?r.preco:(ct*1.8).toFixed(2)}" oninput="updateFromFinal(this.value,${ct},${id})">
-      <button class="save-btn" style="margin-top:12px" onclick="savePreco(${id})">Salvar preço</button>
+    <div style="background:var(--white);border-radius:14px;padding:16px;margin-top:12px;box-shadow:var(--shadow);">
+      <div style="font-weight:700;color:var(--wine);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);">📊 Ajuste de Preço</div>
+      <p style="font-size:.78rem;color:var(--text-soft);margin-bottom:12px;">Arraste o slider ou edite o preço final.</p>
+      <input type="range" min="0" max="300" value="${initM}" style="width:100%;accent-color:var(--wine);margin-bottom:10px;" oninput="updSlider(this.value,${ct},'${id}')">
+      <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:6px 0"><span>Margem de lucro</span><span style="color:var(--wine);font-weight:700" id="p-margem">${initM}%</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:6px 0;margin-bottom:6px"><span>Seu lucro</span><span style="color:var(--pink);font-weight:700" id="p-lucro">${fmtR(initP-ct)}</span></div>
+      <div style="margin-bottom:4px;font-size:.78rem;color:var(--text-soft);">Preço final</div>
+      <input style="width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:11px;font-size:1.05rem;font-weight:700;font-family:'Nunito',sans-serif;color:var(--wine);outline:none;" id="p-final" type="number" value="${initP.toFixed(2)}" oninput="updFinal(this.value,${ct})">
+      <button class="save-btn" style="margin-top:12px" onclick="savePreco('${id}')">Salvar preço</button>
     </div>`;
-  // init display
-  updateSlider(r.preco>0?Math.round((r.preco-ct)/ct*100):80,ct,id);
   go('pricing');
 }
+window.openPricing=openPricing;
 
-function updateSlider(margem,ct,id){
-  margem=parseInt(margem);
-  const lucro=ct*(margem/100);
-  const preco=ct+lucro;
-  const el=document.getElementById('p-margem');if(el)el.textContent=margem+'%';
-  const el2=document.getElementById('p-lucro');if(el2)el2.textContent=fmtR(lucro);
-  const el3=document.getElementById('p-final');if(el3)el3.value=preco.toFixed(2);
-}
-function updateFromFinal(val,ct,id){
-  const p=parseFloat(val)||0;
-  const margem=ct>0?Math.round((p-ct)/ct*100):0;
-  const el=document.getElementById('p-margem');if(el)el.textContent=margem+'%';
-  const el2=document.getElementById('p-lucro');if(el2)el2.textContent=fmtR(p-ct);
-}
-function savePreco(id){
-  const r=getReceita(id);
-  r.preco=parseFloat(document.getElementById('p-final').value)||0;
-  showToast('Preço salvo! ✓');
-}
+function updSlider(m,ct){m=parseInt(m);const l=ct*(m/100);const p=ct+l;const e1=document.getElementById('p-margem');if(e1)e1.textContent=m+'%';const e2=document.getElementById('p-lucro');if(e2)e2.textContent=fmtR(l);const e3=document.getElementById('p-final');if(e3)e3.value=p.toFixed(2);}
+function updFinal(v,ct){const p=parseFloat(v)||0;const m=ct>0?Math.round((p-ct)/ct*100):0;const e1=document.getElementById('p-margem');if(e1)e1.textContent=m+'%';const e2=document.getElementById('p-lucro');if(e2)e2.textContent=fmtR(p-ct);}
+window.updSlider=updSlider; window.updFinal=updFinal;
 
-// ============================================================
+async function savePreco(id){
+  const r=getReceita(id);r.preco=parseFloat(document.getElementById('p-final').value)||0;
+  await fbSet('receitas',id,r);showToast('Preço salvo! ✓');
+}
+window.savePreco=savePreco;
+
+// ================================================================
 // CLIENTES
-// ============================================================
-function renderClientes(filter=''){
-  const list=document.getElementById('clienteList');
-  const items=state.clientes.filter(c=>c.nome.toLowerCase().includes(filter.toLowerCase()));
-  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">👥</div><p>Nenhum cliente encontrado.</p></div>`;return;}
-  list.innerHTML=items.map(c=>{
-    const pedidos=state.pedidos.filter(p=>p.clienteId===c.id);
-    return`<div class="list-item" id="cli-item-${c.id}">
-      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-weight:700;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;">${avatarLetter(c.nome)}</div>
-      <div class="item-main" onclick="openClienteDetalhe(${c.id})" style="cursor:pointer;">
-        <div class="item-name">${c.nome}</div>
-        <div class="item-sub">${c.tel||'Sem telefone'} · ${pedidos.length} pedido(s)</div>
-      </div>
-      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-cli-${c.id}'))">⋮</button>
-      <div class="dd" id="dd-cli-${c.id}" style="display:none;">
-        <button class="dd-item" onclick="openClienteDetalhe(${c.id})">👁️ Ver perfil</button>
-        <button class="dd-item" onclick="openClienteModal(${c.id})">✏️ Editar</button>
-        <button class="dd-item danger" onclick="askDel('Excluir o cliente <b>${c.nome}</b>?',()=>delCliente(${c.id}))">🗑️ Excluir</button>
+// ================================================================
+function renderClientes(f=''){
+  const el=document.getElementById('clienteList');
+  const items=S.clientes.filter(c=>c.nome.toLowerCase().includes(f.toLowerCase())||(c.tel||'').includes(f));
+  if(!items.length){el.innerHTML='<div class="empty-state"><div class="emoji">👥</div><p>Nenhum cliente.</p></div>';return;}
+  el.innerHTML=items.map(c=>{
+    const peds=S.pedidos.filter(p=>String(p.clienteId)===String(c.id));
+    return`<div class="list-item">
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--wine));color:white;font-weight:700;font-size:.95rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;">${al(c.nome)}</div>
+      <div class="item-main" onclick="openClienteDetalhe('${c.id}')" style="cursor:pointer;"><div class="item-name">${c.nome}</div><div class="item-sub">${c.tel||'Sem telefone'} · ${peds.length} pedido(s)</div></div>
+      <button class="more-btn" onclick="toggleDd(event,this.nextElementSibling)">⋮</button>
+      <div class="dd" style="display:none;">
+        <button class="dd-item" onclick="openClienteDetalhe('${c.id}')">👁️ Ver perfil</button>
+        <button class="dd-item" onclick="openClienteModal('${c.id}')">✏️ Editar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir <b>${c.nome}</b>?',()=>delCliente('${c.id}'))">🗑️ Excluir</button>
       </div>
     </div>`;
   }).join('');
 }
+window.renderClientes=renderClientes;
 
+let _curCliId=null,_editCliDetail=false;
 function openClienteModal(id=null){
+  _editCliDetail=!!_curCliId&&String(id)===String(_curCliId);
   document.getElementById('mc-id').value=id||'';
   document.getElementById('modal-cliente-title').textContent=id?'Editar Cliente':'Novo Cliente';
-  if(id){const c=getCliente(id);document.getElementById('mc-nome').value=c.nome;document.getElementById('mc-tel').value=c.tel;document.getElementById('mc-email').value=c.email;document.getElementById('mc-end').value=c.end;document.getElementById('mc-obs').value=c.obs;}
-  else{document.getElementById('mc-nome').value='';document.getElementById('mc-tel').value='';document.getElementById('mc-email').value='';document.getElementById('mc-end').value='';document.getElementById('mc-obs').value='';}
+  if(id){const c=getCliente(id);document.getElementById('mc-nome').value=c.nome;document.getElementById('mc-tel').value=c.tel||'';document.getElementById('mc-email').value=c.email||'';document.getElementById('mc-end').value=c.end||'';document.getElementById('mc-obs').value=c.obs||'';}
+  else{['mc-nome','mc-tel','mc-email','mc-end','mc-obs'].forEach(x=>document.getElementById(x).value='');}
   openModal('cliente');
 }
+window.openClienteModal=openClienteModal;
 
-function saveCliente(){
-  const id=parseInt(document.getElementById('mc-id').value)||null;
+async function saveCliente(){
+  const id=document.getElementById('mc-id').value||null;
   const nome=document.getElementById('mc-nome').value.trim();
   if(!nome){showToast('Informe o nome!');return;}
-  const data={nome,tel:document.getElementById('mc-tel').value.trim(),email:document.getElementById('mc-email').value.trim(),end:document.getElementById('mc-end').value.trim(),obs:document.getElementById('mc-obs').value.trim()};
-  if(id){Object.assign(getCliente(id),data);}
-  else{state.clientes.push({id:newId(),...data});}
-  closeModal('cliente');
-  showToast(id?'Cliente atualizado! ✓':'Cliente adicionado! ✓');
-  if(state.editClienteFromDetail){state.editClienteFromDetail=false;openClienteDetalhe(id||state.clientes[state.clientes.length-1].id);}
-  else renderClientes();
+  const docId=id||newId();
+  const data={id:docId,nome,tel:document.getElementById('mc-tel').value.trim(),email:document.getElementById('mc-email').value.trim(),end:document.getElementById('mc-end').value.trim(),obs:document.getElementById('mc-obs').value.trim()};
+  await fbSet('clientes',docId,data);
+  if(id){Object.assign(getCliente(id),data);}else{S.clientes.push(data);}
+  closeModal('cliente');showToast(id?'Cliente atualizado! ✓':'Cliente adicionado! ✓');
+  if(_editCliDetail){_editCliDetail=false;openClienteDetalhe(docId);}else renderClientes();
 }
+window.saveCliente=saveCliente;
 
-function delCliente(id){
-  state.clientes=state.clientes.filter(c=>c.id!==id);
-  closeModal('del');renderClientes();showToast('Cliente excluído.');
+async function delCliente(id){
+  await fbDel('clientes',id);S.clientes=S.clientes.filter(c=>String(c.id)!==String(id));
+  closeModal('del');renderClientes();showToast('Excluído.');
 }
+window.delCliente=delCliente;
 
 function openClienteDetalhe(id){
-  state.currentClienteId=id;
-  const c=getCliente(id);
-  document.getElementById('cd-title').textContent=c.nome;
-  const pedidos=state.pedidos.filter(p=>p.clienteId===id);
-  const total=pedidos.reduce((s,p)=>s+p.total,0);
-  const pago=pedidos.reduce((s,p)=>s+p.pago,0);
+  _curCliId=id;const c=getCliente(id);document.getElementById('cd-title').textContent=c.nome;
+  const peds=S.pedidos.filter(p=>String(p.clienteId)===String(id));
+  const total=peds.reduce((s,p)=>s+p.total,0);const pago=peds.reduce((s,p)=>s+p.pago,0);
   document.getElementById('cd-body').innerHTML=`
     <div class="client-header">
-      <div class="client-avatar-big">${avatarLetter(c.nome)}</div>
-      <div class="client-name-big">${c.nome}</div>
-      <div class="client-meta-big">${c.tel||''} ${c.email?'· '+c.email:''}</div>
-      ${c.end?`<div class="client-meta-big" style="margin-top:2px;">📍 ${c.end}</div>`:''}
-      ${c.obs?`<div style="margin-top:8px;font-size:0.82rem;color:var(--wine);background:#fce8f2;border-radius:8px;padding:6px 12px;">💬 ${c.obs}</div>`:''}
+      <div class="client-avatar-big">${al(c.nome)}</div>
+      <div style="font-weight:700;font-size:1.05rem;">${c.nome}</div>
+      <div style="font-size:.82rem;color:var(--text-soft);margin-top:2px;">${c.tel||''} ${c.email?'· '+c.email:''}</div>
+      ${c.end?`<div style="font-size:.8rem;color:var(--text-soft);margin-top:2px;">📍 ${c.end}</div>`:''}
+      ${c.obs?`<div style="margin-top:8px;font-size:.81rem;color:var(--wine);background:#fce8f2;border-radius:8px;padding:6px 12px;">💬 ${c.obs}</div>`:''}
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:14px 14px 0;">
-      <div class="stat-card"><div class="stat-num">${pedidos.length}</div><div class="stat-label">Pedidos</div></div>
-      <div class="stat-card"><div class="stat-num" style="font-size:1rem;">${fmtR(total)}</div><div class="stat-label">Total gasto</div></div>
-      <div class="stat-card"><div class="stat-num" style="font-size:1rem;color:var(--warning);">${fmtR(total-pago)}</div><div class="stat-label">Em aberto</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:13px 13px 0;">
+      <div class="stat-card"><div class="stat-num">${peds.length}</div><div class="stat-label">Pedidos</div></div>
+      <div class="stat-card"><div class="stat-num" style="font-size:.95rem;">${fmtR(total)}</div><div class="stat-label">Total gasto</div></div>
+      <div class="stat-card"><div class="stat-num" style="font-size:.95rem;color:var(--warning);">${fmtR(total-pago)}</div><div class="stat-label">Em aberto</div></div>
     </div>
-    <div style="padding:14px 16px 0;">
-      <div style="font-weight:700;color:var(--wine);font-size:0.9rem;margin-bottom:8px;">📦 Histórico de Pedidos</div>
-      ${pedidos.length?pedidos.map(p=>`
-        <div class="list-item" style="border-radius:12px;margin-bottom:8px;" onclick="editPedidoById(${p.id})">
+    <div style="padding:14px 14px 0;">
+      <div style="font-weight:700;color:var(--wine);font-size:.88rem;margin-bottom:8px;">📦 Histórico de Pedidos</div>
+      ${peds.length?peds.sort((a,b)=>b.data.localeCompare(a.data)).map(p=>`
+        <div class="list-item" style="border-radius:12px;margin-bottom:8px;cursor:pointer;" onclick="openPedidoForm('${p.id}')">
           <div class="item-main">
-            <div class="item-name">${p.obs||p.itens.map(i=>i.receita).join(', ')||'Pedido #'+p.id}</div>
-            <div class="item-sub">Entrega: ${fmtDate(p.entrega)} · ${statusBadge(p.status)}</div>
+            <div class="item-name">${(p.itens||[]).map(i=>`${i.qty}× ${i.nome}`).join(', ')||'Pedido'}</div>
+            <div class="item-sub" style="margin-top:3px;">${pagBadge(p.statusPag)} ${entBadge(p.statusEnt)}</div>
+            <div class="item-sub">Entrega: ${fmtDate(p.entrega)}</div>
           </div>
-          <div class="item-right"><div class="item-val">${fmtR(p.total)}</div><div class="item-qty">${fmtR(p.pago)} pago</div></div>
-        </div>`).join(''):`<div class="empty-state" style="padding:20px"><p>Nenhum pedido ainda.</p></div>`}
+          <div class="item-right"><div class="item-val">${fmtR(p.total)}</div><div class="item-qty" style="${p.total-p.pago>0?'color:var(--warning)':''}">${p.total-p.pago>0?'Falta '+fmtR(p.total-p.pago):'Pago ✓'}</div></div>
+        </div>`).join(''):`<div class="empty-state" style="padding:20px"><p>Nenhum pedido.</p></div>`}
     </div>`;
   go('cliente-detalhe');
 }
+window.openClienteDetalhe=openClienteDetalhe;
+function editClienteAtual(){openClienteModal(_curCliId);}
+window.editClienteAtual=editClienteAtual;
 
-function editClienteAtual(){
-  state.editClienteFromDetail=true;
-  openClienteModal(state.currentClienteId);
-}
-
-// ============================================================
+// ================================================================
 // PEDIDOS
-// ============================================================
-function renderPedidos(filter=''){
-  const list=document.getElementById('pedidoList');
-  const items=state.pedidos.filter(p=>{
-    const c=getCliente(p.clienteId);
-    return (c&&c.nome.toLowerCase().includes(filter.toLowerCase()))||(p.obs&&p.obs.toLowerCase().includes(filter.toLowerCase()));
+// ================================================================
+function renderPedidos(f=''){
+  const el=document.getElementById('pedidoList');
+  const items=S.pedidos.filter(p=>{
+    const c=getCliente(p.clienteId);const cn=(c?c.nome:'').toLowerCase();
+    const txt=[p.obs,...(p.itens||[]).map(i=>i.nome)].join(' ').toLowerCase();
+    return cn.includes(f.toLowerCase())||txt.includes(f.toLowerCase());
   });
-  if(!items.length){list.innerHTML=`<div class="empty-state"><div class="emoji">📦</div><p>Nenhum pedido encontrado.</p></div>`;return;}
-  // sort by entrega
-  const sorted=[...items].sort((a,b)=>a.entrega<b.entrega?-1:1);
-  list.innerHTML=sorted.map(p=>{
-    const c=getCliente(p.clienteId);
-    return`<div class="list-item" id="ped-item-${p.id}">
-      <div class="item-main" onclick="editPedidoById(${p.id})" style="cursor:pointer;">
+  if(!items.length){el.innerHTML='<div class="empty-state"><div class="emoji">📦</div><p>Nenhum pedido.</p></div>';return;}
+  el.innerHTML=[...items].sort((a,b)=>a.entrega<b.entrega?-1:1).map(p=>{
+    const c=getCliente(p.clienteId);const falta=p.total-p.pago;
+    return`<div class="list-item">
+      <div class="item-main" onclick="openPedidoForm('${p.id}')" style="cursor:pointer;">
         <div class="item-name">${c?c.nome:'Cliente removido'}</div>
-        <div class="item-sub">Entrega: ${fmtDate(p.entrega)} · ${p.pagamento} ${statusBadge(p.status)}</div>
-        <div class="item-sub" style="margin-top:2px;">${p.itens.map(i=>`${i.qty}× ${i.receita}`).join(', ')||p.obs||''}</div>
+        <div class="item-sub" style="margin-top:3px;">${pagBadge(p.statusPag)} ${entBadge(p.statusEnt)}</div>
+        <div class="item-sub">Entrega: ${fmtDate(p.entrega)} · ${p.pagamento}</div>
+        <div class="item-sub">${(p.itens||[]).slice(0,2).map(i=>`${i.qty}× ${i.nome}`).join(', ')}${(p.itens||[]).length>2?` +${p.itens.length-2}`:''}</div>
       </div>
-      <div class="item-right">
-        <div class="item-val">${fmtR(p.total)}</div>
-        <div class="item-qty" style="${p.total-p.pago>0?'color:var(--warning)':''}">${p.total-p.pago>0?'Falta '+fmtR(p.total-p.pago):'Pago ✓'}</div>
-      </div>
-      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-ped-${p.id}'))">⋮</button>
-      <div class="dd" id="dd-ped-${p.id}" style="display:none;">
-        <button class="dd-item" onclick="editPedidoById(${p.id})">✏️ Editar</button>
-        <button class="dd-item danger" onclick="askDel('Excluir este pedido?',()=>delPedido(${p.id}))">🗑️ Excluir</button>
+      <div class="item-right"><div class="item-val">${fmtR(p.total)}</div><div class="item-qty" style="${falta>0?'color:var(--warning)':''}">${falta>0?'Falta '+fmtR(falta):'✓ Pago'}</div></div>
+      <button class="more-btn" onclick="toggleDd(event,this.nextElementSibling)">⋮</button>
+      <div class="dd" style="display:none;">
+        <button class="dd-item" onclick="openPedidoForm('${p.id}')">✏️ Editar</button>
+        <button class="dd-item danger" onclick="askDel('Excluir este pedido?',()=>delPedido('${p.id}'))">🗑️ Excluir</button>
       </div>
     </div>`;
   }).join('');
 }
+window.renderPedidos=renderPedidos;
 
+let _epItens=[];
 function openPedidoForm(id=null){
-  state.epItens=[];
+  _epItens=[];
   document.getElementById('ep-id').value=id||'';
   document.getElementById('editPedidoTitle').textContent=id?'Editar Pedido':'Novo Pedido';
-  // popular clientes
   const cSel=document.getElementById('ep-cliente');
-  cSel.innerHTML='<option value="">Selecionar cliente...</option>'+state.clientes.map(c=>`<option value="${c.id}">${c.nome}</option>`).join('');
-  // popular receitas
+  cSel.innerHTML='<option value="">Selecionar cliente...</option>'+S.clientes.map(c=>`<option value="${c.id}">${c.nome}</option>`).join('');
   const rSel=document.getElementById('ep-item-receita');
-  rSel.innerHTML='<option value="">Selecionar receita...</option>'+state.receitas.map(r=>`<option value="${r.id}">${r.nome}</option>`).join('');
+  rSel.innerHTML='<option value="">— Receita cadastrada (opcional) —</option>'+S.receitas.map(r=>`<option value="${r.id}">${r.nome}</option>`).join('');
   const hoje=new Date().toISOString().slice(0,10);
   if(id){
-    const p=state.pedidos.find(x=>x.id===id);
+    const p=S.pedidos.find(x=>String(x.id)===String(id));
     document.getElementById('ep-cliente').value=p.clienteId;
     document.getElementById('ep-data').value=p.data;
     document.getElementById('ep-entrega').value=p.entrega;
     document.getElementById('ep-pagamento').value=p.pagamento;
     document.getElementById('ep-total').value=p.total;
     document.getElementById('ep-pago').value=p.pago;
-    document.getElementById('ep-data-pag').value=p.dataPag;
-    document.getElementById('ep-status').value=p.status;
-    document.getElementById('ep-obs').value=p.obs;
-    state.epItens=p.itens.map(x=>({...x}));
+    document.getElementById('ep-data-pag').value=p.dataPag||'';
+    document.getElementById('ep-obs').value=p.obs||'';
+    _epItens=(p.itens||[]).map(x=>({...x}));
+    buildStatusPills('grp-pag',PAG_CFG,'ep-status-pag',p.statusPag||'pendente');
+    buildStatusPills('grp-ent',ENT_CFG,'ep-status-ent',p.statusEnt||'confirmado');
   } else {
     document.getElementById('ep-cliente').value='';
     document.getElementById('ep-data').value=hoje;
@@ -1145,186 +961,231 @@ function openPedidoForm(id=null){
     document.getElementById('ep-total').value='';
     document.getElementById('ep-pago').value='0';
     document.getElementById('ep-data-pag').value='';
-    document.getElementById('ep-status').value='pendente';
     document.getElementById('ep-obs').value='';
+    buildStatusPills('grp-pag',PAG_CFG,'ep-status-pag','pendente');
+    buildStatusPills('grp-ent',ENT_CFG,'ep-status-ent','confirmado');
   }
-  renderEpItens();
-  go('editar-pedido');
+  document.getElementById('ep-item-nome-livre').value='';
+  document.getElementById('ep-item-qty').value='1';
+  document.getElementById('ep-item-preco').value='';
+  renderEpItens();go('editar-pedido');
 }
+window.openPedidoForm=openPedidoForm;
 
-function editPedidoById(id){openPedidoForm(id);}
-
-// auto-fill preço ao selecionar receita
-document.getElementById('ep-item-receita').addEventListener('change',function(){
-  const r=getReceita(parseInt(this.value));
-  if(r&&r.preco) document.getElementById('ep-item-preco').value=r.preco;
-});
+function autoFillPreco(){
+  const rId=document.getElementById('ep-item-receita').value;
+  if(!rId)return;const r=getReceita(rId);
+  if(r&&r.preco)document.getElementById('ep-item-preco').value=r.preco;
+  document.getElementById('ep-item-nome-livre').value='';
+}
+window.autoFillPreco=autoFillPreco;
 
 function renderEpItens(){
   const div=document.getElementById('ep-itens-list');
-  if(!state.epItens.length){div.innerHTML='<p style="font-size:0.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum item adicionado.</p>';return;}
+  if(!_epItens.length){div.innerHTML='<p style="font-size:.82rem;color:var(--text-soft);margin-bottom:8px;">Nenhum item adicionado.</p>';return;}
   let total=0;
-  div.innerHTML='<div style="background:var(--white);border-radius:12px;padding:12px;margin-bottom:8px;">'+
-    state.epItens.map((it,i)=>{
-      total+=it.qty*it.preco;
-      return`<div class="fin-list-item"><span>${it.qty}× ${it.receita}</span><span style="display:flex;align-items:center;gap:8px;">${fmtR(it.qty*it.preco)}<button onclick="removeEpItem(${i})" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:1.1rem;">×</button></span></div>`;
-    }).join('')+
-    `<div style="display:flex;justify-content:space-between;font-weight:700;padding-top:8px;border-top:1px solid var(--border)"><span>Subtotal</span><span style="color:var(--wine)">${fmtR(total)}</span></div></div>`;
-  // auto-fill total
+  div.innerHTML=_epItens.map((it,i)=>{const sub=it.qty*it.preco;total+=sub;return`<div class="ep-item-card"><div class="ep-item-info"><div class="ep-item-name">${it.qty}× ${it.nome}</div><div class="ep-item-meta">${fmtR(it.preco)} un. · total ${fmtR(sub)}</div></div><button class="ep-item-rm" onclick="removeEpItem(${i})">×</button></div>`;}).join('')
+  +`<div style="display:flex;justify-content:space-between;font-weight:700;padding:6px 2px;font-size:.9rem;border-top:1px solid var(--border);"><span>Subtotal</span><span style="color:var(--wine)">${fmtR(total)}</span></div>`;
   document.getElementById('ep-total').value=total.toFixed(2);
 }
+function removeEpItem(i){_epItens.splice(i,1);renderEpItens();}
+window.removeEpItem=removeEpItem;
 
 function addItemPedido(){
-  const rId=parseInt(document.getElementById('ep-item-receita').value);
+  const rId=document.getElementById('ep-item-receita').value;
+  const nomeL=document.getElementById('ep-item-nome-livre').value.trim();
   const qty=parseInt(document.getElementById('ep-item-qty').value)||1;
   const preco=parseFloat(document.getElementById('ep-item-preco').value)||0;
-  if(!rId){showToast('Selecione uma receita!');return;}
-  const r=getReceita(rId);
-  state.epItens.push({receita:r.nome,qty,preco});
-  document.getElementById('ep-item-qty').value='1';
-  document.getElementById('ep-item-preco').value='';
-  document.getElementById('ep-item-receita').value='';
+  let nome='';
+  if(nomeL)nome=nomeL;
+  else if(rId){const r=getReceita(rId);nome=r?r.nome:'';}
+  if(!nome){showToast('Informe o produto ou selecione uma receita!');return;}
+  _epItens.push({nome,qty,preco});
+  document.getElementById('ep-item-receita').value='';document.getElementById('ep-item-nome-livre').value='';
+  document.getElementById('ep-item-qty').value='1';document.getElementById('ep-item-preco').value='';
   renderEpItens();
 }
-function removeEpItem(i){state.epItens.splice(i,1);renderEpItens();}
+window.addItemPedido=addItemPedido;
 
-function savePedido(){
-  const id=parseInt(document.getElementById('ep-id').value)||null;
-  const clienteId=parseInt(document.getElementById('ep-cliente').value)||null;
+async function savePedido(){
+  const id=document.getElementById('ep-id').value||null;
+  const clienteId=document.getElementById('ep-cliente').value;
   if(!clienteId){showToast('Selecione um cliente!');return;}
-  const data={
-    clienteId,
-    data:document.getElementById('ep-data').value,
-    entrega:document.getElementById('ep-entrega').value,
-    pagamento:document.getElementById('ep-pagamento').value,
-    total:parseFloat(document.getElementById('ep-total').value)||0,
-    pago:parseFloat(document.getElementById('ep-pago').value)||0,
-    dataPag:document.getElementById('ep-data-pag').value,
-    status:document.getElementById('ep-status').value,
-    obs:document.getElementById('ep-obs').value.trim(),
-    itens:[...state.epItens],
-  };
-  if(id){Object.assign(state.pedidos.find(p=>p.id===id),data);}
-  else{state.pedidos.push({id:newId(),...data});}
-  showToast(id?'Pedido atualizado! ✓':'Pedido salvo! ✓');
-  go('pedidos');
+  if(!_epItens.length){showToast('Adicione pelo menos um item!');return;}
+  const docId=id||newId();
+  const data={id:docId,clienteId,data:document.getElementById('ep-data').value,entrega:document.getElementById('ep-entrega').value,pagamento:document.getElementById('ep-pagamento').value,total:parseFloat(document.getElementById('ep-total').value)||0,pago:parseFloat(document.getElementById('ep-pago').value)||0,dataPag:document.getElementById('ep-data-pag').value,statusPag:document.getElementById('ep-status-pag').value,statusEnt:document.getElementById('ep-status-ent').value,obs:document.getElementById('ep-obs').value.trim(),itens:[..._epItens]};
+  await fbSet('pedidos',docId,data);
+  if(id){Object.assign(S.pedidos.find(p=>String(p.id)===String(id)),data);}else{S.pedidos.push(data);}
+  showToast(id?'Pedido atualizado! ✓':'Pedido salvo! ✓');go('pedidos');
 }
-function delPedido(id){state.pedidos=state.pedidos.filter(p=>p.id!==id);closeModal('del');renderPedidos();showToast('Pedido excluído.');}
+window.savePedido=savePedido;
 
-// ============================================================
+async function delPedido(id){
+  await fbDel('pedidos',id);S.pedidos=S.pedidos.filter(p=>String(p.id)!==String(id));
+  closeModal('del');renderPedidos();showToast('Excluído.');
+}
+window.delPedido=delPedido;
+
+// ================================================================
 // FINANCEIRO
-// ============================================================
+// ================================================================
 function renderFinanceiro(){
   const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  const hoje=new Date();
-  const mesAtual=hoje.getMonth();
-  const anoAtual=hoje.getFullYear();
-
-  const pedidosMes=state.pedidos.filter(p=>{
-    const d=new Date(p.data);return d.getMonth()===mesAtual&&d.getFullYear()===anoAtual;
-  });
-  const totalMes=pedidosMes.reduce((s,p)=>s+p.total,0);
-  const pagoMes=pedidosMes.reduce((s,p)=>s+p.pago,0);
-  const pendenteMes=totalMes-pagoMes;
-
-  const allPendentes=state.pedidos.filter(p=>p.total-p.pago>0&&p.status!=='cancelado');
-  const totalPendente=allPendentes.reduce((s,p)=>s+(p.total-p.pago),0);
-
-  // lucro estimado
+  const hoje=new Date();const mes=hoje.getMonth();const ano=hoje.getFullYear();
+  const pedMes=S.pedidos.filter(p=>{const d=new Date(p.data);return d.getMonth()===mes&&d.getFullYear()===ano;});
+  const totalMes=pedMes.reduce((s,p)=>s+p.total,0);const pagoMes=pedMes.reduce((s,p)=>s+p.pago,0);
+  const pendAll=S.pedidos.filter(p=>p.total-p.pago>0&&p.statusPag!=='cancelado');
+  const totalPend=pendAll.reduce((s,p)=>s+(p.total-p.pago),0);
   let lucroMes=0;
-  pedidosMes.forEach(p=>{
-    p.itens.forEach(it=>{
-      const r=state.receitas.find(rx=>rx.nome===it.receita);
-      if(r){const ct=custoTotal(r);lucroMes+=(it.preco-ct)*it.qty;}
-    });
-  });
-
-  const pedidosPorStatus={pago:0,pendente:0,parcial:0,entregue:0,cancelado:0};
-  state.pedidos.forEach(p=>{ if(pedidosPorStatus[p.status]!==undefined) pedidosPorStatus[p.status]++; });
-
+  pedMes.forEach(p=>(p.itens||[]).forEach(it=>{const r=S.receitas.find(rx=>rx.nome===it.nome);if(r){const ct=custoTotal(r);lucroMes+=(it.preco-ct/r.rendimento)*it.qty;}}));
+  const bP={pago:0,pendente:0,parcial:0,cancelado:0};const bE={confirmado:0,producao:0,concluido:0,entregue:0};
+  S.pedidos.forEach(p=>{if(bP[p.statusPag]!==undefined)bP[p.statusPag]++;if(bE[p.statusEnt]!==undefined)bE[p.statusEnt]++;});
   document.getElementById('fin-body').innerHTML=`
-    <div class="fin-card">
-      <h3>Receita — ${meses[mesAtual]}/${anoAtual}</h3>
-      <div class="fin-big">${fmtR(totalMes)}</div>
-      <div class="fin-sub">${pedidosMes.length} pedido(s) no mês</div>
-    </div>
+    <div class="fin-card"><h3>Receita — ${meses[mes]}/${ano}</h3><div class="fin-big">${fmtR(totalMes)}</div><div class="fin-sub">${pedMes.length} pedido(s) no mês</div></div>
     <div class="fin-grid">
       <div class="fin-mini"><h4>Recebido</h4><div class="val green">${fmtR(pagoMes)}</div></div>
-      <div class="fin-mini"><h4>A receber (mês)</h4><div class="val orange">${fmtR(pendenteMes)}</div></div>
+      <div class="fin-mini"><h4>A receber (mês)</h4><div class="val orange">${fmtR(totalMes-pagoMes)}</div></div>
       <div class="fin-mini"><h4>Lucro estimado</h4><div class="val">${fmtR(lucroMes)}</div></div>
-      <div class="fin-mini"><h4>Total pendente (geral)</h4><div class="val orange">${fmtR(totalPendente)}</div></div>
+      <div class="fin-mini"><h4>Total pendente</h4><div class="val orange">${fmtR(totalPend)}</div></div>
     </div>
-    <div class="fin-card" style="margin-top:14px;">
-      <h3>Status dos Pedidos</h3>
-      <div class="fin-list-item"><span>✅ Pagos</span><span>${pedidosPorStatus.pago}</span></div>
-      <div class="fin-list-item"><span>⏳ Pendentes</span><span style="color:var(--warning)">${pedidosPorStatus.pendente}</span></div>
-      <div class="fin-list-item"><span>🔵 Pagamento parcial</span><span style="color:#1565c0">${pedidosPorStatus.parcial}</span></div>
-      <div class="fin-list-item"><span>📬 Entregues</span><span>${pedidosPorStatus.entregue}</span></div>
-      <div class="fin-list-item"><span>❌ Cancelados</span><span style="color:var(--danger)">${pedidosPorStatus.cancelado}</span></div>
+    <div class="fin-card" style="margin-top:13px;"><h3>Status de Pagamento</h3>
+      <div class="fin-list-item"><span>✅ Pagos</span><span>${bP.pago}</span></div>
+      <div class="fin-list-item"><span>⏳ Pendentes</span><span style="color:var(--warning)">${bP.pendente}</span></div>
+      <div class="fin-list-item"><span>🔵 Parcial</span><span style="color:#1565c0">${bP.parcial}</span></div>
+      <div class="fin-list-item"><span>❌ Cancelados</span><span style="color:var(--danger)">${bP.cancelado}</span></div>
     </div>
-    ${allPendentes.length?`<div class="fin-card" style="margin-top:14px;margin-bottom:16px;">
-      <h3>⚠️ Cobranças Pendentes</h3>
-      ${allPendentes.map(p=>{const c=getCliente(p.clienteId);return`
-        <div class="fin-list-item">
-          <div><div style="font-weight:600;font-size:0.88rem;">${c?c.nome:'?'}</div><div style="font-size:0.76rem;color:var(--text-soft)">Entrega: ${fmtDate(p.entrega)}</div></div>
-          <div style="text-align:right"><div style="color:var(--warning);font-weight:700">${fmtR(p.total-p.pago)}</div><div style="font-size:0.74rem;color:var(--text-soft)">${p.pagamento}</div></div>
-        </div>`;}).join('')}
-    </div>`:``}`;
+    <div class="fin-card" style="margin-top:13px;"><h3>Status de Entrega</h3>
+      <div class="fin-list-item"><span>📋 Confirmados</span><span style="color:#7b1fa2">${bE.confirmado}</span></div>
+      <div class="fin-list-item"><span>👩‍🍳 Em produção</span><span style="color:var(--warning)">${bE.producao}</span></div>
+      <div class="fin-list-item"><span>✅ Concluídos</span><span style="color:var(--success)">${bE.concluido}</span></div>
+      <div class="fin-list-item"><span>📬 Entregues</span><span style="color:var(--success)">${bE.entregue}</span></div>
+    </div>
+    ${pendAll.length?`<div class="fin-card" style="margin-top:13px;margin-bottom:16px;"><h3>⚠️ Cobranças Pendentes</h3>
+      ${pendAll.map(p=>{const c=getCliente(p.clienteId);return`<div class="fin-list-item"><div><div style="font-weight:600;font-size:.88rem;">${c?c.nome:'?'}</div><div style="font-size:.74rem;color:var(--text-soft)">Entrega: ${fmtDate(p.entrega)} · ${p.pagamento}</div></div><div style="text-align:right"><div style="color:var(--warning);font-weight:700">${fmtR(p.total-p.pago)}</div><div>${pagBadge(p.statusPag)}</div></div></div>`;}).join('')}</div>`:``}`;
 }
 
-// ============================================================
+// ================================================================
+// LISTA DE COMPRAS
+// ================================================================
+function renderCompras(f=''){
+  const el=document.getElementById('compraList');
+  const cats={ingredientes:'🧂 Ingredientes',embalagem:'📦 Embalagem',decoracao:'🎀 Decoração',limpeza:'🧹 Limpeza',outros:'📋 Outros'};
+  const items=S.compras.filter(c=>c.nome.toLowerCase().includes((f||'').toLowerCase()));
+  if(!items.length){el.innerHTML='<div class="empty-state"><div class="emoji">🛒</div><p>Lista vazia!</p></div>';return;}
+  const pend=items.filter(x=>!x.feito);const done=items.filter(x=>x.feito);
+  const row=c=>`<div class="compra-item">
+    <div class="compra-check ${c.feito?'checked':''}" onclick="toggleCompra('${c.id}')">${c.feito?'✓':''}</div>
+    <div style="flex:1;"><div class="compra-label ${c.feito?'done':''}">${c.nome}</div>${c.qty||c.cat?`<div class="compra-qty">${[c.qty,cats[c.cat]||c.cat].filter(Boolean).join(' · ')}</div>`:''}
+    </div>
+    <button class="more-btn" onclick="toggleDd(event,this.nextElementSibling)">⋮</button>
+    <div class="dd" style="display:none;">
+      <button class="dd-item" onclick="openCompraModal('${c.id}')">✏️ Editar</button>
+      <button class="dd-item danger" onclick="askDel('Excluir <b>${c.nome}</b>?',()=>delCompra('${c.id}'))">🗑️ Excluir</button>
+    </div>
+  </div>`;
+  let html='';
+  if(pend.length)html+=`<div class="compra-section-header">A comprar (${pend.length})</div>`+pend.map(row).join('');
+  if(done.length)html+=`<div class="compra-section-header">Comprados (${done.length})</div>`+'<div style="opacity:.6">'+done.map(row).join('')+'</div>';
+  el.innerHTML=html;
+}
+window.renderCompras=renderCompras;
+
+async function toggleCompra(id){
+  const c=S.compras.find(x=>String(x.id)===String(id));
+  if(c){c.feito=!c.feito;await fbSet('compras',id,c);renderCompras();}
+}
+window.toggleCompra=toggleCompra;
+
+async function limparCompradas(){
+  const done=S.compras.filter(c=>c.feito);
+  await Promise.all(done.map(c=>fbDel('compras',c.id)));
+  S.compras=S.compras.filter(c=>!c.feito);renderCompras();showToast('Itens comprados removidos!');
+}
+window.limparCompradas=limparCompradas;
+
+function openCompraModal(id=null){
+  document.getElementById('mco-id').value=id||'';
+  document.getElementById('modal-compra-title').textContent=id?'Editar Item':'Novo Item';
+  if(id){const c=S.compras.find(x=>String(x.id)===String(id));document.getElementById('mco-nome').value=c.nome;document.getElementById('mco-qty').value=c.qty||'';document.getElementById('mco-cat').value=c.cat;}
+  else{['mco-nome','mco-qty'].forEach(x=>document.getElementById(x).value='');document.getElementById('mco-cat').value='ingredientes';}
+  openModal('compra');
+}
+window.openCompraModal=openCompraModal;
+
+async function saveCompra(){
+  const id=document.getElementById('mco-id').value||null;
+  const nome=document.getElementById('mco-nome').value.trim();
+  if(!nome){showToast('Informe o item!');return;}
+  const docId=id||newId();
+  const qty=document.getElementById('mco-qty').value.trim();const cat=document.getElementById('mco-cat').value;
+  const feito=id?(S.compras.find(x=>String(x.id)===String(id))?.feito||false):false;
+  const data={id:docId,nome,qty,cat,feito};
+  await fbSet('compras',docId,data);
+  if(id){Object.assign(S.compras.find(x=>String(x.id)===String(id)),data);}else{S.compras.push(data);}
+  closeModal('compra');renderCompras();showToast(id?'Atualizado! ✓':'Adicionado! ✓');
+}
+window.saveCompra=saveCompra;
+
+async function delCompra(id){
+  await fbDel('compras',id);S.compras=S.compras.filter(c=>String(c.id)!==String(id));
+  closeModal('del');renderCompras();showToast('Excluído.');
+}
+window.delCompra=delCompra;
+
+// ================================================================
 // ELETROS
-// ============================================================
+// ================================================================
 function renderEletros(){
   const div=document.getElementById('eletroList');
-  if(!state.eletros.length){div.innerHTML='<p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:12px;">Nenhum eletrodoméstico cadastrado.</p>';return;}
-  div.innerHTML=state.eletros.map(e=>`
-    <div class="list-item" style="border-radius:12px;margin-bottom:8px;">
-      <div class="item-main">
-        <div class="item-name">${e.nome}</div>
-        <div class="item-sub">${e.w}W · tarifa R$ ${e.kwh}/kWh · custo R$ ${((e.w/1000)*e.kwh).toFixed(3)}/h</div>
-      </div>
-      <button class="more-btn" onclick="toggleDd(event,document.getElementById('dd-el-${e.id}'))">⋮</button>
-      <div class="dd" id="dd-el-${e.id}" style="display:none;">
-        <button class="dd-item" onclick="openEletroModal(${e.id})">✏️ Editar</button>
-        <button class="dd-item danger" onclick="askDel('Excluir este eletrodoméstico?',()=>delEletro(${e.id}))">🗑️ Excluir</button>
-      </div>
-    </div>`).join('');
+  if(!S.eletros.length){div.innerHTML='<p style="font-size:.85rem;color:var(--text-soft);margin-bottom:12px;">Nenhum eletrodoméstico.</p>';return;}
+  div.innerHTML=S.eletros.map(e=>`<div class="list-item" style="border-radius:12px;margin-bottom:8px;">
+    <div class="item-main"><div class="item-name">${e.nome}</div><div class="item-sub">${e.w}W · tarifa R$${e.kwh}/kWh · R$${((e.w/1000)*e.kwh).toFixed(3)}/h</div></div>
+    <button class="more-btn" onclick="toggleDd(event,this.nextElementSibling)">⋮</button>
+    <div class="dd" style="display:none;">
+      <button class="dd-item" onclick="openEletroModal('${e.id}')">✏️ Editar</button>
+      <button class="dd-item danger" onclick="askDel('Excluir <b>${e.nome}</b>?',()=>delEletro('${e.id}'))">🗑️ Excluir</button>
+    </div>
+  </div>`).join('');
 }
 
 function openEletroModal(id=null){
   document.getElementById('mel-id').value=id||'';
-  if(id){const e=state.eletros.find(x=>x.id===id);document.getElementById('mel-nome').value=e.nome;document.getElementById('mel-w').value=e.w;document.getElementById('mel-kwh').value=e.kwh;}
-  else{document.getElementById('mel-nome').value='';document.getElementById('mel-w').value='';document.getElementById('mel-kwh').value='0.75';}
+  if(id){const e=S.eletros.find(x=>String(x.id)===String(id));document.getElementById('mel-nome').value=e.nome;document.getElementById('mel-w').value=e.w;document.getElementById('mel-kwh').value=e.kwh;}
+  else{['mel-nome','mel-w'].forEach(x=>document.getElementById(x).value='');document.getElementById('mel-kwh').value='0.75';}
   openModal('eletro');
 }
-function saveEletro(){
-  const id=parseInt(document.getElementById('mel-id').value)||null;
-  const nome=document.getElementById('mel-nome').value.trim();
-  if(!nome){showToast('Informe o nome!');return;}
-  const w=parseFloat(document.getElementById('mel-w').value)||0;
-  const kwh=parseFloat(document.getElementById('mel-kwh').value)||0;
-  if(id){const e=state.eletros.find(x=>x.id===id);e.nome=nome;e.w=w;e.kwh=kwh;}
-  else{state.eletros.push({id:newId(),nome,w,kwh});}
+window.openEletroModal=openEletroModal;
+
+async function saveEletro(){
+  const id=document.getElementById('mel-id').value||null;
+  const nome=document.getElementById('mel-nome').value.trim();if(!nome){showToast('Informe o nome!');return;}
+  const docId=id||newId();
+  const w=parseFloat(document.getElementById('mel-w').value)||0;const kwh=parseFloat(document.getElementById('mel-kwh').value)||0;
+  const data={id:docId,nome,w,kwh};
+  await fbSet('eletros',docId,data);
+  if(id){Object.assign(S.eletros.find(x=>String(x.id)===String(id)),data);}else{S.eletros.push(data);}
   closeModal('eletro');renderEletros();showToast('Salvo! ✓');
 }
-function delEletro(id){state.eletros=state.eletros.filter(e=>e.id!==id);closeModal('del');renderEletros();showToast('Excluído.');}
+window.saveEletro=saveEletro;
 
-// ============================================================
-// DELETE CONFIRM
-// ============================================================
-function askDel(msg,cb){
-  document.getElementById('del-msg').innerHTML=msg;
-  state.delCb=cb;
-  closeDropdowns();
-  openModal('del');
+async function delEletro(id){
+  await fbDel('eletros',id);S.eletros=S.eletros.filter(e=>String(e.id)!==String(id));
+  closeModal('del');renderEletros();showToast('Excluído.');
 }
-function confirmDel(){if(state.delCb)state.delCb();state.delCb=null;}
+window.delEletro=delEletro;
 
-// ============================================================
+// ================================================================
+// DELETE CONFIRM
+// ================================================================
+let _delCb=null;
+function askDel(msg,cb){document.getElementById('del-msg').innerHTML=msg;_delCb=cb;closeDropdowns();openModal('del');}
+function confirmDel(){if(_delCb)_delCb();_delCb=null;}
+window.askDel=askDel; window.confirmDel=confirmDel;
+
+// ================================================================
 // INIT
-// ============================================================
-renderHome();
+// ================================================================
+loadAll();
 </script>
 </body>
 </html>
